@@ -3,394 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Soul Cafe | Digital Menu</title>
-    
-    <!-- Tailwind CSS & Fonts -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    
-    <style>
-        :root { --cafe-cream: #F9F5F0; --cafe-green: #1B3022; --cafe-gold: #D4A373; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--cafe-cream); color: var(--cafe-green); -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
-        h1, h2, h3 { font-family: 'Playfair Display', serif; }
-        
-        /* Custom UI Styles */
-        .item-card { background: white; transition: all 0.2s ease; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .floating-footer { transform: translateY(150%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .footer-visible { transform: translateY(0); }
-
-        /* Admin Toggle Switch */
-        .switch { position: relative; display: inline-block; width: 40px; height: 20px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 20px; }
-        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: #25D366; }
-        input:checked + .slider:before { transform: translateX(20px); }
-    </style>
-</head>
-<body class="pb-32">
-
-    <!-- HEADER -->
-    <header class="pt-10 pb-4 px-6 text-center">
-        <div class="inline-block relative group cursor-pointer" onclick="openAdminModal()">
-            <div class="w-20 h-20 bg-[#1B3022] rounded-full mx-auto flex items-center justify-center border-4 border-[#D4A373] shadow-lg mb-4 active:scale-90 transition-transform">
-                <span class="text-white text-2xl font-bold italic">SC</span>
-            </div>
-            <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-[#D4A373] text-[8px] text-white px-2 py-0.5 rounded-full uppercase font-bold opacity-0 group-hover:opacity-100 transition-opacity">Manager Mode</span>
-        </div>
-        <h1 class="text-4xl font-bold italic mb-1">The Soul Cafe</h1>
-        <p class="text-[10px] uppercase tracking-[0.3em] opacity-60">Handcrafted & Freshly Served</p>
-    </header>
-
-    <!-- STICKY CATEGORY NAV -->
-    <nav class="sticky top-0 z-30 bg-[#F9F5F0]/90 backdrop-blur-md py-4 border-b border-gray-100 px-4 overflow-x-auto no-scrollbar flex gap-2 shadow-sm">
-        <div id="category-nav" class="flex gap-2"></div>
-    </nav>
-
-    <!-- MENU CONTAINER -->
-    <main class="max-w-md mx-auto px-5 mt-8 space-y-12" id="menu-container"></main>
-
-    <!-- FLOATING ORDER FOOTER -->
-    <div id="order-footer" class="fixed bottom-0 left-0 right-0 p-5 floating-footer z-40">
-        <div class="max-w-md mx-auto bg-[#1B3022] text-white p-4 rounded-2xl shadow-2xl flex justify-between items-center">
-            <div>
-                <p class="text-[10px] uppercase tracking-widest opacity-60">Total Bill</p>
-                <p class="text-2xl font-bold" id="footer-total">₹0</p>
-            </div>
-            <button onclick="openCheckoutModal()" class="bg-[#D4A373] px-8 py-3 rounded-xl font-bold text-sm uppercase tracking-wider shadow-lg active:scale-95 transition-transform">
-                View Order
-            </button>
-        </div>
-    </div>
-
-    <!-- ADMIN PANEL MODAL -->
-    <div id="admin-modal" class="fixed inset-0 bg-black/80 hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-md rounded-[2rem] max-h-[85vh] overflow-hidden flex flex-col shadow-2xl">
-            <div class="p-6 border-b flex justify-between items-center bg-gray-50">
-                <h3 class="text-xl font-bold italic">Menu Manager</h3>
-                <button onclick="closeAdminModal()" class="text-gray-400 text-2xl">✕</button>
-            </div>
-            <div class="p-4 overflow-y-auto space-y-2 bg-gray-100" id="admin-list"></div>
-            <div class="p-6 border-t">
-                <button onclick="closeAdminModal()" class="w-full bg-[#1B3022] text-white py-4 rounded-xl font-bold shadow-lg">Save & Update Menu</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- CHECKOUT MODAL -->
-    <div id="checkout-modal" class="fixed inset-0 bg-black/60 hidden z-50 flex items-center justify-center p-6">
-        <div class="bg-white w-full max-w-sm rounded-[2.5rem] overflow-hidden shadow-2xl p-8 transform transition-all">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-2xl font-bold">Final Order</h3>
-                <button onclick="closeCheckoutModal()" class="text-gray-400">✕</button>
-            </div>
-
-            <!-- TIME NOTICE BOX -->
-            <div class="bg-amber-50 border-l-4 border-[#D4A373] p-4 mb-6 rounded-r-xl">
-                <div class="flex gap-3">
-                    <span class="text-xl">⏳</span>
-                    <p class="text-xs text-amber-900 leading-relaxed font-semibold">
-                        Fresh food takes time. You need to wait for <span class="text-[#D4A373] font-bold underline">30 minutes</span> for order preparation. 
-                    </p>
-                </div>
-            </div>
-
-            <div class="space-y-6">
-                <div>
-                    <label class="text-[10px] font-bold uppercase text-gray-400 block mb-1 ml-1">Your Full Name</label>
-                    <input type="text" id="cust-name" placeholder="Enter your name" 
-                        class="w-full bg-gray-50 border-2 rounded-2xl px-5 py-4 outline-none focus:border-[#D4A373] transition-colors">
-                </div>
-                <button onclick="sendWhatsApp()" class="w-full bg-[#25D366] text-white py-5 rounded-2xl font-bold flex items-center justify-center gap-3 text-lg shadow-xl active:scale-95 transition-transform">
-                    Confirm Order
-                </button>
-            </div>
-        </div>
-    </div>
-
+    <title>The Soul Cafe Menu</title>
     <script>
-        // CONFIGURATION
-        const WHATSAPP_NUMBER = "917023207620"; 
-        
-        let menuItems = [
-            // STARTER
-            { id: 1, name: "Veg Pakora", price: 250, category: "Starter", available: true },
-            { id: 2, name: "Aloo Onion Pakora", price: 220, category: "Starter", available: true },
-            { id: 3, name: "Crispy Chilly Potato", price: 200, category: "Starter", available: true },
-            { id: 4, name: "Crispy Chilly Potato With Honey", price: 230, category: "Starter", available: true },
-            { id: 5, name: "Paneer Pakora", price: 260, category: "Starter", available: true },
-            { id: 6, name: "Paneer Chilly", price: 280, category: "Starter", available: true },
-            { id: 7, name: "French Fries", price: 200, category: "Starter", available: true },
-            { id: 8, name: "Peanut Masala", price: 180, category: "Starter", available: true },
-            { id: 9, name: "Idli Sambhar (Special)", price: 200, category: "Starter", available: true },
-            { id: 10, name: "Masala Dosa (Special)", price: 200, category: "Starter", available: true },
-            { id: 11, name: "Fried Idli", price: 220, category: "Starter", available: true },
-            { id: 12, name: "Masala Papad", price: 80, category: "Starter", available: true },
-            { id: 13, name: "Fry Papad", price: 80, category: "Starter", available: true },
-            { id: 14, name: "Roasted Papad", price: 60, category: "Starter", available: true },
-            { id: 15, name: "Veg Nuggets", price: 150, category: "Starter", available: true },
-            { id: 16, name: "Poha", price: 120, category: "Starter", available: true },
-
-            // SOUPS
-            { id: 17, name: "Tomato Soup", price: 100, category: "Soups", available: true },
-            { id: 18, name: "Mix Veg Soup", price: 120, category: "Soups", available: true },
-            { id: 19, name: "Veg Noodles Soup", price: 120, category: "Soups", available: true },
-            { id: 20, name: "Mushroom Soup", price: 150, category: "Soups", available: true },
-            { id: 21, name: "Veg Sweet Corn Soup", price: 150, category: "Soups", available: true },
-
-            // TOAST
-            { id: 22, name: "Plain Toast", price: 50, category: "Toast", available: true },
-            { id: 23, name: "Butter Toast", price: 80, category: "Toast", available: true },
-            { id: 24, name: "Butter Jam Toast", price: 120, category: "Toast", available: true },
-            { id: 25, name: "Peanut Butter Toast", price: 120, category: "Toast", available: true },
-            { id: 26, name: "Nutella Toast", price: 160, category: "Toast", available: true },
-            { id: 27, name: "Cheese Tomato Toast", price: 140, category: "Toast", available: true },
-            { id: 28, name: "Cheese Garlic Toast", price: 140, category: "Toast", available: true },
-            { id: 29, name: "Cheese Egg Toast", price: 150, category: "Toast", available: true },
-            { id: 30, name: "Honey Butter Toast", price: 120, category: "Toast", available: true },
-
-            // LASSI
-            { id: 31, name: "Mango Lassi", price: 120, category: "Lassi", available: true },
-            { id: 32, name: "Banana Lassi", price: 120, category: "Lassi", available: true },
-            { id: 33, name: "Strawberry Lassi", price: 120, category: "Lassi", available: true },
-            { id: 34, name: "Sweet Lassi", price: 100, category: "Lassi", available: true },
-            { id: 35, name: "Salted Lassi", price: 100, category: "Lassi", available: true },
-            { id: 36, name: "Rose Lassi", price: 150, category: "Lassi", available: true },
-            { id: 37, name: "Mix Dry Fruit Lassi", price: 180, category: "Lassi", available: true },
-
-            // HOT BEVERAGE
-            { id: 38, name: "Milk Tea", price: 50, category: "Hot Beverage", available: true },
-            { id: 39, name: "Masala Tea", price: 60, category: "Hot Beverage", available: true },
-            { id: 40, name: "Black Tea", price: 30, category: "Hot Beverage", available: true },
-            { id: 41, name: "Lemon Tea", price: 40, category: "Hot Beverage", available: true },
-            { id: 42, name: "Mint Tea", price: 40, category: "Hot Beverage", available: true },
-            { id: 43, name: "Kesar Chai", price: 80, category: "Hot Beverage", available: true },
-            { id: 44, name: "Ginger Lemon Honey Tea", price: 80, category: "Hot Beverage", available: true },
-            { id: 45, name: "Black Coffee", price: 50, category: "Hot Beverage", available: true },
-            { id: 46, name: "Filter Coffee", price: 100, category: "Hot Beverage", available: true },
-            { id: 47, name: "Milk Coffee", price: 80, category: "Hot Beverage", available: true },
-            { id: 48, name: "Cappuccino", price: 180, category: "Hot Beverage", available: true },
-            { id: 49, name: "Hot Chocolate", price: 120, category: "Hot Beverage", available: true },
-            { id: 50, name: "Hot Nutella Milk", price: 150, category: "Hot Beverage", available: true },
-            { id: 51, name: "Hot Milk", price: 60, category: "Hot Beverage", available: true },
-
-            // CEREALS/MUESLI
-            { id: 52, name: "Cornflakes with Milk", price: 160, category: "Cereals", available: true },
-            { id: 53, name: "Fruit Curd Muesli", price: 180, category: "Cereals", available: true },
-            { id: 54, name: "Plain Porridge", price: 140, category: "Cereals", available: true },
-            { id: 55, name: "Mix Fruit Porridge", price: 180, category: "Cereals", available: true },
-            { id: 56, name: "Banana Porridge", price: 160, category: "Cereals", available: true },
-
-            // OMELETTE
-            { id: 57, name: "Plain Omelette", price: 80, category: "Omelette", available: true },
-            { id: 58, name: "Boiled Egg (4 Pcs)", price: 120, category: "Omelette", available: true },
-            { id: 59, name: "Half Fry", price: 80, category: "Omelette", available: true },
-            { id: 60, name: "Poached Egg", price: 100, category: "Omelette", available: true },
-            { id: 61, name: "Scrambled Egg", price: 80, category: "Omelette", available: true },
-            { id: 62, name: "Onion Omelette", price: 100, category: "Omelette", available: true },
-            { id: 63, name: "Bread Omelette", price: 140, category: "Omelette", available: true },
-            { id: 64, name: "Cheese Omelette", price: 160, category: "Omelette", available: true },
-            { id: 65, name: "Masala Omelette", price: 140, category: "Omelette", available: true },
-            { id: 66, name: "Cheese Masala Omelette", price: 160, category: "Omelette", available: true },
-            { id: 67, name: "Mushroom Cheese Bread Omelette", price: 180, category: "Omelette", available: true },
-            { id: 68, name: "Cheese Masala Bread Omelette", price: 200, category: "Omelette", available: true },
-
-            // PRANTHA
-            { id: 69, name: "Aloo Prantha", price: 80, category: "Prantha", available: true },
-            { id: 70, name: "Onion Prantha", price: 80, category: "Prantha", available: true },
-            { id: 71, name: "Gobhi Prantha", price: 100, category: "Prantha", available: true },
-            { id: 72, name: "Aloo Onion Prantha", price: 100, category: "Prantha", available: true },
-            { id: 73, name: "Mix Veg Prantha", price: 120, category: "Prantha", available: true },
-            { id: 74, name: "Egg Prantha", price: 120, category: "Prantha", available: true },
-            { id: 75, name: "Cheese Prantha", price: 120, category: "Prantha", available: true },
-            { id: 76, name: "Egg Cheese Prantha", price: 150, category: "Prantha", available: true },
-            { id: 77, name: "Mirch Jeera Prantha", price: 80, category: "Prantha", available: true },
-
-            // PASTA
-            { id: 78, name: "Pomodoro (Tomato Sauce, Cheese)", price: 260, category: "Pasta", available: true },
-            { id: 79, name: "Ala Funghi (Tomato, Mushroom, Cheese)", price: 280, category: "Pasta", available: true },
-            { id: 80, name: "All Verdure (Capsicum, Olive, Veg Mix)", price: 280, category: "Pasta", available: true },
-            { id: 81, name: "Tobasko Pasta (Spicy Mix)", price: 280, category: "Pasta", available: true },
-            { id: 82, name: "Creamy White Sauce Pasta", price: 350, category: "Pasta", available: true },
-
-            // PIZZA
-            { id: 83, name: "Margarita Pizza", price: 300, category: "Pizza", available: true },
-            { id: 84, name: "Alle E Olive Pizza (Mushroom, Olive)", price: 350, category: "Pizza", available: true },
-            { id: 85, name: "Veg Delight Pizza (Veg Toppings)", price: 400, category: "Pizza", available: true },
-
-            // INDIAN ZAIKA
-            { id: 86, name: "Dal Fry", price: 150, category: "Indian Zaika", available: true },
-            { id: 87, name: "Dal Tadka", price: 180, category: "Indian Zaika", available: true },
-            { id: 88, name: "Dal Makhani", price: 220, category: "Indian Zaika", available: true },
-            { id: 89, name: "Gatta Masala", price: 180, category: "Indian Zaika", available: true },
-            { id: 90, name: "Gatta Masala Curry", price: 200, category: "Indian Zaika", available: true },
-            { id: 91, name: "Zeera Aloo", price: 200, category: "Indian Zaika", available: true },
-            { id: 92, name: "Aloo Gobhi", price: 220, category: "Indian Zaika", available: true },
-            { id: 93, name: "Aloo Ka Pyaza", price: 250, category: "Indian Zaika", available: true },
-            { id: 94, name: "Bhindi Fry", price: 200, category: "Indian Zaika", available: true },
-            { id: 95, name: "Masala Bhindi Fry", price: 250, category: "Indian Zaika", available: true },
-            { id: 96, name: "Rajasthani Kadhi", price: 200, category: "Indian Zaika", available: true },
-            { id: 97, name: "Pakora Kadhi", price: 250, category: "Indian Zaika", available: true },
-            { id: 98, name: "Paneer Butter Masala", price: 250, category: "Indian Zaika", available: true },
-            { id: 99, name: "Kadai Paneer", price: 250, category: "Indian Zaika", available: true },
-            { id: 100, name: "Shahi Paneer", price: 280, category: "Indian Zaika", available: true },
-            { id: 101, name: "Palak Paneer", price: 280, category: "Indian Zaika", available: true },
-            { id: 102, name: "Matar Paneer", price: 280, category: "Indian Zaika", available: true },
-            { id: 103, name: "Malai Kofta", price: 350, category: "Indian Zaika", available: true },
-            { id: 104, name: "Lauki Kofta", price: 320, category: "Indian Zaika", available: true },
-            { id: 105, name: "Mushroom Curry", price: 350, category: "Indian Zaika", available: true },
-            { id: 106, name: "Egg Curry", price: 350, category: "Indian Zaika", available: true },
-
-            // BREADS/RICE/SALAD
-            { id: 107, name: "Plain Tawa Chapati", price: 20, category: "Breads", available: true },
-            { id: 108, name: "Butter Tawa Chapati", price: 30, category: "Breads", available: true },
-            { id: 109, name: "Lacha Paratha", price: 100, category: "Breads", available: true },
-            { id: 110, name: "Butter Naan", price: 100, category: "Breads", available: true },
-            { id: 111, name: "Cheese Garlic Naan", price: 120, category: "Breads", available: true },
-            { id: 112, name: "Plain Rice", price: 100, category: "Rice", available: true },
-            { id: 113, name: "Zeera Rice", price: 120, category: "Rice", available: true },
-            { id: 114, name: "Veg Pulao", price: 180, category: "Rice", available: true },
-            { id: 115, name: "Veg Fried Rice", price: 200, category: "Rice", available: true },
-            { id: 116, name: "Egg Fried Rice", price: 220, category: "Rice", available: true },
-            { id: 117, name: "Onion Salad", price: 50, category: "Salad", available: true },
-            { id: 118, name: "Veg Salad", price: 80, category: "Salad", available: true },
-            { id: 119, name: "Green Salad", price: 100, category: "Salad", available: true },
-            { id: 120, name: "Fruit Salad", price: 120, category: "Salad", available: true },
-            { id: 121, name: "Honey Fruit Salad", price: 150, category: "Salad", available: true },
-
-            // THALI
-            { id: 122, name: "Veg Thali", price: 250, category: "Thali", available: true },
-            { id: 123, name: "Special Thali", price: 380, category: "Thali", available: true },
-            { id: 124, name: "Egg Thali", price: 400, category: "Thali", available: true },
-            { id: 125, name: "Rajasthani Special Thali", price: 530, category: "Thali", available: true },
-
-            // DESSERT
-            { id: 126, name: "Plain Pancake", price: 160, category: "Dessert", available: true },
-            { id: 127, name: "Lemon Honey Pancake", price: 220, category: "Dessert", available: true },
-            { id: 128, name: "Chocolate Pancake", price: 250, category: "Dessert", available: true },
-            { id: 129, name: "Chocolate Banana Pancake", price: 260, category: "Dessert", available: true },
-            { id: 130, name: "Nutella Pancake", price: 260, category: "Dessert", available: true },
-            { id: 131, name: "Nutella Banana Pancake", price: 300, category: "Dessert", available: true },
-            { id: 132, name: "Chocolate Ball", price: 120, category: "Dessert", available: true },
-            { id: 133, name: "Nutella Chapati", price: 100, category: "Dessert", available: true },
-            { id: 134, name: "Dairy Milk Chapati", price: 80, category: "Dessert", available: true },
-            { id: 135, name: "Milky Bar Chapati", price: 100, category: "Dessert", available: true },
-            { id: 136, name: "Mix Fruit Ice Cream", price: 220, category: "Dessert", available: true },
-            { id: 137, name: "Gulab Jamun", price: 200, category: "Dessert", available: true },
-        ];
-
-        let cart = {};
-
-        // RENDER FUNCTIONS
-        function renderMenu() {
-            const container = document.getElementById('menu-container');
-            const nav = document.getElementById('category-nav');
-            const activeItems = menuItems.filter(i => i.available);
-            const categories = [...new Set(activeItems.map(i => i.category))];
-
-            nav.innerHTML = categories.map(cat => `
-                <a href="#cat-${cat.replace(/\s/g,'')}" class="bg-white px-5 py-2 rounded-full text-xs font-bold shadow-sm border whitespace-nowrap">${cat}</a>
-            `).join('');
-
-            container.innerHTML = categories.map(cat => `
-                <section id="cat-${cat.replace(/\s/g,'')}">
-                    <h2 class="text-2xl font-bold mb-6 flex items-center gap-3"><span class="w-2 h-8 bg-[#D4A373] rounded-full"></span>${cat}</h2>
-                    <div class="grid gap-4">
-                        ${activeItems.filter(i => i.category === cat).map(item => `
-                            <div class="item-card p-5 rounded-3xl flex justify-between items-center shadow-sm">
-                                <div class="flex-1 pr-4">
-                                    <h3 class="font-bold text-base leading-tight">${item.name}</h3>
-                                    <p class="text-[#D4A373] font-bold mt-1">₹${item.price}</p>
-                                </div>
-                                <div class="flex items-center gap-4 bg-gray-50 rounded-2xl p-1 border">
-                                    <button onclick="updateQty(${item.id}, -1)" class="w-10 h-10 flex items-center justify-center rounded-xl bg-white shadow-sm font-bold">-</button>
-                                    <span id="qty-${item.id}" class="w-4 text-center font-bold">${cart[item.id] || 0}</span>
-                                    <button onclick="updateQty(${item.id}, 1)" class="w-10 h-10 flex items-center justify-center rounded-xl bg-[#1B3022] text-white shadow-sm font-bold">+</button>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </section>
-            `).join('');
+        // Function to load menu from localStorage
+        function loadMenu() {
+            let menu = localStorage.getItem('menu');
+            if (menu) {
+                document.getElementById('menu').innerHTML = menu;
+            }
         }
 
-        function updateQty(id, delta) {
-            cart[id] = Math.max(0, (cart[id] || 0) + delta);
-            document.getElementById(`qty-${id}`).innerText = cart[id];
-            updateFooter();
+        // Function to save menu to localStorage
+        function saveMenu() {
+            let menu = document.getElementById('menu').innerHTML;
+            localStorage.setItem('menu', menu);
         }
 
-        function updateFooter() {
-            const total = menuItems.reduce((sum, item) => sum + ((cart[item.id] || 0) * item.price), 0);
-            document.getElementById('footer-total').innerText = `₹${total}`;
-            const footer = document.getElementById('order-footer');
-            total > 0 ? footer.classList.add('footer-visible') : footer.classList.remove('footer-visible');
+        // Function to add a new dish
+        function addDish() {
+            let dish = document.getElementById('newDish').value;
+            if (dish) {
+                let menu = document.getElementById('menu');
+                let newDishElement = document.createElement('li');
+                newDishElement.textContent = dish;
+                menu.appendChild(newDishElement);
+                saveMenu(); // Save the updated menu
+                document.getElementById('newDish').value = ''; // Clear input
+            }
         }
 
-        // ADMIN PANEL LOGIC
-        function openAdminModal() {
-            const list = document.getElementById('admin-list');
-            list.innerHTML = menuItems.map(item => `
-                <div class="flex items-center justify-between p-4 bg-white rounded-2xl border mb-2">
-                    <div class="flex-1">
-                        <p class="font-bold text-sm">${item.name}</p>
-                        <input type="number" value="${item.price}" onchange="updatePrice(${item.id}, this.value)" class="w-20 text-sm border-b font-bold text-[#D4A373] outline-none">
-                    </div>
-                    <label class="switch">
-                        <input type="checkbox" ${item.available ? 'checked' : ''} onchange="toggleAvailability(${item.id})">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-            `).join('');
-            document.getElementById('admin-modal').classList.remove('hidden');
-        }
-
-        function toggleAvailability(id) {
-            const item = menuItems.find(i => i.id === id);
-            item.available = !item.available;
-            if(!item.available) cart[id] = 0;
-            updateFooter();
-        }
-
-        function updatePrice(id, val) {
-            const item = menuItems.find(i => i.id === id);
-            item.price = parseInt(val) || 0;
-            updateFooter();
-        }
-
-        function closeAdminModal() { document.getElementById('admin-modal').classList.add('hidden'); renderMenu(); }
-
-        // CHECKOUT & WHATSAPP REDIRECT
-        function openCheckoutModal() { document.getElementById('checkout-modal').classList.remove('hidden'); }
-        function closeCheckoutModal() { document.getElementById('checkout-modal').classList.add('hidden'); }
-
-        function sendWhatsApp() {
-            const name = document.getElementById('cust-name').value.trim();
-            if(!name) { alert("Please enter your name"); return; }
-
-            let orderItemsText = "";
-            let totalAmount = 0;
-
-            menuItems.forEach(item => {
-                const qty = cart[item.id] || 0;
-                if (qty > 0) {
-                    orderItemsText += `• ${qty} x ${item.name}\n`;
-                    totalAmount += (qty * item.price);
-                }
-            });
-
-            // Added Preparation Note to message
-            const message = `*New Order from ${name}*\n--------------------------\n${orderItemsText}--------------------------\n*Total: ₹${totalAmount}*\n\n_(Note: Waiting 30 mins for preparation)_`;
-            
-            const encodedMessage = encodeURIComponent(message);
-            const link = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodedMessage}`;
-            
-            // Redirect directly to bypass browser blocks
-            window.location.href = link;
-        }
-
-        renderMenu();
+        window.onload = loadMenu; // Load menu on page load
     </script>
+</head>
+<body>
+    <h1>The Soul Cafe Menu</h1>
+    <ul id="menu">
+        <li>Espresso</li>
+        <li>Cappuccino</li>
+        <li>Latte</li>
+    </ul>
+    <input type="text" id="newDish" placeholder="Add a new dish">
+    <button onclick="addDish()">Add Dish</button>
 </body>
 </html>
