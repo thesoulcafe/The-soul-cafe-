@@ -1,39 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soul Cafe Digital Menu</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css" rel="stylesheet">
+    <script defer src="app.js"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-green-500 p-4">
+        <h1 class="text-white text-3xl">Soul Cafe Menu</h1>
+        <nav class="mt-4">
+            <ul class="flex space-x-4">
+                <li><a href="#appetizers" class="text-white">Appetizers</a></li>
+                <li><a href="#main-courses" class="text-white">Main Courses</a></li>
+                <li><a href="#desserts" class="text-white">Desserts</a></li>
+                <li><a href="#drinks" class="text-white">Drinks</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="appetizers" class="p-4">
+            <h2 class="text-2xl mb-2">Appetizers</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Menu items will be dynamically added here -->
+            </div>
+        </section>
+        <section id="main-courses" class="p-4">
+            <h2 class="text-2xl mb-2">Main Courses</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Menu items will be dynamically added here -->
+            </div>
+        </section>
+        <section id="desserts" class="p-4">
+            <h2 class="text-2xl mb-2">Desserts</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Menu items will be dynamically added here -->
+            </div>
+        </section>
+        <section id="drinks" class="p-4">
+            <h2 class="text-2xl mb-2">Drinks</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Menu items will be dynamically added here -->
+            </div>
+        </section>
+    </main>
+    <footer class="fixed bottom-0 left-0 right-0 bg-green-500 p-4">
+        <button id="checkout" class="bg-white text-green-500 p-2 rounded">Checkout</button>
+    </footer>
+    <div id="admin-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+        <div class="bg-white p-4 rounded shadow-lg">
+            <h2 class="text-xl mb-4">Admin Panel</h2>
+            <form id="admin-form">
+                <input type="text" placeholder="Dish Name" class="border p-2 mb-2 w-full">
+                <input type="number" placeholder="Price" class="border p-2 mb-2 w-full">
+                <button type="submit" class="bg-green-500 text-white p-2 rounded">Add Dish</button>
+            </form>
+            <button id="close-admin" class="mt-4 text-gray-600">Close</button>
+        </div>
+    </div>
+    <div id="checkout-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+        <div class="bg-white p-4 rounded shadow-lg">
+            <h2 class="text-xl mb-4">Checkout</h2>
+            <p id="checkout-details">Your order details...</p>
+            <button id="send-whatsapp" class="bg-green-500 text-white p-2 rounded">Send to WhatsApp</button>
+            <button id="close-checkout" class="mt-4 text-gray-600">Close</button>
+        </div>
+    </div>
+</body>
+</html>
 <script>
-// Function to save menu to localStorage
-function saveMenuToLocalStorage() {
-    const menu = getMenu(); // Function to get the current menu
-    localStorage.setItem('menu', JSON.stringify(menu));
-}
+const menu = []; // Array to store menu items
+const localStorageKey = 'soulCafeMenu';
 
-// Function to load menu from localStorage
-function loadMenuFromLocalStorage() {
-    const menu = JSON.parse(localStorage.getItem('menu'));
-    if (menu) {
-        setMenu(menu); // Function to set the menu on the page
-    }
-}
-
-// Function to add a new dish
-function addNewDish(dish) {
-    const menu = getMenu();
-    menu.push(dish);
-    setMenu(menu);
-    saveMenuToLocalStorage();
-}
-
-// Function to delete a dish
-function deleteDish(dishName) {
-    let menu = getMenu();
-    menu = menu.filter(dish => dish.name !== dishName);
-    setMenu(menu);
-    saveMenuToLocalStorage();
-}
-
-// Load saved menu on page refresh
+// Load menu from localStorage on page load
 window.onload = function() {
-    loadMenuFromLocalStorage();
+    const storedMenu = JSON.parse(localStorage.getItem(localStorageKey));
+    if (storedMenu) {
+        menu.push(...storedMenu);
+        renderMenu();
+    }
 };
 
-// Call saveMenuToLocalStorage whenever there are changes to the menu
-// Assuming there are event listeners or functions modifying the menu
+// Function to render menu items
+function renderMenu() {
+    const sections = ["appetizers", "main-courses", "desserts", "drinks"];
+    sections.forEach(section => {
+        const container = document.querySelector(`#${section} .grid`);
+        container.innerHTML = menu
+            .filter(item => item.category === section)
+            .map(item => `<div class='border p-2'><h3 class='font-bold'>${item.name}</h3><p>${item.price}</p></div>`)
+            .join("");
+    });
+}
+
+// Add new dish from admin form
+document.getElementById('admin-form').onsubmit = function(event) {
+    event.preventDefault();
+    const name = this[0].value;
+    const price = this[1].value;
+    const newDish = { name, price, category: 'appetizers' }; // Default category
+    menu.push(newDish);
+    localStorage.setItem(localStorageKey, JSON.stringify(menu));
+    renderMenu();
+    this.reset();
+};
+
+// Checkout button
+document.getElementById('checkout').onclick = function() {
+    // Show checkout modal
+    document.getElementById('checkout-modal').classList.remove('hidden');
+};
+
+// Close admin modal
+document.getElementById('close-admin').onclick = function() {
+    document.getElementById('admin-modal').classList.add('hidden');
+};
+
+// Close checkout modal
+document.getElementById('close-checkout').onclick = function() {
+    document.getElementById('checkout-modal').classList.add('hidden');
+};
+
+// Trigger WhatsApp order sending
+document.getElementById('send-whatsapp').onclick = function() {
+    const orderDetails = menu.map(item => `${item.name} - ${item.price}`).join('%0A');
+    window.open(`https://wa.me/?text=Order%20Details:%0A${orderDetails}`, '_blank');
+};
 </script>
