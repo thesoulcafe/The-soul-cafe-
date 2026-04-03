@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Soul Cafe - Tosh | Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --forest-green: #1b4332;
+            --wood-brown: #5d4037;
+            --warm-cream: #fdf5e6;
+            --accent-gold: #e6b17e;
+        }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--warm-cream);
+            color: #2d2d2d;
+            scroll-behavior: smooth;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .dish-card {
+            background: linear-gradient(135deg, #fffcf7 0%, #fdf5e6 100%);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .dish-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        .modal-backdrop {
+            backdrop-filter: blur(8px);
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+        .dish-card.unavailable {
+            opacity: 0.6;
+            filter: grayscale(0.5);
+            pointer-events: none;
+        }
+        .dish-card.unavailable .btn-container {
+            display: none;
+        }
+        .manager-badge {
+            background: #1b4332;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 20;
+        }
+    </style>
+</head>
+<body class="selection:bg-[#1b4332] selection:text-white">
+
+    <!-- Header -->
+    <header class="relative h-[40vh] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=2070'); filter: brightness(0.6);"></div>
+        <div class="relative z-10 text-center px-4">
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-2 tracking-tight drop-shadow-lg">The Soul Cafe</h1>
+            <div class="flex items-center justify-center gap-2 text-white/90 text-lg md:text-xl font-medium italic">
+                <i data-lucide="map-pin" class="w-5 h-5"></i>
+                <span>Tosh, Himachal Pradesh</span>
+            </div>
+            <div class="mt-4 flex items-center justify-center gap-4 text-white/80 text-sm">
+                <span class="flex items-center gap-1"><i data-lucide="clock" class="w-4 h-4"></i> 30m prep time</span>
+                <span class="flex items-center gap-1"><i data-lucide="leaf" class="w-4 h-4"></i> Pure Veg Options</span>
+            </div>
+            <div class="mt-8">
+                <button onclick="document.getElementById('trek-section').scrollIntoView({ behavior: 'smooth' })" class="px-8 py-3 bg-[#e6b17e] text-[#1b4332] font-bold rounded-full shadow-lg hover:bg-white transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2 mx-auto">
+                    <i data-lucide="mountain" class="w-5 h-5"></i>
+                    Explore Local Treks
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Category Navigation -->
+    <nav id="category-nav" class="sticky top-0 z-30 bg-[#1b4332] text-white shadow-md overflow-x-auto no-scrollbar">
+        <div class="flex whitespace-nowrap px-4 py-3 gap-6 max-w-5xl mx-auto" id="nav-items">
+            <!-- Categories will be injected here -->
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 py-12 pb-32">
+
+        <div class="mb-12 text-center">
+            <h2 class="text-3xl font-bold text-[#1b4332] mb-2">Our Menu</h2>
+            <p class="text-gray-600 italic">Freshly prepared Himalayan delicacies</p>
+            <div class="w-24 h-1 bg-[#8b5e3c] mx-auto mt-4 rounded-full"></div>
+        </div>
+
+        <div id="menu-sections">
+            <!-- Menu sections will be injected here -->
+        </div>
+
+        <div id="trek-section" class="mt-20 scroll-mt-24">
+            <div class="mb-12 text-center">
+                <h2 class="text-3xl font-bold text-[#1b4332] mb-2">Trek Guide</h2>
+                <p class="text-gray-600 italic">Explore the beauty of Tosh and beyond</p>
+                <div class="w-24 h-1 bg-[#8b5e3c] mx-auto mt-4 rounded-full"></div>
+            </div>
+            <div id="trek-list" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Treks will be injected here -->
+            </div>
+        </div>
+
+        <footer class="mt-20 text-center text-gray-500 text-sm italic border-t border-[#8b5e3c]/20 pt-8">
+            <p>Note: Some items may not be available at all times.</p>
+            <p>Fresh food is prepared — please allow 30 minutes.</p>
+            <p class="mt-4 font-semibold text-[#1b4332]">© The Soul Cafe, Tosh</p>
+            <button onclick="openLoginModal()" class="mt-8 opacity-20 hover:opacity-100 transition-opacity">
+                <i data-lucide="lock" class="w-4 h-4 mx-auto"></i>
+            </button>
+        </footer>
+    </main>
+
+    <!-- Floating Cart Button -->
+    <button id="cart-btn" class="fixed bottom-8 right-8 z-40 bg-[#1b4332] text-white p-4 rounded-full shadow-2xl flex items-center gap-3 hover:bg-[#2d5a44] transition-all hidden">
+        <div class="relative">
+            <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+            <span id="cart-count" class="absolute -top-2 -right-2 bg-[#e6b17e] text-[#1b4332] text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-[#1b4332]">0</span>
+        </div>
+        <span class="font-bold pr-2">Checkout (<span id="cart-total">₹0</span>)</span>
+    </button>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden">
+        <div class="absolute inset-0 modal-backdrop" onclick="closeModal()"></div>
+        <div class="relative w-full max-w-lg bg-[#fdf5e6] rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="p-6 bg-[#1b4332] text-white flex justify-between items-center">
+                <div>
+                    <h3 class="text-xl font-bold">Your Order</h3>
+                    <p class="text-white/70 text-sm">The Soul Cafe, Tosh</p>
+                </div>
+                <button onclick="closeModal()" class="p-2 hover:bg-white/10 rounded-full transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <div class="flex-1 overflow-y-auto p-6 space-y-6">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-bold text-[#5d4037] mb-1 uppercase tracking-wider">Your Name</label>
+                        <input type="text" id="cust-name" placeholder="Enter your name" class="w-full px-4 py-3 rounded-xl border-2 border-[#8b5e3c]/20 focus:border-[#1b4332] outline-none transition-all bg-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-[#5d4037] mb-1 uppercase tracking-wider">Seating Space</label>
+                        <select id="seating-space" class="w-full px-4 py-3 rounded-xl border-2 border-[#8b5e3c]/20 focus:border-[#1b4332] outline-none transition-all bg-white appearance-none cursor-pointer">
+                            <option value="Indoor cafe">Indoor Cafe</option>
+                            <option value="Open Table">Open Table</option>
+                            <option value="Camp">Camp</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <h4 class="text-sm font-bold text-[#5d4037] uppercase tracking-wider">Order Summary</h4>
+                    <div id="cart-items-list" class="space-y-3">
+                        <!-- Cart items will be injected here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-6 bg-white border-t border-[#8b5e3c]/10">
+                <div class="flex justify-between items-center mb-6">
+                    <span class="text-lg font-bold text-[#5d4037]">Grand Total</span>
+                    <span class="text-2xl font-bold text-[#1b4332]" id="modal-total">₹0</span>
+                </div>
+                <button onclick="handleCheckout()" class="w-full bg-[#25D366] text-white py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 hover:bg-[#1ebe57] transition-all shadow-lg">
+                    <i data-lucide="send" class="w-5 h-5"></i>
+                    Order via WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manager Login Modal -->
+    <div id="login-modal" class="fixed inset-0 z-[60] flex items-center justify-center p-4 hidden">
+        <div class="absolute inset-0 modal-backdrop" onclick="closeLoginModal()"></div>
+        <div class="relative w-full max-w-sm bg-white rounded-3xl shadow-2xl p-8">
+            <h3 class="text-2xl font-bold text-[#1b4332] mb-6 text-center">Manager Login</h3>
+            <input type="password" id="manager-pass" placeholder="Enter Password" class="w-full px-4 py-3 rounded-xl border-2 border-[#8b5e3c]/20 mb-4 outline-none focus:border-[#1b4332]">
+            <button onclick="attemptLogin()" class="w-full bg-[#1b4332] text-white py-3 rounded-xl font-bold hover:bg-[#2d5a44] transition-all">Login</button>
+        </div>
+    </div>
+
+    <!-- Manager Dashboard Modal -->
+    <div id="manager-modal" class="fixed inset-0 z-[70] flex items-center justify-center p-0 sm:p-4 hidden">
+        <div class="absolute inset-0 modal-backdrop" onclick="closeManagerModal()"></div>
+        <div class="relative w-full max-w-4xl bg-[#fdf5e6] h-full sm:h-[90vh] sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col">
+            <div class="p-6 bg-[#1b4332] text-white flex justify-between items-center">
+                <h3 class="text-xl font-bold">Manager Dashboard</h3>
+                <button onclick="closeManagerModal()" class="p-2 hover:bg-white/10 rounded-full">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            
+            <div class="flex-1 overflow-y-auto p-6">
+                <!-- Add New Item Form -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-[#8b5e3c]/10 mb-8">
+                    <h4 class="font-bold text-[#5d4037] mb-4 uppercase tracking-wider text-sm">Add New Dish</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input type="text" id="new-item-name" placeholder="Dish Name" class="px-4 py-2 rounded-lg border border-gray-200">
+                        <input type="number" id="new-item-price" placeholder="Price (₹)" class="px-4 py-2 rounded-lg border border-gray-200">
+                        <select id="new-item-cat" class="px-4 py-2 rounded-lg border border-gray-200">
+                            <!-- Categories will be injected -->
+                        </select>
+                        <input type="text" id="new-item-desc" placeholder="Description (Optional)" class="px-4 py-2 rounded-lg border border-gray-200">
+                    </div>
+                    <button onclick="addNewDish()" class="mt-4 bg-[#1b4332] text-white px-6 py-2 rounded-lg font-bold hover:bg-[#2d5a44]">Add to Menu</button>
+                </div>
+
+                <!-- Manage Existing Items -->
+                <div class="space-y-4" id="manager-items-list">
+                    <!-- Items will be injected -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Syncing Indicator -->
+    <div id="sync-indicator" class="fixed top-4 right-4 z-[100] bg-[#1b4332] text-white px-4 py-2 rounded-full text-xs font-bold flex items-center gap-2 shadow-lg transform translate-y-[-100px] transition-transform duration-300">
+        <div class="w-2 h-2 bg-[#e6b17e] rounded-full pulse-dot"></div>
+        <span>Syncing Menu...</span>
+    </div>
+
+    <!-- Error Boundary -->
+    <div id="error-boundary" class="fixed inset-0 z-[1000] bg-white flex flex-col items-center justify-center p-6 text-center hidden">
+        <div class="bg-red-50 p-8 rounded-3xl max-w-md border-2 border-red-100">
+            <i data-lucide="alert-triangle" class="w-16 h-16 text-red-500 mx-auto mb-6"></i>
+            <h2 class="text-2xl font-bold text-red-700 mb-4">Something went wrong</h2>
+            <p id="error-message" class="text-gray-600 mb-8 italic"></p>
+            <button onclick="location.reload()" class="bg-red-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-red-700 transition-all">
+                Try Refreshing
+            </button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { initializeFirestore, collection, onSnapshot, doc, setDoc, getDocs, deleteDoc, writeBatch, getDocFromServer } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            projectId: "gen-lang-client-0775483264",
+            appId: "1:40091504848:web:43f466554f379231620ed5",
+            apiKey: "AIzaSyBkR2MeWHwOG55lb5TkEJSeFuPfF1ZL6Vk",
+            authDomain: "gen-lang-client-0775483264.firebaseapp.com",
+            storageBucket: "gen-lang-client-0775483264.firebasestorage.app",
+            messagingSenderId: "40091504848"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        // Use initializeFirestore with long polling to bypass potential WebSocket restrictions
+        const db = initializeFirestore(app, {
+            experimentalForceLongPolling: true,
+        }, "ai-studio-4ce66396-f81d-4d93-944e-3f363b09c805");
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        const OperationType = {
+            CREATE: 'create',
+            UPDATE: 'update',
+            DELETE: 'delete',
+            LIST: 'list',
+            GET: 'get',
+            WRITE: 'write',
+        };
+
+        function handleFirestoreError(error, operationType, path) {
+            const errInfo = {
+                error: error instanceof Error ? error.message : String(error),
+                authInfo: {
+                    userId: auth.currentUser?.uid,
+                    email: auth.currentUser?.email,
+                    emailVerified: auth.currentUser?.emailVerified,
+                    isAnonymous: auth.currentUser?.isAnonymous,
+                    tenantId: auth.currentUser?.tenantId,
+                    providerInfo: auth.currentUser?.providerData.map(provider => ({
+                        providerId: provider.providerId,
+                        displayName: provider.displayName,
+                        email: provider.email,
+                        photoUrl: provider.photoURL
+                    })) || []
+                },
+                operationType,
+                path
+            };
+            console.error('Firestore Error: ', JSON.stringify(errInfo));
+            
+            // Show a user-friendly message if it's a permission error
+            if (errInfo.error.includes("insufficient permissions")) {
+                alert("Permission Denied: You don't have access to perform this action. If you're the manager, please ensure you're logged in with the correct account.");
+            } else {
+                // Show Error Boundary for other critical errors
+                const boundary = document.getElementById('error-boundary');
+                const msg = document.getElementById('error-message');
+                if (boundary && msg) {
+                    msg.innerText = errInfo.error;
+                    boundary.classList.remove('hidden');
+                }
+            }
+            throw new Error(JSON.stringify(errInfo));
+        }
+
+        // Test connection
+        async function testConnection() {
+            try {
+                await getDocFromServer(doc(db, 'test', 'connection'));
+                console.log("Firestore connection test successful.");
+            } catch (error) {
+                if(error instanceof Error && error.message.includes('the client is offline')) {
+                    console.error("Please check your Firebase configuration. The client is offline.");
+                }
+            }
+        }
+        testConnection();
+
+        const DEFAULT_MENU = [
+            {
+                category: "Starters",
+                items: [
+                    { name: "Veg Pakora", price: 250 },
+                    { name: "Aloo Onion Pakora", price: 220 },
+                    { name: "Crispy Chilly Potato", price: 200 },
+                    { name: "Crispy Chilly Potato with Honey", price: 230 },
+                    { name: "Paneer Pakora", price: 260 },
+                    { name: "Paneer Chilly", price: 280 },
+                    { name: "French Fries", price: 200 },
+                    { name: "Peanut Masala", price: 180 },
+                    { name: "Idli Sambhar (Special)", price: 200 },
+                    { name: "Masala Dosa (Special)", price: 200 },
+                    { name: "Fried Idli", price: 220 },
+                    { name: "Masala Papad", price: 80 },
+                    { name: "Fry Papad", price: 80 },
+                    { name: "Roasted Papad", price: 60 },
+                    { name: "Veg Nuggets", price: 150 },
+                    { name: "Poha", price: 120 },
+                ]
+            },
+            {
+                category: "Soups",
+                items: [
+                    { name: "Tomato Soup", price: 100 },
+                    { name: "Mix Veg. Soup", price: 120 },
+                    { name: "Veg Noodles Soup", price: 120 },
+                    { name: "Mushroom Soup", price: 150 },
+                    { name: "Veg. Sweet Corn Soup", price: 150 },
+                ]
+            },
+            {
+                category: "Toast",
+                items: [
+                    { name: "Plain Toast", price: 50 },
+                    { name: "Butter Toast", price: 80 },
+                    { name: "Butter Jam Toast", price: 120 },
+                    { name: "Peanut Butter Toast", price: 120 },
+                    { name: "Nutella Toast", price: 160 },
+                    { name: "Cheese Tomato Toast", price: 140 },
+                    { name: "Cheese Garlic Toast", price: 140 },
+                    { name: "Cheese Egg Toast", price: 150 },
+                    { name: "Honey Butter Toast", price: 120 },
+                ]
+            },
+            {
+                category: "Lassi",
+                items: [
+                    { name: "Mango Lassi", price: 120 },
+                    { name: "Banana Lassi", price: 120 },
+                    { name: "Strawberry Lassi", price: 120 },
+                    { name: "Sweet Lassi", price: 100 },
+                    { name: "Salted Lassi", price: 100 },
+                    { name: "Rose Lassi", price: 150 },
+                    { name: "Mix Dry Fruit Lassi", price: 180 },
+                ]
+            },
+            {
+                category: "Hot Beverages",
+                items: [
+                    { name: "Milk Tea", price: 50 },
+                    { name: "Masala Tea", price: 60 },
+                    { name: "Black Tea", price: 30 },
+                    { name: "Lemon Tea", price: 40 },
+                    { name: "Mint Tea", price: 40 },
+                    { name: "Kesar Chai", price: 80 },
+                    { name: "Ginger Lemon Honey Tea", price: 80 },
+                    { name: "Black Coffee", price: 50 },
+                    { name: "Filter Coffee", price: 100 },
+                    { name: "Milk Coffee", price: 80 },
+                    { name: "Cappuccino", price: 180 },
+                    { name: "Hot Chocolate", price: 120 },
+                    { name: "Hot Nutella Milk", price: 150 },
+                    { name: "Hot Milk", price: 60 },
+                ]
+            },
+            {
+                category: "Breakfast Bowls",
+                items: [
+                    { name: "Cornflakes with Milk", price: 160 },
+                    { name: "Fruit Curd Muesli", price: 180 },
+                    { name: "Plain Porridge", price: 140 },
+                    { name: "Mix Fruit Porridge", price: 180 },
+                    { name: "Banana Porridge", price: 160 },
+                ]
+            },
+            {
+                category: "Omelette",
+                items: [
+                    { name: "Plain Omelette", price: 80 },
+                    { name: "Boiled Egg (4 pcs)", price: 120 },
+                    { name: "Half Fry", price: 80 },
+                    { name: "Poached Egg", price: 100 },
+                    { name: "Scrambled Egg", price: 80 },
+                    { name: "Onion Omelette", price: 100 },
+                    { name: "Bread Omelette", price: 140 },
+                    { name: "Cheese Omelette", price: 160 },
+                    { name: "Masala Omelette", price: 140 },
+                    { name: "Cheese Masala Omelette", price: 160 },
+                    { name: "Mushroom Cheese Bread Omelette", price: 180 },
+                    { name: "Cheese Masala Bread Omelette", price: 200 },
+                ]
+            },
+            {
+                category: "Prantha",
+                items: [
+                    { name: "Aloo Prantha", price: 80 },
+                    { name: "Onion Prantha", price: 80 },
+                    { name: "Gobhi Prantha", price: 100 },
+                    { name: "Aloo Onion Prantha", price: 100 },
+                    { name: "Mix Veg. Prantha", price: 120 },
+                    { name: "Egg Prantha", price: 120 },
+                    { name: "Cheese Prantha", price: 120 },
+                    { name: "Egg Cheese Prantha", price: 150 },
+                    { name: "Mirch Jeera Prantha", price: 80 },
+                ]
+            },
+            {
+                category: "Pasta",
+                items: [
+                    { name: "Pomodoro", price: 260, desc: "Tomato sauce, cheese" },
+                    { name: "Ala Funghi", price: 280, desc: "Tomato sauce, mushroom, cheese" },
+                    { name: "All Verdure", price: 280, desc: "Capsicum, olive, mushroom, tomato sauce, olive cheese, oregano" },
+                    { name: "Tobasko Pasta", price: 280, desc: "Tomato sauce, green chilly, capsicum, onion, mozzarella cheese" },
+                    { name: "Creamy White Sauce Pasta (Special)", price: 350 },
+                ]
+            },
+            {
+                category: "Pizza",
+                items: [
+                    { name: "Margarita", price: 300, desc: "Tomato sauce, mozzarella cheese" },
+                    { name: "Alle E Olive", price: 350, desc: "Tomato sauce, mushroom, mozzarella cheese" },
+                    { name: "Veg. Delight", price: 400, desc: "Tomato sauce, mushroom, corn, capsicum, onion, chilly, olive, garlic, mozzarella cheese" },
+                ]
+            },
+            {
+                category: "Indian Zaika",
+                items: [
+                    { name: "Dal Fry", price: 150 },
+                    { name: "Dal Tadka", price: 180 },
+                    { name: "Dal Makhani", price: 220 },
+                    { name: "Gatta Masala", price: 180 },
+                    { name: "Gatta Masala Curry", price: 200 },
+                    { name: "Zeera Aloo", price: 200 },
+                    { name: "Aloo Gobhi", price: 220 },
+                    { name: "Aloo ka Pyaza", price: 250 },
+                    { name: "Bhindi Fry", price: 200 },
+                    { name: "Masala Bhindi Fry", price: 250 },
+                    { name: "Rajasthani Kadhi", price: 200 },
+                    { name: "Pakora Kadhi", price: 250 },
+                    { name: "Paneer Butter Masala", price: 250 },
+                    { name: "Kadai Paneer", price: 250 },
+                    { name: "Shahi Paneer", price: 280 },
+                    { name: "Palak Paneer", price: 280 },
+                    { name: "Matar Paneer", price: 280 },
+                    { name: "Malai Kofta", price: 350 },
+                    { name: "Lauki Kofta", price: 320 },
+                    { name: "Mushroom Curry", price: 350 },
+                    { name: "Egg Curry", price: 350 },
+                ]
+            },
+            {
+                category: "Breads",
+                items: [
+                    { name: "Plain Tawa Chapati", price: 20 },
+                    { name: "Butter Tawa Chapati", price: 30 },
+                    { name: "Lacha Paratha", price: 100 },
+                    { name: "Butter Naan", price: 100 },
+                    { name: "Cheese Garlic Naan", price: 120 },
+                ]
+            },
+            {
+                category: "Rice",
+                items: [
+                    { name: "Plain Rice", price: 100 },
+                    { name: "Zeera Rice", price: 120 },
+                    { name: "Veg. Pulao", price: 180 },
+                    { name: "Veg. Fried Rice", price: 200 },
+                    { name: "Egg Fried Rice", price: 220 },
+                ]
+            },
+            {
+                category: "Salad",
+                items: [
+                    { name: "Onion Salad", price: 50 },
+                    { name: "Veg Salad", price: 80 },
+                    { name: "Green Salad", price: 100 },
+                    { name: "Fruit Salad", price: 120 },
+                    { name: "Honey Fruit Salad", price: 150 },
+                ]
+            },
+            {
+                category: "Thali",
+                items: [
+                    { name: "Veg Thali", price: 250, desc: "Rice, 2 chapati, dal, mix veg, pickle, papad, salad" },
+                    { name: "Special Thali", price: 380, desc: "Zeera rice, paneer butter masala, dal makhani, boondi raita, parantha, 2 butter roti, papad, salad" },
+                    { name: "Egg Thali", price: 400, desc: "Rice, 2 butter chapati, egg curry, dal, papad, salad" },
+                    { name: "Rajasthani Special Thali", price: 530, desc: "Dal, lehsun chutney, gatte ki sabji, 2 bati with ghee, 2 chapati, special churma, papad, pickle, salad" },
+                ]
+            },
+            {
+                category: "Dessert",
+                items: [
+                    { name: "Plain Pancake", price: 160 },
+                    { name: "Lemon Honey Pancake", price: 220 },
+                    { name: "Chocolate Pancake", price: 250 },
+                    { name: "Chocolate Banana Pancake", price: 260 },
+                    { name: "Nutella Pancake", price: 260 },
+                    { name: "Nutella Banana Pancake", price: 300 },
+                    { name: "Chocolate Ball", price: 120 },
+                    { name: "Nutella Chapati", price: 100 },
+                    { name: "Dairy Milk Chapati", price: 80 },
+                    { name: "Milky Bar Chapati", price: 100 },
+                    { name: "Mix Fruit Ice Cream", price: 220 },
+                    { name: "Gulab Jamun", price: 200 },
+                ]
+            }
+        ];
+
+        const TREK_DATA = [
+            {
+                name: "Kutla Village Trek",
+                desc: "A popular 5–6 km hike from Tosh that takes about 2–3 hours. It is known for its scenic waterfalls and views of the surrounding mountains.",
+                difficulty: "Moderate",
+                duration: "2-3 Hours"
+            },
+            {
+                name: "Tosh Waterfall Hike",
+                desc: "A very short, easy walk from the main Tosh village to the nearby local waterfall.",
+                difficulty: "Easy",
+                duration: "30-45 Mins"
+            },
+            {
+                name: "Tosh Glacier Trek",
+                desc: "A more advanced trek that goes deep into the Tosh Valley, passing through alpine meadows and offering close-up views of the glaciers.",
+                difficulty: "Advanced",
+                duration: "5-6 Hours"
+            },
+            {
+                name: "Kheerganga Trek",
+                desc: "One of the most famous treks in the region, approximately 12–14 km from Barshaini. It is renowned for its hot water springs and meadow summit.",
+                difficulty: "Moderate",
+                duration: "4-5 Hours"
+            },
+            {
+                name: "Kalga and Pulga Village Treks",
+                desc: "Short, easy hikes from Barshaini to these nearby sister villages, known for their dense apple orchards and wooden architecture.",
+                difficulty: "Easy",
+                duration: "1-2 Hours"
+            }
+        ];
+
+        let MENU_DATA = [];
+        let cart = {};
+        let isManager = false;
+
+        // Initialize Firebase listeners
+        onSnapshot(collection(db, "menu"), (snapshot) => {
+            try {
+                if (snapshot.empty) {
+                    // Initial migration if Firestore is empty
+                    console.log("Firestore empty, migrating default menu...");
+                    migrateDefaultMenu();
+                } else {
+                    const newMenu = [];
+                    snapshot.forEach(doc => {
+                        newMenu.push(doc.data());
+                    });
+                    // Sort by sortOrder to maintain original category sequence
+                    newMenu.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+                    MENU_DATA = newMenu;
+                    renderNav();
+                    renderMenu();
+                    if (isManager) renderManagerItems();
+                    updateCategoryDropdown();
+                    lucide.createIcons();
+                }
+            } catch (error) {
+                handleFirestoreError(error, OperationType.GET, "menu");
+            }
+        }, (error) => {
+            handleFirestoreError(error, OperationType.GET, "menu");
+        });
+
+        onAuthStateChanged(auth, (user) => {
+            if (user && (user.email === "piyushbishnoi6167@gmail.com")) {
+                isManager = true;
+                console.log("Manager authenticated:", user.email);
+            } else {
+                isManager = false;
+            }
+        });
+
+        async function migrateDefaultMenu() {
+            const batch = writeBatch(db);
+            DEFAULT_MENU.forEach((cat, index) => {
+                const docRef = doc(db, "menu", cat.category);
+                batch.set(docRef, { ...cat, sortOrder: index });
+            });
+            try {
+                await batch.commit();
+            } catch (error) {
+                handleFirestoreError(error, OperationType.WRITE, "menu");
+            }
+        }
+
+        function init() {
+            lucide.createIcons();
+            document.getElementById('cart-btn').onclick = () => {
+                renderCartModal();
+                document.getElementById('checkout-modal').classList.remove('hidden');
+            };
+        }
+
+        async function saveMenu() {
+            showSync(true);
+            try {
+                // In this simplified model, we save individual categories
+                // If adding/deleting dishes, we update the specific category document
+                // This is handled in the specific functions below
+            } catch (error) {
+                console.error("Error saving menu:", error);
+                alert("Failed to sync changes. Check your connection.");
+            } finally {
+                showSync(false);
+            }
+        }
+
+        function showSync(show) {
+            const el = document.getElementById('sync-indicator');
+            if (show) el.classList.remove('translate-y-[-100px]');
+            else el.classList.add('translate-y-[-100px]');
+        }
+
+        function updateCategoryDropdown() {
+            const catSelect = document.getElementById('new-item-cat');
+            if (!catSelect) return;
+            catSelect.innerHTML = '';
+            MENU_DATA.forEach(cat => {
+                const opt = document.createElement('option');
+                opt.value = cat.category;
+                opt.innerText = cat.category;
+                catSelect.appendChild(opt);
+            });
+        }
+
+        window.openLoginModal = function() {
+            document.getElementById('login-modal').classList.remove('hidden');
+        }
+
+        window.closeLoginModal = function() {
+            document.getElementById('login-modal').classList.add('hidden');
+        }
+
+        window.attemptLogin = async function() {
+            try {
+                const result = await signInWithPopup(auth, provider);
+                if (result.user.email === "piyushbishnoi6167@gmail.com") {
+                    isManager = true;
+                    closeLoginModal();
+                    openManagerModal();
+                } else {
+                    alert("Unauthorized. Only the manager can access this.");
+                    await signOut(auth);
+                }
+            } catch (error) {
+                console.error("Login failed:", error);
+                alert("Login failed. Please try again.");
+            }
+        }
+
+        window.openManagerModal = function() {
+            document.getElementById('manager-modal').classList.remove('hidden');
+            renderManagerItems();
+        }
+
+        window.closeManagerModal = function() {
+            document.getElementById('manager-modal').classList.add('hidden');
+        }
+
+        function renderManagerItems() {
+            const list = document.getElementById('manager-items-list');
+            list.innerHTML = '';
+            
+            MENU_DATA.forEach((cat, catIdx) => {
+                const catHeader = document.createElement('div');
+                catHeader.className = "font-bold text-[#1b4332] mt-6 mb-2 border-b border-[#1b4332]/10 pb-1 flex justify-between items-center";
+                catHeader.innerHTML = `
+                    <span>${cat.category}</span>
+                    <button onclick="deleteCategory('${cat.category}')" class="text-xs text-red-500 hover:underline">Delete Category</button>
+                `;
+                list.appendChild(catHeader);
+
+                cat.items.forEach((item, itemIdx) => {
+                    const row = document.createElement('div');
+                    row.className = "flex items-center justify-between bg-white p-4 rounded-xl shadow-sm border border-gray-100";
+                    row.innerHTML = `
+                        <div class="flex-1">
+                            <p class="font-bold text-gray-800">${item.name} <span class="text-xs text-gray-400 ml-2">₹${item.price}</span></p>
+                            <p class="text-xs text-gray-500">${item.desc || 'No description'}</p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <button onclick="toggleAvailability('${cat.category}', ${itemIdx})" class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${item.unavailable ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'}">
+                                ${item.unavailable ? 'Unavailable' : 'Available'}
+                            </button>
+                            <button onclick="deleteDish('${cat.category}', ${itemIdx})" class="text-gray-400 hover:text-red-500">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    `;
+                    list.appendChild(row);
+                });
+            });
+            lucide.createIcons();
+        }
+
+        window.toggleAvailability = async function(catName, itemIdx) {
+            const cat = MENU_DATA.find(c => c.category === catName);
+            if (cat) {
+                cat.items[itemIdx].unavailable = !cat.items[itemIdx].unavailable;
+                showSync(true);
+                try {
+                    await setDoc(doc(db, "menu", catName), cat);
+                } catch (error) {
+                    handleFirestoreError(error, OperationType.WRITE, `menu/${catName}`);
+                } finally {
+                    showSync(false);
+                }
+            }
+        }
+
+        window.deleteDish = async function(catName, itemIdx) {
+            if (confirm("Delete this dish?")) {
+                const cat = MENU_DATA.find(c => c.category === catName);
+                if (cat) {
+                    cat.items.splice(itemIdx, 1);
+                    showSync(true);
+                    try {
+                        await setDoc(doc(db, "menu", catName), cat);
+                    } catch (error) {
+                        handleFirestoreError(error, OperationType.WRITE, `menu/${catName}`);
+                    } finally {
+                        showSync(false);
+                    }
+                }
+            }
+        }
+
+        window.deleteCategory = async function(catName) {
+            if (confirm(`Delete entire category "${catName}"?`)) {
+                showSync(true);
+                try {
+                    await deleteDoc(doc(db, "menu", catName));
+                } catch (error) {
+                    handleFirestoreError(error, OperationType.DELETE, `menu/${catName}`);
+                } finally {
+                    showSync(false);
+                }
+            }
+        }
+
+        window.addNewDish = async function() {
+            const name = document.getElementById('new-item-name').value;
+            const price = parseInt(document.getElementById('new-item-price').value);
+            const catName = document.getElementById('new-item-cat').value;
+            const desc = document.getElementById('new-item-desc').value;
+
+            if (!name || !price) {
+                alert("Please enter name and price");
+                return;
+            }
+
+            const cat = MENU_DATA.find(c => c.category === catName);
+            if (cat) {
+                cat.items.push({ name, price, desc });
+                showSync(true);
+                try {
+                    await setDoc(doc(db, "menu", catName), cat);
+                } catch (error) {
+                    handleFirestoreError(error, OperationType.WRITE, `menu/${catName}`);
+                } finally {
+                    showSync(false);
+                }
+                // Reset form
+                document.getElementById('new-item-name').value = '';
+                document.getElementById('new-item-price').value = '';
+                document.getElementById('new-item-desc').value = '';
+            }
+        }
+
+        function renderNav() {
+            const nav = document.getElementById('nav-items');
+            nav.innerHTML = '';
+            MENU_DATA.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = "text-sm font-semibold uppercase tracking-wider transition-colors duration-200 text-white/70 hover:text-white";
+                btn.innerText = cat.category;
+                btn.onclick = () => {
+                    document.getElementById(cat.category).scrollIntoView({ behavior: 'smooth' });
+                };
+                nav.appendChild(btn);
+            });
+
+            const trekBtn = document.createElement('button');
+            trekBtn.className = "text-sm font-semibold uppercase tracking-wider transition-colors duration-200 text-white/70 hover:text-white";
+            trekBtn.innerText = "Trek Guide";
+            trekBtn.onclick = () => {
+                document.getElementById('trek-section').scrollIntoView({ behavior: 'smooth' });
+            };
+            nav.appendChild(trekBtn);
+        }
+
+        function renderTreks() {
+            const container = document.getElementById('trek-list');
+            container.innerHTML = '';
+            TREK_DATA.forEach(trek => {
+                const card = document.createElement('div');
+                card.className = "dish-card group relative p-6 rounded-2xl shadow-sm border border-[#8b5e3c]/10 flex flex-col justify-between min-h-[220px] overflow-hidden";
+                card.innerHTML = `
+                    <div class="absolute -right-4 -bottom-4 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-500 pointer-events-none">
+                        <i data-lucide="map" class="w-[120px] h-[120px] text-[#1b4332] rotate-12"></i>
+                    </div>
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#e6b17e]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-start gap-3 mb-3">
+                            <h4 class="text-lg font-bold text-[#2d2d2d] group-hover:text-[#1b4332] transition-colors leading-tight">${trek.name}</h4>
+                            <span class="text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded bg-[#1b4332]/5 text-[#1b4332]">${trek.difficulty}</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-4 leading-relaxed">${trek.desc}</p>
+                    </div>
+
+                    <div class="relative z-10 flex flex-wrap items-center justify-between gap-4 mt-auto">
+                        <div class="flex items-center gap-2">
+                            <div class="flex items-center gap-1.5 px-2 py-1 rounded-md bg-white/50 backdrop-blur-sm border border-[#8b5e3c]/5">
+                                <i data-lucide="clock" class="w-3 h-3 text-[#8b5e3c]"></i>
+                                <span class="text-[9px] text-[#8b5e3c] font-bold uppercase tracking-wider">${trek.duration}</span>
+                            </div>
+                            <div class="flex items-center gap-1.5 px-2 py-1 rounded-md bg-white/50 backdrop-blur-sm border border-[#8b5e3c]/5">
+                                <i data-lucide="mountain" class="w-3 h-3 text-[#8b5e3c]"></i>
+                                <span class="text-[9px] text-[#8b5e3c] font-bold uppercase tracking-wider">Trek</span>
+                            </div>
+                        </div>
+                        <button onclick="handleTrekGuidance('${trek.name}')" class="flex items-center gap-2 px-4 py-2 rounded-full bg-[#1b4332] text-white text-xs font-bold hover:bg-[#25D366] transition-all shadow-md">
+                            <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> Get Guidance
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        window.handleTrekGuidance = function(trekName) {
+            const message = `*Trek Guidance Request - The Soul Cafe*\n\nHi! I'm interested in the *${trekName}* and would like some guidance or more information regarding the route and best time to visit.\n\n_Sent from The Soul Cafe Menu_`;
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/917023207620?text=${encodedMessage}`, '_blank');
+        }
+
+        function renderMenu() {
+            const container = document.getElementById('menu-sections');
+            container.innerHTML = ''; // Clear existing
+            MENU_DATA.forEach(section => {
+                const sec = document.createElement('section');
+                sec.id = section.category;
+                sec.className = "mb-16 scroll-mt-24";
+                
+                sec.innerHTML = `
+                    <div class="flex items-center gap-4 mb-8">
+                        <h3 class="text-2xl font-bold text-[#5d4037] whitespace-nowrap">${section.category}</h3>
+                        <div class="h-[1px] w-full bg-[#8b5e3c]/20"></div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        ${section.items.map(item => renderDishCard(item)).join('')}
+                    </div>
+                `;
+                container.appendChild(sec);
+            });
+        }
+
+        function renderDishCard(item) {
+            const isSpecial = item.name.toLowerCase().includes('special');
+            const isUnavailable = item.unavailable === true;
+            
+            return `
+                <div class="dish-card group relative p-6 rounded-2xl shadow-sm border border-[#8b5e3c]/10 flex flex-col justify-between min-h-[160px] overflow-hidden ${isUnavailable ? 'unavailable' : ''}">
+                    ${isUnavailable ? '<div class="manager-badge bg-red-600">Unavailable</div>' : ''}
+                    <div class="absolute -right-4 -bottom-4 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-500 pointer-events-none">
+                        <i data-lucide="utensils" class="w-[120px] h-[120px] text-[#1b4332] rotate-12"></i>
+                    </div>
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#8b5e3c]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-start gap-3 mb-3">
+                            <h4 class="text-lg font-bold text-[#2d2d2d] group-hover:text-[#1b4332] transition-colors leading-tight">${item.name}</h4>
+                            <div class="flex flex-col items-end">
+                                <span class="text-[#1b4332] font-black text-lg">₹${item.price}</span>
+                                <div class="w-8 h-[2px] bg-[#8b5e3c]/30 mt-1 rounded-full"></div>
+                            </div>
+                        </div>
+                        ${isSpecial ? `
+                            <div class="flex items-center gap-1.5 mb-3">
+                                <span class="w-1.5 h-1.5 rounded-full bg-[#e6b17e] pulse-dot"></span>
+                                <span class="text-[10px] font-black uppercase tracking-[0.2em] text-[#8b5e3c]">Chef's Special</span>
+                            </div>
+                        ` : ''}
+                        ${item.desc ? `<p class="text-xs text-gray-500 italic line-clamp-2 mb-4 leading-relaxed">${item.desc}</p>` : ''}
+                    </div>
+
+                    <div class="relative z-10 flex items-center justify-between mt-auto">
+                        <div class="flex items-center gap-1.5 px-2 py-1 rounded-md bg-white/50 backdrop-blur-sm border border-[#8b5e3c]/5">
+                            <i data-lucide="clock" class="w-3 h-3 text-[#8b5e3c]"></i>
+                            <span class="text-[9px] text-[#8b5e3c] font-bold uppercase tracking-wider">30 MINS</span>
+                        </div>
+                        <div id="btn-container-${item.name.replace(/\s+/g, '-')}" class="flex items-center btn-container">
+                            ${renderCartButtons(item)}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderCartButtons(item) {
+            const cartItem = cart[item.name];
+            if (cartItem) {
+                return `
+                    <div class="flex items-center gap-3 bg-[#1b4332] text-white rounded-full px-3 py-1.5 shadow-lg transform scale-105 transition-transform">
+                        <button onclick="updateQty('${item.name}', -1)" class="hover:text-[#e6b17e] transition-colors p-0.5"><i data-lucide="minus" class="w-3.5 h-3.5"></i></button>
+                        <span class="font-bold text-sm min-w-[20px] text-center">${cartItem.qty}</span>
+                        <button onclick="updateQty('${item.name}', 1)" class="hover:text-[#e6b17e] transition-colors p-0.5"><i data-lucide="plus" class="w-3.5 h-3.5"></i></button>
+                    </div>
+                `;
+            } else {
+                return `
+                    <button onclick="addToCart('${item.name}', ${item.price})" class="flex items-center gap-2 px-6 py-2 rounded-full bg-white text-[#1b4332] font-black border-2 border-[#1b4332] hover:bg-[#1b4332] hover:text-white transition-all duration-300 text-xs shadow-sm hover:shadow-md transform active:scale-95">
+                        <i data-lucide="plus" class="w-3.5 h-3.5"></i> ADD
+                    </button>
+                `;
+            }
+        }
+
+        window.addToCart = function(name, price) {
+            if (!cart[name]) {
+                cart[name] = { name, price, qty: 1 };
+            } else {
+                cart[name].qty++;
+            }
+            updateUI();
+        }
+
+        window.updateQty = function(name, delta) {
+            if (cart[name]) {
+                cart[name].qty += delta;
+                if (cart[name].qty <= 0) delete cart[name];
+            }
+            updateUI();
+        }
+
+        function updateUI() {
+            let totalItems = 0;
+            let totalPrice = 0;
+            for (const key in cart) {
+                totalItems += cart[key].qty;
+                totalPrice += cart[key].price * cart[key].qty;
+            }
+
+            const cartBtn = document.getElementById('cart-btn');
+            if (totalItems > 0) {
+                cartBtn.classList.remove('hidden');
+                document.getElementById('cart-count').innerText = totalItems;
+                document.getElementById('cart-total').innerText = '₹' + totalPrice;
+            } else {
+                cartBtn.classList.add('hidden');
+            }
+
+            // Re-render all button containers to reflect changes
+            MENU_DATA.forEach(section => {
+                section.items.forEach(item => {
+                    const container = document.getElementById(`btn-container-${item.name.replace(/\s+/g, '-')}`);
+                    if (container) {
+                        container.innerHTML = renderCartButtons(item);
+                    }
+                });
+            });
+            
+            lucide.createIcons();
+            if (!document.getElementById('checkout-modal').classList.contains('hidden')) {
+                renderCartModal();
+            }
+        }
+
+        function renderCartModal() {
+            const list = document.getElementById('cart-items-list');
+            list.innerHTML = '';
+            let totalPrice = 0;
+            
+            for (const key in cart) {
+                const item = cart[key];
+                totalPrice += item.price * item.qty;
+                const div = document.createElement('div');
+                div.className = "flex justify-between items-center py-2 border-b border-[#8b5e3c]/10";
+                div.innerHTML = `
+                    <div class="flex-1">
+                        <p class="font-semibold">${item.name}</p>
+                        <p class="text-xs text-gray-500">₹${item.price} x ${item.qty}</p>
+                    </div>
+                    <div class="flex items-center gap-3 ml-4">
+                        <button onclick="updateQty('${item.name}', -1)" class="text-[#8b5e3c] hover:text-[#1b4332]"><i data-lucide="minus" class="w-4.5 h-4.5"></i></button>
+                        <span class="font-bold w-6 text-center">${item.qty}</span>
+                        <button onclick="updateQty('${item.name}', 1)" class="text-[#8b5e3c] hover:text-[#1b4332]"><i data-lucide="plus" class="w-4.5 h-4.5"></i></button>
+                        <span class="font-bold min-w-[60px] text-right">₹${item.price * item.qty}</span>
+                    </div>
+                `;
+                list.appendChild(div);
+            }
+            document.getElementById('modal-total').innerText = '₹' + totalPrice;
+            lucide.createIcons();
+        }
+
+        window.closeModal = function() {
+            document.getElementById('checkout-modal').classList.add('hidden');
+        }
+
+        window.handleCheckout = function() {
+            const name = document.getElementById('cust-name').value;
+            const space = document.getElementById('seating-space').value;
+            
+            if (!name.trim()) {
+                alert("Please enter your name.");
+                return;
+            }
+
+            let cartItemsText = '';
+            let totalPrice = 0;
+            for (const key in cart) {
+                const item = cart[key];
+                cartItemsText += `• ${item.name} x ${item.qty} - ₹${item.price * item.qty}\n`;
+                totalPrice += item.price * item.qty;
+            }
+
+            const message = `*New Order - The Soul Cafe*\n\n*Customer:* ${name}\n*Space:* ${space}\n\n*Items:*\n${cartItemsText}\n\n------------------------\n*Total Amount: ₹${totalPrice}*\n------------------------\n_Note: Please allow 30 mins for fresh preparation._`;
+
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/917023207620?text=${encodedMessage}`, '_blank');
+        }
+
+        init();
+    </script>
+</body>
+</html>
