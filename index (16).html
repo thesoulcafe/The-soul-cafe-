@@ -1,0 +1,1941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Soul Cafe - Tosh | Menu</title>
+    
+    <!-- SEO & Social Meta Tags -->
+    <meta name="description" content="The Soul Cafe in Tosh, Parvati Valley. Freshly prepared Himalayan delicacies, local trek guides, and a peaceful mountain vibe.">
+    <meta property="og:title" content="The Soul Cafe - Tosh | Menu & Trek Guide">
+    <meta property="og:description" content="Order fresh food and explore local treks in Tosh. Your soul's retreat in the Himalayas.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=1200">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+    <style>
+        :root {
+            --forest-green: #1b4332;
+            --wood-brown: #5d4037;
+            --warm-cream: #fdf5e6;
+            --accent-gold: #e6b17e;
+        }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--warm-cream);
+            color: #2d2d2d;
+            scroll-behavior: smooth;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .dish-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border-left: 4px solid #e6b17e;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+        .dish-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transition: 0.6s;
+            z-index: 5;
+        }
+        .dish-card:hover::before {
+            left: 100%;
+        }
+        .dish-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 0 0 2px #e6b17e, 0 20px 25px -5px rgba(0, 0, 0, 0.08);
+            filter: brightness(0.99);
+        }
+        .dish-card.special-card {
+            border-left-color: #1b4332;
+        }
+        .shimmer-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .shimmer-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transform: rotate(45deg);
+            transition: 0.5s;
+        }
+        .shimmer-btn:hover::after {
+            left: 100%;
+            top: 100%;
+        }
+        .modal-backdrop {
+            backdrop-filter: blur(8px);
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+        @keyframes ken-burns {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+        .ken-burns {
+            animation: ken-burns 20s ease-out infinite alternate;
+        }
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+        }
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .nav-active {
+            color: white !important;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-bottom: 2px solid var(--accent-gold);
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 40;
+            background-color: #1b4332;
+            color: white;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .veg-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            border: 1px solid white;
+        }
+        .veg-dot.veg { background-color: #22c55e; }
+        .veg-dot.non-veg { background-color: #ef4444; }
+        .trek-card-img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 1rem 1rem 0 0;
+        }
+        .dish-card.unavailable {
+            opacity: 0.6;
+            filter: grayscale(0.5);
+            pointer-events: none;
+        }
+        .dish-card.unavailable .btn-container {
+            display: none;
+        }
+        .manager-badge {
+            background: #1b4332;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 20;
+        }
+    </style>
+</head>
+<body class="selection:bg-[#1b4332] selection:text-white">
+
+    <!-- Header -->
+    <header class="relative h-[40vh] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-cover bg-center ken-burns" style="background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=2070'); filter: brightness(0.6);"></div>
+        <div class="relative z-10 text-center px-4">
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-2 tracking-tight drop-shadow-lg">The Soul Cafe</h1>
+            <div class="flex items-center justify-center gap-2 text-white/90 text-lg md:text-xl font-medium italic">
+                <i data-lucide="map-pin" class="w-5 h-5"></i>
+                <span>Tosh, Himachal Pradesh</span>
+            </div>
+            <div class="mt-4 flex items-center justify-center gap-4 text-white/80 text-sm">
+                <span class="flex items-center gap-1"><i data-lucide="clock" class="w-4 h-4"></i> 30m prep time</span>
+                <span class="flex items-center gap-1"><i data-lucide="leaf" class="w-4 h-4"></i> Pure Veg Options</span>
+            </div>
+            <div class="mt-8">
+                <button onclick="document.getElementById('trek-section').scrollIntoView({ behavior: 'smooth' })" class="px-8 py-3 bg-[#e6b17e] text-[#1b4332] font-bold rounded-full shadow-lg hover:bg-white transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2 mx-auto">
+                    <i data-lucide="mountain" class="w-5 h-5"></i>
+                    Explore Local Treks
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Category Navigation -->
+    <nav id="category-nav" class="sticky top-0 z-30 bg-[#1b4332] text-white shadow-md overflow-x-auto no-scrollbar">
+        <div class="flex whitespace-nowrap px-4 py-3 gap-6 max-w-5xl mx-auto" id="nav-items">
+            <!-- Categories will be injected here -->
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 py-12 pb-32">
+
+        <div class="mb-12 text-center">
+            <h2 class="text-3xl font-bold text-[#1b4332] mb-2">Our Menu</h2>
+            <p class="text-gray-600 italic">Freshly prepared Himalayan delicacies</p>
+            <div class="w-24 h-1 bg-[#8b5e3c] mx-auto mt-4 rounded-full"></div>
+            
+            <!-- Search Bar -->
+            <div class="mt-8 max-w-md mx-auto relative">
+                <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></i>
+                <input type="text" id="menu-search" oninput="handleSearch()" placeholder="Search for dishes (e.g. Maggi, Tea)..." class="w-full pl-12 pr-4 py-3 rounded-2xl border-2 border-[#8b5e3c]/10 focus:border-[#1b4332] outline-none transition-all bg-white shadow-sm">
+            </div>
+        </div>
+
+        <div id="menu-sections">
+            <!-- Skeleton Loaders -->
+            <div id="skeleton-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="skeleton h-40 rounded-2xl"></div>
+                <div class="skeleton h-40 rounded-2xl"></div>
+                <div class="skeleton h-40 rounded-2xl"></div>
+            </div>
+        </div>
+
+        <div id="trek-section" class="mt-20 scroll-mt-24">
+            <div class="mb-12 text-center">
+                <h2 class="text-3xl font-bold text-[#1b4332] mb-2">Trek Guide</h2>
+                <p class="text-gray-600 italic">Explore the beauty of Tosh and beyond</p>
+                <div class="w-24 h-1 bg-[#8b5e3c] mx-auto mt-4 rounded-full"></div>
+            </div>
+            <div id="trek-list" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Treks will be injected here -->
+            </div>
+        </div>
+
+        <footer class="mt-20 text-center text-gray-500 text-sm italic border-t border-[#8b5e3c]/20 pt-8">
+            <p>Note: Some items may not be available at all times.</p>
+            <p>Fresh food is prepared — please allow 30 minutes.</p>
+            <p class="mt-4 font-semibold text-[#1b4332]">© The Soul Cafe, Tosh</p>
+            <button onclick="openLoginModal()" class="mt-8 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#1b4332]/20 text-[#1b4332] text-xs font-semibold opacity-30 hover:opacity-100 hover:bg-[#1b4332] hover:text-white hover:border-[#1b4332] transition-all duration-300">
+                <i data-lucide="lock" class="w-3 h-3"></i>
+                Manager Login
+            </button>
+        </footer>
+    </main>
+
+    <!-- Floating Cart Button -->
+    <button id="cart-btn" class="fixed bottom-8 right-8 z-40 bg-[#1b4332] text-white p-4 rounded-full shadow-2xl flex items-center gap-3 hover:bg-[#2d5a44] transition-all hidden">
+        <div class="relative">
+            <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+            <span id="cart-count" class="absolute -top-2 -right-2 bg-[#e6b17e] text-[#1b4332] text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-[#1b4332]">0</span>
+        </div>
+        <span class="font-bold pr-2">Checkout (<span id="cart-total">₹0</span>)</span>
+    </button>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <i data-lucide="arrow-up" class="w-6 h-6"></i>
+    </button>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden">
+        <div class="absolute inset-0 modal-backdrop" onclick="closeModal()"></div>
+        <div class="relative w-full max-w-lg bg-[#fdf5e6] rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="p-6 bg-[#1b4332] text-white flex justify-between items-center">
+                <div>
+                    <h3 class="text-xl font-bold">Your Order</h3>
+                    <p class="text-white/70 text-sm">The Soul Cafe, Tosh</p>
+                </div>
+                <button onclick="closeModal()" class="p-2 hover:bg-white/10 rounded-full transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <div class="flex-1 overflow-y-auto p-6 space-y-6">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-bold text-[#5d4037] mb-1 uppercase tracking-wider">Your Name</label>
+                        <input type="text" id="cust-name" placeholder="Enter your name" class="w-full px-4 py-3 rounded-xl border-2 border-[#8b5e3c]/20 focus:border-[#1b4332] outline-none transition-all bg-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-[#5d4037] mb-1 uppercase tracking-wider">Seating Space</label>
+                        <select id="seating-space" class="w-full px-4 py-3 rounded-xl border-2 border-[#8b5e3c]/20 focus:border-[#1b4332] outline-none transition-all bg-white appearance-none cursor-pointer">
+                            <option value="Indoor cafe">Indoor Cafe</option>
+                            <option value="Open Table">Open Table</option>
+                            <option value="Camp">Camp</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-[#5d4037] mb-1 uppercase tracking-wider">Special Instructions / Notes</label>
+                        <textarea id="order-notes" rows="2" placeholder="e.g. less spicy, no onion" class="w-full px-4 py-3 rounded-xl border-2 border-[#8b5e3c]/20 focus:border-[#1b4332] outline-none transition-all bg-white resize-none"></textarea>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <h4 class="text-sm font-bold text-[#5d4037] uppercase tracking-wider">Order Summary</h4>
+                    <div id="cart-items-list" class="space-y-3">
+                        <!-- Cart items will be injected here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-6 bg-white border-t border-[#8b5e3c]/10">
+                <div class="flex justify-between items-center mb-6">
+                    <span class="text-lg font-bold text-[#5d4037]">Grand Total</span>
+                    <span class="text-2xl font-bold text-[#1b4332]" id="modal-total">₹0</span>
+                </div>
+                <button onclick="handleCheckout()" class="w-full bg-[#25D366] text-white py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 hover:bg-[#1ebe57] transition-all shadow-lg">
+                    <i data-lucide="send" class="w-5 h-5"></i>
+                    Order via WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manager Login Modal -->
+    <div id="login-modal" class="fixed inset-0 z-[60] flex items-center justify-center p-4 hidden">
+        <div class="absolute inset-0 modal-backdrop" onclick="closeLoginModal()"></div>
+        <div class="relative w-full max-w-sm bg-white rounded-3xl shadow-2xl p-8">
+            <h3 class="text-2xl font-bold text-[#1b4332] mb-6 text-center">Manager Login</h3>
+            <p class="text-gray-600 text-center mb-6 text-sm">Enter the manager password and sign in with Google to access the dashboard.</p>
+            
+            <div class="mb-6">
+                <label class="block text-[10px] font-black text-[#1b4332] uppercase tracking-[0.2em] mb-2">Manager Password</label>
+                <input type="password" id="manager-password" placeholder="••••••••" class="w-full px-4 py-3 rounded-xl border-2 border-[#8b5e3c]/10 focus:border-[#1b4332] outline-none transition-all bg-gray-50 text-center tracking-widest">
+            </div>
+
+            <button onclick="attemptLogin()" class="w-full bg-[#1b4332] text-white py-4 rounded-xl font-bold hover:bg-[#2d5a44] transition-all flex items-center justify-center gap-3 shadow-lg mb-4">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/action/google.svg" class="w-5 h-5 bg-white rounded-full p-0.5" alt="Google">
+                Sign in with Google
+            </button>
+            <button onclick="closeLoginModal()" class="w-full text-gray-400 text-sm hover:text-gray-600 transition-colors">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Manager Dashboard Modal -->
+    <div id="manager-modal" class="fixed inset-0 z-[70] flex items-center justify-center p-0 sm:p-4 hidden">
+        <div class="absolute inset-0 modal-backdrop" onclick="closeManagerModal()"></div>
+        <div class="relative w-full max-w-4xl bg-[#fdf5e6] h-full sm:h-[90vh] sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col">
+            <div class="p-6 bg-[#1b4332] text-white flex flex-col gap-4">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center gap-4">
+                        <h3 class="text-xl font-bold">Manager Dashboard</h3>
+                        <div class="flex gap-2">
+                            <button onclick="handleSignOut()" class="text-[10px] uppercase tracking-widest bg-white/10 hover:bg-white/20 px-3 py-1 rounded-full transition-all">Sign Out</button>
+                        </div>
+                    </div>
+                    <button onclick="closeManagerModal()" class="p-2 hover:bg-white/10 rounded-full">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+                <!-- Tabs -->
+                <div class="flex gap-4 border-b border-white/10">
+                    <button id="tab-menu" onclick="switchManagerTab('menu')" class="pb-2 px-2 text-sm font-bold border-b-2 border-white transition-all">Menu Management</button>
+                    <button id="tab-treks" onclick="switchManagerTab('treks')" class="pb-2 px-2 text-sm font-bold border-b-2 border-transparent opacity-60 hover:opacity-100 transition-all">Trek Guide</button>
+                </div>
+                <div id="menu-quick-actions" class="flex gap-2">
+                    <button onclick="toggleAllAvailability(false)" class="text-[10px] uppercase tracking-widest bg-red-500/20 hover:bg-red-500/40 px-3 py-1 rounded-full transition-all border border-red-500/30">Close Kitchen</button>
+                    <button onclick="toggleAllAvailability(true)" class="text-[10px] uppercase tracking-widest bg-green-500/20 hover:bg-green-500/40 px-3 py-1 rounded-full transition-all border border-green-500/30">Open Kitchen</button>
+                </div>
+            </div>
+            
+            <div class="flex-1 overflow-y-auto p-6">
+                <!-- Menu Management Section -->
+                <div id="manager-menu-section">
+                    <!-- Add New Item Form -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-[#8b5e3c]/10 mb-8">
+                        <h4 id="form-title" class="font-bold text-[#5d4037] mb-4 uppercase tracking-wider text-sm">Add New Dish</h4>
+                        <input type="hidden" id="edit-item-index">
+                        <input type="hidden" id="edit-item-cat">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <input type="text" id="new-item-name" placeholder="Dish Name" class="px-4 py-2 rounded-lg border border-gray-200">
+                            <input type="number" id="new-item-price" placeholder="Price (₹)" class="px-4 py-2 rounded-lg border border-gray-200">
+                            <select id="new-item-cat" class="px-4 py-2 rounded-lg border border-gray-200">
+                                <!-- Categories will be injected -->
+                            </select>
+                            <input type="text" id="new-item-desc" placeholder="Description (Optional)" class="px-4 py-2 rounded-lg border border-gray-200">
+                            <select id="new-item-veg" class="px-4 py-2 rounded-lg border border-gray-200">
+                                <option value="true">Vegetarian 🟢</option>
+                                <option value="false">Non-Vegetarian 🔴</option>
+                            </select>
+                            <input type="text" id="new-item-prep" placeholder="Prep Time (e.g. 20 MINS)" class="px-4 py-2 rounded-lg border border-gray-200">
+                        </div>
+                        <div class="flex gap-2 mt-4">
+                            <button id="submit-btn" onclick="addNewDish()" class="bg-[#1b4332] text-white px-6 py-2 rounded-lg font-bold hover:bg-[#2d5a44]">Add to Menu</button>
+                            <button id="cancel-edit-btn" onclick="cancelEdit()" class="hidden bg-gray-200 text-gray-700 px-6 py-2 rounded-lg font-bold hover:bg-gray-300">Cancel Edit</button>
+                        </div>
+                    </div>
+
+                    <!-- Manage Existing Items -->
+                    <div class="space-y-4" id="manager-items-list">
+                        <!-- Items will be injected -->
+                    </div>
+                </div>
+
+                <!-- Trek Management Section -->
+                <div id="manager-treks-section" class="hidden">
+                    <!-- Add New Trek Form -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-[#8b5e3c]/10 mb-8">
+                        <h4 id="trek-form-title" class="font-bold text-[#5d4037] mb-4 uppercase tracking-wider text-sm">Add New Trek</h4>
+                        <input type="hidden" id="edit-trek-id">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <input type="text" id="new-trek-name" placeholder="Trek Name" class="px-4 py-2 rounded-lg border border-gray-200">
+                            <select id="new-trek-diff" class="px-4 py-2 rounded-lg border border-gray-200">
+                                <option value="Easy">Easy</option>
+                                <option value="Easy-Moderate">Easy-Moderate</option>
+                                <option value="Moderate">Moderate</option>
+                                <option value="Moderate-Difficult">Moderate-Difficult</option>
+                                <option value="Difficult">Difficult</option>
+                            </select>
+                            <input type="text" id="new-trek-duration" placeholder="Duration (e.g. 3-4 Hours)" class="px-4 py-2 rounded-lg border border-gray-200">
+                            <input type="text" id="new-trek-distance" placeholder="Distance (e.g. 5 km)" class="px-4 py-2 rounded-lg border border-gray-200">
+                            <input type="text" id="new-trek-highlights" placeholder="Highlights (e.g. Snow, River)" class="px-4 py-2 rounded-lg border border-gray-200">
+                            <div class="md:col-span-2 space-y-2">
+                                <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Trek Images</label>
+                                <div id="trek-images-container" class="space-y-2">
+                                    <div class="flex gap-2">
+                                        <input type="text" placeholder="Image URL (Unsplash or direct link)" class="trek-image-input flex-1 px-4 py-2 rounded-lg border border-gray-200">
+                                        <button onclick="removeImageInput(this)" class="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors">
+                                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <button onclick="addImageInput()" class="text-sm font-bold text-[#1b4332] flex items-center gap-1 hover:underline">
+                                    <i data-lucide="plus" class="w-4 h-4"></i> Add Another Image
+                                </button>
+                            </div>
+                            <textarea id="new-trek-desc" placeholder="Trek Description" class="px-4 py-2 rounded-lg border border-gray-200 md:col-span-2 h-24"></textarea>
+                        </div>
+                        <div class="flex gap-2 mt-4">
+                            <button id="trek-submit-btn" onclick="addNewTrek()" class="bg-[#1b4332] text-white px-6 py-2 rounded-lg font-bold hover:bg-[#2d5a44]">Add Trek</button>
+                            <button id="cancel-trek-edit-btn" onclick="cancelTrekEdit()" class="hidden bg-gray-200 text-gray-700 px-6 py-2 rounded-lg font-bold hover:bg-gray-300">Cancel Edit</button>
+                        </div>
+                    </div>
+
+                    <!-- Manage Existing Treks -->
+                    <div class="space-y-4" id="manager-treks-list">
+                        <!-- Treks will be injected -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Syncing Indicator -->
+    <div id="sync-indicator" class="fixed top-4 right-4 z-[100] bg-[#1b4332] text-white px-4 py-2 rounded-full text-xs font-bold flex items-center gap-2 shadow-lg transform translate-y-[-100px] transition-transform duration-300">
+        <div class="w-2 h-2 bg-[#e6b17e] rounded-full pulse-dot"></div>
+        <span>Syncing Menu...</span>
+    </div>
+
+    <!-- Error Boundary -->
+    <div id="error-boundary" class="fixed inset-0 z-[1000] bg-white flex flex-col items-center justify-center p-6 text-center hidden">
+        <div class="bg-red-50 p-8 rounded-3xl max-w-md border-2 border-red-100">
+            <i data-lucide="alert-triangle" class="w-16 h-16 text-red-500 mx-auto mb-6"></i>
+            <h2 class="text-2xl font-bold text-red-700 mb-4">Something went wrong</h2>
+            <p id="error-message" class="text-gray-600 mb-8 italic"></p>
+            <button onclick="location.reload()" class="bg-red-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-red-700 transition-all">
+                Try Refreshing
+            </button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+        import { initializeFirestore, collection, onSnapshot, doc, setDoc, getDocs, deleteDoc, writeBatch, getDocFromServer, addDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            projectId: "gen-lang-client-0775483264",
+            appId: "1:40091504848:web:43f466554f379231620ed5",
+            apiKey: "AIzaSyBkR2MeWHwOG55lb5TkEJSeFuPfF1ZL6Vk",
+            authDomain: "gen-lang-client-0775483264.firebaseapp.com",
+            storageBucket: "gen-lang-client-0775483264.firebasestorage.app",
+            messagingSenderId: "40091504848"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        // Use initializeFirestore with long polling to bypass potential WebSocket restrictions
+        const db = initializeFirestore(app, {
+            experimentalForceLongPolling: true,
+        }, "ai-studio-4ce66396-f81d-4d93-944e-3f363b09c805");
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // Helper to escape strings for HTML attributes
+        function esc(str) {
+            if (!str) return '';
+            return str.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
+        }
+
+        const OperationType = {
+            CREATE: 'create',
+            UPDATE: 'update',
+            DELETE: 'delete',
+            LIST: 'list',
+            GET: 'get',
+            WRITE: 'write',
+        };
+
+        function handleFirestoreError(error, operationType, path) {
+            const errInfo = {
+                error: error instanceof Error ? error.message : String(error),
+                authInfo: {
+                    userId: auth.currentUser?.uid,
+                    email: auth.currentUser?.email,
+                    emailVerified: auth.currentUser?.emailVerified,
+                    isAnonymous: auth.currentUser?.isAnonymous,
+                    tenantId: auth.currentUser?.tenantId,
+                    providerInfo: auth.currentUser?.providerData.map(provider => ({
+                        providerId: provider.providerId,
+                        displayName: provider.displayName,
+                        email: provider.email,
+                        photoUrl: provider.photoURL
+                    })) || []
+                },
+                operationType,
+                path
+            };
+            console.error('Firestore Error: ', JSON.stringify(errInfo));
+            
+            // Show a user-friendly message if it's a permission error
+            if (errInfo.error.includes("insufficient permissions")) {
+                alert("Permission Denied: You don't have access to perform this action. If you're the manager, please ensure you're logged in with the correct account.");
+            } else {
+                // Show Error Boundary for other critical errors
+                const boundary = document.getElementById('error-boundary');
+                const msg = document.getElementById('error-message');
+                if (boundary && msg) {
+                    msg.innerText = errInfo.error;
+                    boundary.classList.remove('hidden');
+                }
+            }
+            throw new Error(JSON.stringify(errInfo));
+        }
+
+        // Test connection
+        async function testConnection() {
+            try {
+                await getDocFromServer(doc(db, 'test', 'connection'));
+                console.log("Firestore connection test successful.");
+            } catch (error) {
+                if(error instanceof Error && error.message.includes('the client is offline')) {
+                    console.error("Please check your Firebase configuration. The client is offline.");
+                }
+            }
+        }
+          const DEFAULT_MENU = [
+            {
+                category: "Starters",
+                items: [
+                    { name: "Veg Pakora", price: 250, isVeg: true, prepTime: "20 MINS" },
+                    { name: "Aloo Onion Pakora", price: 220, isVeg: true, prepTime: "20 MINS" },
+                    { name: "Crispy Chilly Potato", price: 200, isVeg: true, prepTime: "20 MINS" },
+                    { name: "Crispy Chilly Potato with Honey", price: 230, isVeg: true, prepTime: "20 MINS" },
+                    { name: "Paneer Pakora", price: 260, isVeg: true, prepTime: "20 MINS" },
+                    { name: "Paneer Chilly", price: 280, isVeg: true, prepTime: "25 MINS" },
+                    { name: "French Fries", price: 200, isVeg: true, prepTime: "15 MINS" },
+                    { name: "Peanut Masala", price: 180, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Idli Sambhar (Special)", price: 200, isVeg: true, prepTime: "25 MINS" },
+                    { name: "Masala Dosa (Special)", price: 200, isVeg: true, prepTime: "25 MINS" },
+                    { name: "Fried Idli", price: 220, isVeg: true, prepTime: "20 MINS" },
+                    { name: "Masala Papad", price: 80, isVeg: true, prepTime: "5 MINS" },
+                    { name: "Fry Papad", price: 80, isVeg: true, prepTime: "5 MINS" },
+                    { name: "Roasted Papad", price: 60, isVeg: true, prepTime: "5 MINS" },
+                    { name: "Veg Nuggets", price: 150, isVeg: true, prepTime: "15 MINS" },
+                    { name: "Poha", price: 120, isVeg: true, prepTime: "15 MINS" },
+                ]
+            },
+            {
+                category: "Soups",
+                items: [
+                    { name: "Tomato Soup", price: 100, isVeg: true, prepTime: "15 MINS" },
+                    { name: "Mix Veg. Soup", price: 120, isVeg: true, prepTime: "15 MINS" },
+                    { name: "Veg Noodles Soup", price: 120, isVeg: true, prepTime: "15 MINS" },
+                    { name: "Mushroom Soup", price: 150, isVeg: true, prepTime: "15 MINS" },
+                    { name: "Veg. Sweet Corn Soup", price: 150, isVeg: true, prepTime: "15 MINS" },
+                ]
+            },
+            {
+                category: "Toast",
+                items: [
+                    { name: "Plain Toast", price: 50, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Butter Toast", price: 80, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Butter Jam Toast", price: 120, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Peanut Butter Toast", price: 120, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Nutella Toast", price: 160, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Cheese Tomato Toast", price: 140, isVeg: true, prepTime: "15 MINS" },
+                    { name: "Cheese Garlic Toast", price: 140, isVeg: true, prepTime: "15 MINS" },
+                    { name: "Cheese Egg Toast", price: 150, isVeg: false, prepTime: "15 MINS" },
+                    { name: "Honey Butter Toast", price: 120, isVeg: true, prepTime: "10 MINS" },
+                ]
+            },
+            {
+                category: "Lassi",
+                items: [
+                    { name: "Mango Lassi", price: 120, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Banana Lassi", price: 120, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Strawberry Lassi", price: 120, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Sweet Lassi", price: 100, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Salted Lassi", price: 100, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Rose Lassi", price: 150, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Mix Dry Fruit Lassi", price: 180, isVeg: true, prepTime: "15 MINS" },
+                ]
+            },
+            {
+                category: "Hot Beverages",
+                items: [
+                    { name: "Milk Tea", price: 50, isVeg: true, prepTime: "5 MINS" },
+                    { name: "Masala Tea", price: 60, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Black Tea", price: 30, isVeg: true, prepTime: "5 MINS" },
+                    { name: "Lemon Tea", price: 40, isVeg: true, prepTime: "5 MINS" },
+                    { name: "Mint Tea", price: 40, isVeg: true, prepTime: "5 MINS" },
+                    { name: "Kesar Chai", price: 80, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Ginger Lemon Honey Tea", price: 80, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Black Coffee", price: 50, isVeg: true, prepTime: "5 MINS" },
+                    { name: "Filter Coffee", price: 100, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Milk Coffee", price: 80, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Cappuccino", price: 180, isVeg: true, prepTime: "15 MINS" },
+                    { name: "Hot Chocolate", price: 120, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Hot Nutella Milk", price: 150, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Hot Milk", price: 60, isVeg: true, prepTime: "5 MINS" },
+                ]
+            },
+            {
+                category: "Breakfast Bowls",
+                items: [
+                    { name: "Cornflakes with Milk", price: 160, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Fruit Curd Muesli", price: 180, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Plain Porridge", price: 140, isVeg: true, prepTime: "15 MINS" },
+                    { name: "Mix Fruit Porridge", price: 180, isVeg: true, prepTime: "15 MINS" },
+                    { name: "Banana Porridge", price: 160, isVeg: true, prepTime: "15 MINS" },
+                ]
+            },
+            {
+                category: "Omelette",
+                items: [
+                    { name: "Plain Omelette", price: 80, isVeg: false, prepTime: "10 MINS" },
+                    { name: "Boiled Egg (4 pcs)", price: 120, isVeg: false, prepTime: "10 MINS" },
+                    { name: "Half Fry", price: 80, isVeg: false, prepTime: "10 MINS" },
+                    { name: "Poached Egg", price: 100, isVeg: false, prepTime: "15 MINS" },
+                    { name: "Scrambled Egg", price: 80, isVeg: false, prepTime: "10 MINS" },
+                    { name: "Onion Omelette", price: 100, isVeg: false, prepTime: "15 MINS" },
+                    { name: "Bread Omelette", price: 140, isVeg: false, prepTime: "15 MINS" },
+                    { name: "Cheese Omelette", price: 160, isVeg: false, prepTime: "15 MINS" },
+                    { name: "Masala Omelette", price: 140, isVeg: false, prepTime: "15 MINS" },
+                    { name: "Cheese Masala Omelette", price: 160, isVeg: false, prepTime: "15 MINS" },
+                    { name: "Mushroom Cheese Bread Omelette", price: 180, isVeg: false, prepTime: "20 MINS" },
+                    { name: "Cheese Masala Bread Omelette", price: 200, isVeg: false, prepTime: "20 MINS" },
+                ]
+            },
+            {
+                category: "Prantha",
+                items: [
+                    { name: "Aloo Prantha", price: 80, isVeg: true, prepTime: "15 MINS" },
+                    { name: "Onion Prantha", price: 80, isVeg: true, prepTime: "15 MINS" },
+                    { name: "Gobhi Prantha", price: 100, isVeg: true, prepTime: "15 MINS" },
+                    { name: "Aloo Onion Prantha", price: 100, isVeg: true, prepTime: "15 MINS" },
+                    { name: "Mix Veg. Prantha", price: 120, isVeg: true, prepTime: "20 MINS" },
+                    { name: "Egg Prantha", price: 120, isVeg: false, prepTime: "20 MINS" },
+                    { name: "Cheese Prantha", price: 120, isVeg: true, prepTime: "20 MINS" },
+                    { name: "Egg Cheese Prantha", price: 150, isVeg: false, prepTime: "20 MINS" },
+                    { name: "Mirch Jeera Prantha", price: 80, isVeg: true, prepTime: "15 MINS" },
+                ]
+            },
+            {
+                category: "Pasta",
+                items: [
+                    { name: "Pomodoro", price: 260, isVeg: true, prepTime: "20 MINS", desc: "Tomato sauce, cheese" },
+                    { name: "Ala Funghi", price: 280, isVeg: true, prepTime: "20 MINS", desc: "Tomato sauce, mushroom, cheese" },
+                    { name: "All Verdure", price: 280, isVeg: true, prepTime: "25 MINS", desc: "Capsicum, olive, mushroom, tomato sauce, olive cheese, oregano" },
+                    { name: "Tobasko Pasta", price: 280, isVeg: true, prepTime: "25 MINS", desc: "Tomato sauce, green chilly, capsicum, onion, mozzarella cheese" },
+                    { name: "Creamy White Sauce Pasta (Special)", price: 350, isVeg: true, prepTime: "30 MINS" },
+                ]
+            },
+            {
+                category: "Pizza",
+                items: [
+                    { name: "Margarita", price: 300, isVeg: true, prepTime: "25 MINS", desc: "Tomato sauce, mozzarella cheese" },
+                    { name: "Alle E Olive", price: 350, isVeg: true, prepTime: "30 MINS", desc: "Tomato sauce, mushroom, mozzarella cheese" },
+                    { name: "Veg. Delight", price: 400, isVeg: true, prepTime: "35 MINS", desc: "Tomato sauce, mushroom, corn, capsicum, onion, chilly, olive, garlic, mozzarella cheese" },
+                ]
+            },
+            {
+                category: "Indian Zaika",
+                items: [
+                    { name: "Dal Fry", price: 150, isVeg: true, prepTime: "20 MINS" },
+                    { name: "Dal Tadka", price: 180, isVeg: true, prepTime: "20 MINS" },
+                    { name: "Dal Makhani", price: 220, isVeg: true, prepTime: "30 MINS" },
+                    { name: "Gatta Masala", price: 180, isVeg: true, prepTime: "25 MINS" },
+                    { name: "Gatta Masala Curry", price: 200, isVeg: true, prepTime: "25 MINS" },
+                    { name: "Zeera Aloo", price: 200, isVeg: true, prepTime: "20 MINS" },
+                    { name: "Aloo Gobhi", price: 220, isVeg: true, prepTime: "25 MINS" },
+                    { name: "Aloo ka Pyaza", price: 250, isVeg: true, prepTime: "25 MINS" },
+                    { name: "Bhindi Fry", price: 200, isVeg: true, prepTime: "20 MINS" },
+                    { name: "Masala Bhindi Fry", price: 250, isVeg: true, prepTime: "25 MINS" },
+                    { name: "Rajasthani Kadhi", price: 200, isVeg: true, prepTime: "25 MINS" },
+                    { name: "Pakora Kadhi", price: 250, isVeg: true, prepTime: "30 MINS" },
+                    { name: "Paneer Butter Masala", price: 250, isVeg: true, prepTime: "30 MINS" },
+                    { name: "Kadai Paneer", price: 250, isVeg: true, prepTime: "30 MINS" },
+                    { name: "Shahi Paneer", price: 280, isVeg: true, prepTime: "30 MINS" },
+                    { name: "Palak Paneer", price: 280, isVeg: true, prepTime: "30 MINS" },
+                    { name: "Matar Paneer", price: 280, isVeg: true, prepTime: "30 MINS" },
+                    { name: "Malai Kofta", price: 350, isVeg: true, prepTime: "35 MINS" },
+                    { name: "Lauki Kofta", price: 320, isVeg: true, prepTime: "35 MINS" },
+                    { name: "Mushroom Curry", price: 350, isVeg: true, prepTime: "30 MINS" },
+                    { name: "Egg Curry", price: 350, isVeg: false, prepTime: "30 MINS" },
+                ]
+            },
+            {
+                category: "Breads",
+                items: [
+                    { name: "Plain Tawa Chapati", price: 20, isVeg: true, prepTime: "5 MINS" },
+                    { name: "Butter Tawa Chapati", price: 30, isVeg: true, prepTime: "5 MINS" },
+                    { name: "Lacha Paratha", price: 100, isVeg: true, prepTime: "15 MINS" },
+                    { name: "Butter Naan", price: 100, isVeg: true, prepTime: "15 MINS" },
+                    { name: "Cheese Garlic Naan", price: 120, isVeg: true, prepTime: "20 MINS" },
+                ]
+            },
+            {
+                category: "Rice",
+                items: [
+                    { name: "Plain Rice", price: 100, isVeg: true, prepTime: "15 MINS" },
+                    { name: "Zeera Rice", price: 120, isVeg: true, prepTime: "15 MINS" },
+                    { name: "Veg. Pulao", price: 180, isVeg: true, prepTime: "25 MINS" },
+                    { name: "Veg. Fried Rice", price: 200, isVeg: true, prepTime: "25 MINS" },
+                    { name: "Egg Fried Rice", price: 220, isVeg: false, prepTime: "25 MINS" },
+                ]
+            },
+            {
+                category: "Salad",
+                items: [
+                    { name: "Onion Salad", price: 50, isVeg: true, prepTime: "5 MINS" },
+                    { name: "Veg Salad", price: 80, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Green Salad", price: 100, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Fruit Salad", price: 120, isVeg: true, prepTime: "15 MINS" },
+                    { name: "Honey Fruit Salad", price: 150, isVeg: true, prepTime: "15 MINS" },
+                ]
+            },
+            {
+                category: "Thali",
+                items: [
+                    { name: "Veg Thali", price: 250, isVeg: true, prepTime: "35 MINS", desc: "Rice, 2 chapati, dal, mix veg, pickle, papad, salad" },
+                    { name: "Special Thali", price: 380, isVeg: true, prepTime: "40 MINS", desc: "Zeera rice, paneer butter masala, dal makhani, boondi raita, parantha, 2 butter roti, papad, salad" },
+                    { name: "Egg Thali", price: 400, isVeg: false, prepTime: "40 MINS", desc: "Rice, 2 butter chapati, egg curry, dal, papad, salad" },
+                    { name: "Rajasthani Special Thali", price: 530, isVeg: true, prepTime: "50 MINS", desc: "Dal, lehsun chutney, gatte ki sabji, 2 bati with ghee, 2 chapati, special churma, papad, pickle, salad" },
+                ]
+            },
+            {
+                category: "Dessert",
+                items: [
+                    { name: "Plain Pancake", price: 160, isVeg: true, prepTime: "15 MINS" },
+                    { name: "Lemon Honey Pancake", price: 220, isVeg: true, prepTime: "15 MINS" },
+                    { name: "Chocolate Pancake", price: 250, isVeg: true, prepTime: "15 MINS" },
+                    { name: "Chocolate Banana Pancake", price: 260, isVeg: true, prepTime: "15 MINS" },
+                    { name: "Nutella Pancake", price: 260, isVeg: true, prepTime: "15 MINS" },
+                    { name: "Nutella Banana Pancake", price: 300, isVeg: true, prepTime: "15 MINS" },
+                    { name: "Chocolate Ball", price: 120, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Nutella Chapati", price: 100, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Dairy Milk Chapati", price: 80, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Milky Bar Chapati", price: 100, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Mix Fruit Ice Cream", price: 220, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Gulab Jamun", price: 200, isVeg: true, prepTime: "10 MINS" },
+                ]
+            }
+        ];
+
+        let TREK_DATA = [];
+        let MENU_DATA = [];
+        let cart = {};
+        let isManager = false;
+
+        // Initialize Firebase listeners
+        function startListeners() {
+            onSnapshot(collection(db, "menu"), (snapshot) => {
+                try {
+                    if (snapshot.empty) {
+                        // Initial migration if Firestore is empty
+                        console.log("Firestore empty, migrating default menu...");
+                        migrateDefaultMenu();
+                    } else {
+                        const newMenu = [];
+                        snapshot.forEach(doc => {
+                            newMenu.push(doc.data());
+                        });
+                        // Sort by sortOrder to maintain original category sequence
+                        newMenu.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+                        MENU_DATA = newMenu;
+                        renderNav();
+                        renderMenu();
+                        if (isManager) renderManagerItems();
+                        updateCategoryDropdown();
+                        if (window.lucide) lucide.createIcons();
+                    }
+                } catch (error) {
+                    handleFirestoreError(error, OperationType.GET, "menu");
+                }
+            }, (error) => {
+                handleFirestoreError(error, OperationType.GET, "menu");
+            });
+
+            onSnapshot(collection(db, "treks"), (snapshot) => {
+                try {
+                    if (snapshot.empty) {
+                        console.log("Treks collection empty, migrating default treks...");
+                        migrateDefaultTreks();
+                    } else {
+                        const newTreks = [];
+                        snapshot.forEach(doc => {
+                            newTreks.push({ id: doc.id, ...doc.data() });
+                        });
+                        TREK_DATA = newTreks;
+                        renderTreks();
+                        if (isManager) renderManagerTreks();
+                        if (window.lucide) lucide.createIcons();
+                    }
+                } catch (error) {
+                    handleFirestoreError(error, OperationType.GET, "treks");
+                }
+            }, (error) => {
+                handleFirestoreError(error, OperationType.GET, "treks");
+            });
+
+            onAuthStateChanged(auth, (user) => {
+                const isManagerSession = sessionStorage.getItem('soul_cafe_manager_session') === 'true';
+                if (user && user.emailVerified && isManagerSession) {
+                    isManager = true;
+                    console.log("Manager authenticated:", user.email);
+                } else {
+                    isManager = false;
+                }
+                // Re-render menu to show/hide manager-specific badges/actions
+                if (MENU_DATA.length > 0) {
+                    renderMenu();
+                    if (isManager) renderManagerItems();
+                }
+            });
+        }
+
+        async function migrateDefaultTreks() {
+            const DEFAULT_TREKS = [
+                {
+                    name: "Kutla Glacier Point",
+                    desc: "High-altitude destination above Kutla (3400–3600m). Offers views of snow mountains, glaciers, and dense forests. Route passes through Budhavan Forest and Sharam Thach meadows.",
+                    difficulty: "Moderate-Difficult",
+                    duration: "3-4.5 Hours",
+                    distance: "4-5 km from Kutla",
+                    highlights: "Snow sections, river streams, rocky paths",
+                    images: ["https://images.unsplash.com/photo-1519904981063-b0144236c28e?auto=format&fit=crop&q=80&w=800"]
+                },
+                {
+                    name: "Tosh Waterfall",
+                    desc: "Scenic natural waterfall surrounded by pine trees and fresh streams (2500m). Trail passes through village lanes and green fields with beautiful valley views.",
+                    difficulty: "Easy-Moderate",
+                    duration: "20-40 Mins",
+                    distance: "1-1.5 km from Tosh",
+                    highlights: "Wooden bridges, fresh mountain water",
+                    images: ["https://images.unsplash.com/photo-1433086566608-e9373fef41c0?auto=format&fit=crop&q=80&w=800"]
+                },
+                {
+                    name: "Kheerganga Trek",
+                    desc: "Famous meadow (2950–3050m) known for natural hot water springs and panoramic views. Routes via Nakthan Village or Kalga-Pulga forest trail.",
+                    difficulty: "Easy-Moderate",
+                    duration: "4-6 Hours",
+                    distance: "10-12 km from Barshaini",
+                    highlights: "Hot water spring (kund), alpine meadows",
+                    images: ["https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=800"]
+                },
+                {
+                    name: "Kalga Village",
+                    desc: "Peaceful village at 2300m known for wooden houses and apple orchards. A starting point for the Kheerganga trek with stone step trails.",
+                    difficulty: "Easy",
+                    duration: "45m-1.5 Hours",
+                    distance: "2 km from Barshaini",
+                    highlights: "Apple orchards, traditional architecture",
+                    images: ["https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&q=80&w=800"]
+                },
+                {
+                    name: "Pulga Village",
+                    desc: "Famous for the 'Fairy Forest' (2500m). A quiet pine forest area perfect for short hikes and relaxing in nature among wooden houses.",
+                    difficulty: "Easy-Moderate",
+                    duration: "1-2 Hours",
+                    distance: "3 km from Barshaini",
+                    highlights: "Fairy Forest, dense pine trees",
+                    images: ["https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=800"]
+                },
+                {
+                    name: "Umga Village",
+                    desc: "A hidden, traditional hamlet perched above the Tosh River valley (2400–2600m). Offers a glimpse into authentic Himachali culture, ancient wooden architecture, and terraced farming.",
+                    difficulty: "Easy-Moderate",
+                    duration: "1.5-2.5 Hours",
+                    distance: "3 km from Tosh",
+                    highlights: "Ancient cedar temples, apple orchards, valley views",
+                    images: ["https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&q=80&w=800"]
+                }
+            ];
+
+            const batch = writeBatch(db);
+            DEFAULT_TREKS.forEach((trek) => {
+                const docRef = doc(collection(db, "treks"));
+                batch.set(docRef, trek);
+            });
+            try {
+                await batch.commit();
+            } catch (error) {
+                handleFirestoreError(error, OperationType.WRITE, "treks");
+            }
+        }
+
+        async function migrateDefaultMenu() {
+            const batch = writeBatch(db);
+            DEFAULT_MENU.forEach((cat, index) => {
+                const docRef = doc(db, "menu", cat.category);
+                const itemsWithDefaults = cat.items.map(item => ({
+                    ...item,
+                    unavailable: false,
+                    isVeg: item.isVeg !== undefined ? item.isVeg : true,
+                    prepTime: item.prepTime || "30 MINS"
+                }));
+                batch.set(docRef, { ...cat, items: itemsWithDefaults, sortOrder: index });
+            });
+            try {
+                await batch.commit();
+            } catch (error) {
+                handleFirestoreError(error, OperationType.WRITE, "menu");
+            }
+        }
+
+        window.init = async function() {
+            try {
+                // Load persisted data
+                const savedCart = localStorage.getItem('soul_cafe_cart');
+                if (savedCart) {
+                    try {
+                        const parsed = JSON.parse(savedCart);
+                        Object.assign(cart, parsed);
+                    } catch(e) {}
+                }
+                const savedName = localStorage.getItem('soul_cafe_cust_name');
+                if (savedName) {
+                    const nameInput = document.getElementById('cust-name');
+                    if (nameInput) nameInput.value = savedName;
+                }
+
+                // renderTreks() will be called by the listener
+                if (window.lucide) lucide.createIcons();
+                document.getElementById('cart-btn').onclick = () => {
+                    renderCartModal();
+                    document.getElementById('checkout-modal').classList.remove('hidden');
+                };
+                await startListeners();
+                updateUI();
+            } catch (e) {
+                console.error("Initialization failed:", e);
+                const boundary = document.getElementById('error-boundary');
+                const msg = document.getElementById('error-message');
+                if (boundary && msg) {
+                    msg.innerText = e.message || 'Initialization failed.';
+                    boundary.classList.remove('hidden');
+                }
+            }
+        }
+
+        async function saveMenu() {
+            showSync(true);
+            try {
+                // In this simplified model, we save individual categories
+                // If adding/deleting dishes, we update the specific category document
+                // This is handled in the specific functions below
+            } catch (error) {
+                console.error("Error saving menu:", error);
+                alert("Failed to sync changes. Check your connection.");
+            } finally {
+                showSync(false);
+            }
+        }
+
+        function showSync(show) {
+            const el = document.getElementById('sync-indicator');
+            if (show) el.classList.remove('translate-y-[-100px]');
+            else el.classList.add('translate-y-[-100px]');
+        }
+
+        function updateCategoryDropdown() {
+            const catSelect = document.getElementById('new-item-cat');
+            if (!catSelect) return;
+            catSelect.innerHTML = '';
+            MENU_DATA.forEach(cat => {
+                const opt = document.createElement('option');
+                opt.value = cat.category;
+                opt.innerText = cat.category;
+                catSelect.appendChild(opt);
+            });
+        }
+
+        window.openLoginModal = function() {
+            if (isManager) {
+                openManagerModal();
+            } else {
+                document.getElementById('login-modal').classList.remove('hidden');
+            }
+        }
+
+        window.closeLoginModal = function() {
+            document.getElementById('login-modal').classList.add('hidden');
+            document.getElementById('manager-password').value = '';
+        }
+
+        window.attemptLogin = async function() {
+            const passwordInput = document.getElementById('manager-password');
+            const enteredPassword = passwordInput.value;
+            
+            // Simple password check (You can change this or I can move it to Firestore)
+            const MANAGER_PASSWORD = "SoulCafeTosh@2024"; 
+
+            if (!enteredPassword) {
+                alert("Please enter the manager password.");
+                return;
+            }
+
+            if (enteredPassword !== MANAGER_PASSWORD) {
+                alert("Incorrect manager password.");
+                passwordInput.value = '';
+                return;
+            }
+
+            try {
+                const result = await signInWithPopup(auth, provider);
+                if (result.user && result.user.emailVerified) {
+                    sessionStorage.setItem('soul_cafe_manager_session', 'true');
+                    isManager = true;
+                    closeLoginModal();
+                    openManagerModal();
+                } else {
+                    alert("Unauthorized. Please use a verified Google account.");
+                    await signOut(auth);
+                }
+            } catch (error) {
+                console.error("Login failed:", error);
+                if (error.code === 'auth/unauthorized-domain') {
+                    alert("Domain Not Authorized: Please add your GitHub domain to the 'Authorized Domains' list in the Firebase Console (Authentication > Settings).");
+                } else if (error.code === 'auth/popup-blocked') {
+                    alert("Popup Blocked: Please allow popups for this site to sign in.");
+                } else {
+                    alert("Login failed: " + (error.message || "Please try again."));
+                }
+            }
+        }
+
+        window.handleSignOut = async function() {
+            if (confirm("Sign out from manager account?")) {
+                try {
+                    sessionStorage.removeItem('soul_cafe_manager_session');
+                    await signOut(auth);
+                    isManager = false;
+                    closeManagerModal();
+                    alert("Signed out successfully.");
+                } catch (error) {
+                    console.error("Sign out failed:", error);
+                }
+            }
+        }
+
+        window.openManagerModal = function() {
+            document.getElementById('manager-modal').classList.remove('hidden');
+            switchManagerTab('menu');
+        }
+
+        window.closeManagerModal = function() {
+            document.getElementById('manager-modal').classList.add('hidden');
+        }
+
+        function renderManagerItems() {
+            const container = document.getElementById('manager-items-list');
+            if (!container) return;
+            container.innerHTML = '';
+            MENU_DATA.forEach(cat => {
+                const catDiv = document.createElement('div');
+                catDiv.className = "bg-white/50 p-4 rounded-xl border border-[#8b5e3c]/5 mb-6";
+                catDiv.innerHTML = `
+                    <div class="flex justify-between items-center mb-4">
+                        <h5 class="font-bold text-[#1b4332]">${cat.category}</h5>
+                        <button onclick="deleteCategory('${esc(cat.category)}')" class="text-red-500 hover:text-red-700 text-xs font-bold uppercase tracking-widest">Delete Category</button>
+                    </div>
+                    <div class="space-y-2">
+                        ${cat.items.map((item, idx) => `
+                            <div class="flex items-center justify-between p-3 bg-white rounded-lg border border-gray-100 group">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2">
+                                        <span class="font-bold text-sm ${item.unavailable ? 'line-through text-gray-400' : 'text-gray-700'}">${item.name}</span>
+                                        <span class="text-xs text-gray-400">₹${item.price}</span>
+                                    </div>
+                                    ${item.desc ? `<p class="text-[10px] text-gray-400 truncate max-w-[200px]">${item.desc}</p>` : ''}
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <button onclick="editDish('${esc(cat.category)}', ${idx})" class="p-2 text-blue-500 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <i data-lucide="edit-2" class="w-4 h-4"></i>
+                                    </button>
+                                    <button onclick="toggleAvailability('${esc(cat.category)}', ${idx})" class="p-2 ${item.unavailable ? 'text-gray-400' : 'text-green-500'} hover:bg-gray-50 rounded-lg transition-colors">
+                                        <i data-lucide="${item.unavailable ? 'eye-off' : 'eye'}" class="w-4 h-4"></i>
+                                    </button>
+                                    <button onclick="deleteDish('${esc(cat.category)}', ${idx})" class="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(catDiv);
+            });
+            if (window.lucide) lucide.createIcons();
+        }
+
+        window.switchManagerTab = function(tab) {
+            const menuBtn = document.getElementById('tab-menu');
+            const treksBtn = document.getElementById('tab-treks');
+            const menuSection = document.getElementById('manager-menu-section');
+            const treksSection = document.getElementById('manager-treks-section');
+            const menuQuickActions = document.getElementById('menu-quick-actions');
+
+            if (tab === 'menu') {
+                menuBtn.classList.add('border-white');
+                menuBtn.classList.remove('border-transparent', 'opacity-60');
+                treksBtn.classList.add('border-transparent', 'opacity-60');
+                treksBtn.classList.remove('border-white');
+                menuSection.classList.remove('hidden');
+                treksSection.classList.add('hidden');
+                menuQuickActions.classList.remove('hidden');
+                renderManagerItems();
+            } else {
+                treksBtn.classList.add('border-white');
+                treksBtn.classList.remove('border-transparent', 'opacity-60');
+                menuBtn.classList.add('border-transparent', 'opacity-60');
+                menuBtn.classList.remove('border-white');
+                treksSection.classList.remove('hidden');
+                menuSection.classList.add('hidden');
+                menuQuickActions.classList.add('hidden');
+                renderManagerTreks();
+            }
+        }
+
+        window.addImageInput = function(val = '') {
+            const container = document.getElementById('trek-images-container');
+            const div = document.createElement('div');
+            div.className = "flex gap-2";
+            div.innerHTML = `
+                <input type="text" value="${val}" placeholder="Image URL (Unsplash or direct link)" class="trek-image-input flex-1 px-4 py-2 rounded-lg border border-gray-200">
+                <button onclick="removeImageInput(this)" class="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors">
+                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                </button>
+            `;
+            container.appendChild(div);
+            if (window.lucide) lucide.createIcons();
+        }
+
+        window.removeImageInput = function(btn) {
+            const container = document.getElementById('trek-images-container');
+            if (container.children.length > 1) {
+                btn.closest('.flex').remove();
+            } else {
+                btn.closest('.flex').querySelector('input').value = '';
+            }
+        }
+
+        window.addNewTrek = async function() {
+            const name = document.getElementById('new-trek-name').value.trim();
+            const diff = document.getElementById('new-trek-diff').value;
+            const duration = document.getElementById('new-trek-duration').value.trim();
+            const distance = document.getElementById('new-trek-distance').value.trim();
+            const highlights = document.getElementById('new-trek-highlights').value.trim();
+            const desc = document.getElementById('new-trek-desc').value.trim();
+            const editId = document.getElementById('edit-trek-id').value;
+
+            const imageInputs = document.querySelectorAll('.trek-image-input');
+            const images = Array.from(imageInputs).map(i => i.value.trim()).filter(v => v !== '');
+
+            if (!name || !desc) {
+                alert("Please fill in at least the trek name and description.");
+                return;
+            }
+
+            const trekData = {
+                name, difficulty: diff, duration, distance, highlights, images, desc
+            };
+
+            showSync(true);
+            try {
+                if (editId) {
+                    await updateDoc(doc(db, "treks", editId), trekData);
+                } else {
+                    await addDoc(collection(db, "treks"), trekData);
+                }
+                cancelTrekEdit();
+            } catch (error) {
+                handleFirestoreError(error, OperationType.WRITE, "treks");
+            } finally {
+                showSync(false);
+            }
+        }
+
+        window.editTrek = function(id) {
+            const trek = TREK_DATA.find(t => t.id === id);
+            if (!trek) return;
+
+            document.getElementById('edit-trek-id').value = id;
+            document.getElementById('new-trek-name').value = trek.name;
+            document.getElementById('new-trek-diff').value = trek.difficulty;
+            document.getElementById('new-trek-duration').value = trek.duration;
+            document.getElementById('new-trek-distance').value = trek.distance;
+            document.getElementById('new-trek-highlights').value = trek.highlights;
+            document.getElementById('new-trek-desc').value = trek.desc;
+
+            // Handle multiple images
+            const container = document.getElementById('trek-images-container');
+            container.innerHTML = '';
+            const images = trek.images || (trek.image ? [trek.image] : []);
+            if (images.length === 0) {
+                addImageInput();
+            } else {
+                images.forEach(img => addImageInput(img));
+            }
+
+            document.getElementById('trek-form-title').innerText = "Edit Trek";
+            document.getElementById('trek-submit-btn').innerText = "Update Trek";
+            document.getElementById('cancel-trek-edit-btn').classList.remove('hidden');
+            
+            // Scroll to form
+            document.getElementById('manager-modal').querySelector('.overflow-y-auto').scrollTop = 0;
+        }
+
+        window.cancelTrekEdit = function() {
+            document.getElementById('edit-trek-id').value = '';
+            document.getElementById('new-trek-name').value = '';
+            document.getElementById('new-trek-diff').value = 'Easy';
+            document.getElementById('new-trek-duration').value = '';
+            document.getElementById('new-trek-distance').value = '';
+            document.getElementById('new-trek-highlights').value = '';
+            document.getElementById('new-trek-desc').value = '';
+
+            // Reset images
+            const container = document.getElementById('trek-images-container');
+            container.innerHTML = '';
+            addImageInput();
+
+            document.getElementById('trek-form-title').innerText = "Add New Trek";
+            document.getElementById('trek-submit-btn').innerText = "Add Trek";
+            document.getElementById('cancel-trek-edit-btn').classList.add('hidden');
+        }
+
+        window.deleteTrek = async function(id) {
+            if (!confirm("Are you sure you want to delete this trek?")) return;
+            showSync(true);
+            try {
+                await deleteDoc(doc(db, "treks", id));
+            } catch (error) {
+                handleFirestoreError(error, OperationType.DELETE, "treks");
+            } finally {
+                showSync(false);
+            }
+        }
+
+        function renderManagerTreks() {
+            const list = document.getElementById('manager-treks-list');
+            if (!list) return;
+
+            list.innerHTML = TREK_DATA.map(trek => {
+                const mainImage = (trek.images && trek.images.length > 0) ? trek.images[0] : trek.image;
+                return `
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-[#8b5e3c]/10 flex justify-between items-center">
+                        <div class="flex items-center gap-4">
+                            ${mainImage ? `<img src="${mainImage}" class="w-12 h-12 rounded-lg object-cover" referrerPolicy="no-referrer">` : `<div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center"><i data-lucide="image" class="w-6 h-6 text-gray-400"></i></div>`}
+                            <div>
+                                <h5 class="font-bold text-[#5d4037]">${trek.name}</h5>
+                                <p class="text-xs text-gray-500">${trek.difficulty} • ${trek.duration}</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="editTrek('${trek.id}')" class="p-2 hover:bg-blue-50 text-blue-600 rounded-lg transition-colors">
+                                <i data-lucide="edit-2" class="w-4 h-4"></i>
+                            </button>
+                            <button onclick="deleteTrek('${trek.id}')" class="p-2 hover:bg-red-50 text-red-600 rounded-lg transition-colors">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            if (window.lucide) lucide.createIcons();
+        }
+
+        window.toggleAvailability = async function(catName, itemIdx) {
+            const cat = MENU_DATA.find(c => c.category === catName);
+            if (cat) {
+                cat.items[itemIdx].unavailable = !cat.items[itemIdx].unavailable;
+                showSync(true);
+                try {
+                    await setDoc(doc(db, "menu", catName), cat);
+                } catch (error) {
+                    handleFirestoreError(error, OperationType.WRITE, `menu/${catName}`);
+                } finally {
+                    showSync(false);
+                }
+            }
+        }
+
+        window.deleteDish = async function(catName, itemIdx) {
+            if (confirm("Delete this dish?")) {
+                const cat = MENU_DATA.find(c => c.category === catName);
+                if (cat) {
+                    cat.items.splice(itemIdx, 1);
+                    showSync(true);
+                    try {
+                        await setDoc(doc(db, "menu", catName), cat);
+                    } catch (error) {
+                        handleFirestoreError(error, OperationType.WRITE, `menu/${catName}`);
+                    } finally {
+                        showSync(false);
+                    }
+                }
+            }
+        }
+
+        window.deleteCategory = async function(catName) {
+            if (confirm(`Delete entire category "${catName}"?`)) {
+                showSync(true);
+                try {
+                    await deleteDoc(doc(db, "menu", catName));
+                } catch (error) {
+                    handleFirestoreError(error, OperationType.DELETE, `menu/${catName}`);
+                } finally {
+                    showSync(false);
+                }
+            }
+        }
+
+        const CATEGORY_ICONS = {
+            "Hot Beverages": "coffee",
+            "Cold Beverages": "cup-soda",
+            "Breakfast": "egg",
+            "Maggi": "flame",
+            "Pasta": "utensils",
+            "Sandwich": "sandwich",
+            "Burger": "circle-dot",
+            "Pizza": "pizza",
+            "Salad": "leaf",
+            "Main Course": "soup",
+            "Rice": "wheat",
+            "Sides": "popcorn",
+            "Dessert": "ice-cream",
+            "Trek Guide": "mountain"
+        };
+
+        window.handleSearch = function() {
+            const query = document.getElementById('menu-search').value.toLowerCase();
+            renderMenu(query);
+            renderTreks(query);
+        }
+
+        window.toggleAllAvailability = async function(status) {
+            if (confirm(`Mark ALL items as ${status ? 'Available' : 'Unavailable'}?`)) {
+                showSync(true);
+                try {
+                    const batch = writeBatch(db);
+                    MENU_DATA.forEach(cat => {
+                        cat.items.forEach(item => item.unavailable = !status);
+                        batch.set(doc(db, "menu", cat.category), cat);
+                    });
+                    await batch.commit();
+                } catch (error) {
+                    handleFirestoreError(error, OperationType.WRITE, 'all-menu');
+                } finally {
+                    showSync(false);
+                }
+            }
+        }
+
+        window.editDish = function(catName, itemIdx) {
+            const cat = MENU_DATA.find(c => c.category === catName);
+            if (cat) {
+                const item = cat.items[itemIdx];
+                document.getElementById('form-title').innerText = "Edit Dish";
+                document.getElementById('new-item-name').value = item.name;
+                document.getElementById('new-item-price').value = item.price;
+                document.getElementById('new-item-cat').value = catName;
+                document.getElementById('new-item-desc').value = item.desc || '';
+                document.getElementById('new-item-veg').value = item.isVeg !== false ? "true" : "false";
+                document.getElementById('new-item-prep').value = item.prepTime || "30 MINS";
+                document.getElementById('edit-item-index').value = itemIdx;
+                document.getElementById('edit-item-cat').value = catName;
+                
+                document.getElementById('submit-btn').innerText = "Update Dish";
+                document.getElementById('cancel-edit-btn').classList.remove('hidden');
+                document.getElementById('manager-modal').querySelector('.flex-1').scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        window.cancelEdit = function() {
+            document.getElementById('form-title').innerText = "Add New Dish";
+            document.getElementById('new-item-name').value = '';
+            document.getElementById('new-item-price').value = '';
+            document.getElementById('new-item-desc').value = '';
+            document.getElementById('edit-item-index').value = '';
+            document.getElementById('edit-item-cat').value = '';
+            document.getElementById('submit-btn').innerText = "Add to Menu";
+            document.getElementById('cancel-edit-btn').classList.add('hidden');
+        }
+
+        window.addNewDish = async function() {
+            const name = document.getElementById('new-item-name').value;
+            const price = parseInt(document.getElementById('new-item-price').value);
+            const catName = document.getElementById('new-item-cat').value;
+            const desc = document.getElementById('new-item-desc').value;
+            const isVeg = document.getElementById('new-item-veg').value === "true";
+            const prepTime = document.getElementById('new-item-prep').value || "30 MINS";
+            const editIdx = document.getElementById('edit-item-index').value;
+            const oldCatName = document.getElementById('edit-item-cat').value;
+
+            if (!name || !price) {
+                alert("Please enter name and price");
+                return;
+            }
+
+            showSync(true);
+            try {
+                if (editIdx !== '') {
+                    // Editing existing item
+                    const oldCat = MENU_DATA.find(c => c.category === oldCatName);
+                    const newCat = MENU_DATA.find(c => c.category === catName);
+                    
+                    if (oldCatName === catName) {
+                        oldCat.items[editIdx] = { ...oldCat.items[editIdx], name, price, desc, isVeg, prepTime };
+                        await setDoc(doc(db, "menu", catName), oldCat);
+                    } else {
+                        // Moved to different category
+                        const item = oldCat.items.splice(editIdx, 1)[0];
+                        item.name = name;
+                        item.price = price;
+                        item.desc = desc;
+                        item.isVeg = isVeg;
+                        item.prepTime = prepTime;
+                        newCat.items.push(item);
+                        
+                        const batch = writeBatch(db);
+                        batch.set(doc(db, "menu", oldCatName), oldCat);
+                        batch.set(doc(db, "menu", catName), newCat);
+                        await batch.commit();
+                    }
+                    cancelEdit();
+                } else {
+                    // Adding new item
+                    const cat = MENU_DATA.find(c => c.category === catName);
+                    if (cat) {
+                        cat.items.push({ name, price, desc, isVeg, prepTime, unavailable: false });
+                        await setDoc(doc(db, "menu", catName), cat);
+                    }
+                }
+                
+                // Reset form
+                document.getElementById('new-item-name').value = '';
+                document.getElementById('new-item-price').value = '';
+                document.getElementById('new-item-desc').value = '';
+                document.getElementById('new-item-prep').value = '';
+            } catch (error) {
+                handleFirestoreError(error, OperationType.WRITE, `menu/${catName}`);
+            } finally {
+                showSync(false);
+            }
+        }
+
+        function renderNav() {
+            const nav = document.getElementById('nav-items');
+            nav.innerHTML = '';
+            MENU_DATA.forEach(cat => {
+                const iconName = CATEGORY_ICONS[cat.category] || "utensils";
+                const btn = document.createElement('button');
+                btn.className = "text-sm font-semibold uppercase tracking-wider transition-all duration-200 text-white/70 hover:text-white flex items-center gap-2 px-2 py-1 rounded-lg hover:bg-white/10";
+                btn.innerHTML = `<i data-lucide="${iconName}" class="w-4 h-4"></i> ${cat.category}`;
+                btn.onclick = () => {
+                    const secId = `section-${cat.category.replace(/[^a-zA-Z0-9]/g, '-')}`;
+                    const target = document.getElementById(secId);
+                    if (target) {
+                        const offset = 100;
+                        const bodyRect = document.body.getBoundingClientRect().top;
+                        const elementRect = target.getBoundingClientRect().top;
+                        const elementPosition = elementRect - bodyRect;
+                        const offsetPosition = elementPosition - offset;
+                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                    }
+                };
+                nav.appendChild(btn);
+            });
+
+            const trekBtn = document.createElement('button');
+            trekBtn.className = "text-sm font-semibold uppercase tracking-wider transition-all duration-200 text-white/70 hover:text-white flex items-center gap-2 px-2 py-1 rounded-lg hover:bg-white/10";
+            trekBtn.innerHTML = `<i data-lucide="mountain" class="w-4 h-4"></i> Trek Guide`;
+            trekBtn.onclick = () => {
+                document.getElementById('trek-section').scrollIntoView({ behavior: 'smooth' });
+            };
+            nav.appendChild(trekBtn);
+            if (window.lucide) lucide.createIcons();
+        }
+
+        function renderTreks(searchQuery = '') {
+            const container = document.getElementById('trek-list');
+            container.innerHTML = '';
+            
+            let filteredTreks = TREK_DATA;
+            if (searchQuery) {
+                filteredTreks = TREK_DATA.filter(trek => 
+                    trek.name.toLowerCase().includes(searchQuery) || 
+                    trek.desc.toLowerCase().includes(searchQuery)
+                );
+            }
+
+            if (filteredTreks.length === 0 && searchQuery) {
+                // If searching and no treks found, hide section or show message
+                // For now just keep it empty
+            }
+
+            filteredTreks.forEach(trek => {
+                const diff = trek.difficulty.toLowerCase();
+                let diffClass = "bg-[#1b4332]/5 text-[#1b4332]";
+                if (diff.includes('easy')) diffClass = "bg-green-100 text-green-700";
+                else if (diff.includes('moderate')) diffClass = "bg-yellow-100 text-yellow-700";
+                else if (diff.includes('difficult') || diff.includes('advanced')) diffClass = "bg-red-100 text-red-700";
+
+                const images = trek.images || (trek.image ? [trek.image] : []);
+                const hasMultipleImages = images.length > 1;
+
+                const card = document.createElement('div');
+                card.className = "dish-card group relative rounded-2xl shadow-sm border border-[#8b5e3c]/10 flex flex-col overflow-hidden";
+                card.innerHTML = `
+                    <div class="relative w-full h-48 overflow-hidden">
+                        <div class="flex h-full overflow-x-auto snap-x snap-mandatory no-scrollbar scroll-smooth">
+                            ${images.map(img => `
+                                <div class="flex-shrink-0 w-full h-full snap-center">
+                                    <img src="${img}" alt="${trek.name}" class="w-full h-full object-cover" referrerPolicy="no-referrer">
+                                </div>
+                            `).join('')}
+                        </div>
+                        ${hasMultipleImages ? `
+                            <div class="absolute bottom-2 right-2 bg-black/50 text-white text-[10px] px-2 py-1 rounded-full backdrop-blur-sm flex items-center gap-1">
+                                <i data-lucide="images" class="w-3 h-3"></i>
+                                ${images.length} Photos
+                            </div>
+                        ` : ''}
+                    </div>
+                    <div class="p-6 flex flex-col flex-1">
+                        <div class="absolute -right-4 -bottom-4 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-500 pointer-events-none">
+                            <i data-lucide="map" class="w-[120px] h-[120px] text-[#1b4332] rotate-12"></i>
+                        </div>
+                        
+                        <div class="relative z-10">
+                            <div class="flex justify-between items-start gap-3 mb-3">
+                                <h4 class="text-lg font-bold text-[#2d2d2d] group-hover:text-[#1b4332] transition-colors leading-tight">${trek.name}</h4>
+                                <span class="text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded ${diffClass}">${trek.difficulty}</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3 leading-relaxed">${trek.desc}</p>
+                            ${trek.highlights ? `<p class="text-[10px] text-[#1b4332] font-semibold mb-4 bg-[#1b4332]/5 px-2 py-1 rounded-md inline-block">✨ ${trek.highlights}</p>` : ''}
+                        </div>
+
+                        <div class="relative z-10 flex flex-wrap items-center justify-between gap-4 mt-auto">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <div class="flex items-center gap-1.5 px-2 py-1 rounded-md bg-white/50 backdrop-blur-sm border border-[#8b5e3c]/5">
+                                    <i data-lucide="clock" class="w-3 h-3 text-[#8b5e3c]"></i>
+                                    <span class="text-[9px] text-[#8b5e3c] font-bold uppercase tracking-wider">${trek.duration}</span>
+                                </div>
+                                ${trek.distance ? `
+                                <div class="flex items-center gap-1.5 px-2 py-1 rounded-md bg-white/50 backdrop-blur-sm border border-[#8b5e3c]/5">
+                                    <i data-lucide="map-pin" class="w-3 h-3 text-[#8b5e3c]"></i>
+                                    <span class="text-[9px] text-[#8b5e3c] font-bold uppercase tracking-wider">${trek.distance}</span>
+                                </div>
+                                ` : ''}
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="handleTrekGuidance('${esc(trek.name)}')" class="flex items-center gap-2 px-3 py-2 rounded-full bg-[#1b4332] text-white text-[10px] font-bold hover:bg-[#25D366] transition-all shadow-md">
+                                    <i data-lucide="message-circle" class="w-3 h-3"></i> Guide
+                                </button>
+                                <button onclick="handleTrekPlanning('${esc(trek.name)}')" class="flex items-center gap-2 px-3 py-2 rounded-full bg-[#8b5e3c] text-white text-[10px] font-bold hover:bg-[#a67c52] transition-all shadow-md">
+                                    Plan This Trek 🏔️
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            if (window.lucide) lucide.createIcons();
+        }
+
+        window.handleTrekPlanning = function(trekName) {
+            const message = `*Trek Planning Inquiry - The Soul Cafe*\n\nHi! I'm planning to do the *${trekName}* trek and I'm looking for a local guide and some assistance with the itinerary.\n\n_Sent from The Soul Cafe Website_`;
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/917023207620?text=${encodedMessage}`, '_blank');
+        }
+
+        window.handleTrekGuidance = function(trekName) {
+            const message = `*Trek Guidance Request - The Soul Cafe*\n\nHi! I'm interested in the *${trekName}* and would like some guidance or more information regarding the route and best time to visit.\n\n_Sent from The Soul Cafe Menu_`;
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/917023207620?text=${encodedMessage}`, '_blank');
+        }
+
+        function renderMenu(searchQuery = '') {
+            const container = document.getElementById('menu-sections');
+            const skeleton = document.getElementById('skeleton-container');
+            if (skeleton) skeleton.classList.add('hidden');
+            
+            container.innerHTML = '';
+            
+            let filteredData = MENU_DATA;
+            if (searchQuery) {
+                filteredData = MENU_DATA.map(cat => ({
+                    ...cat,
+                    items: cat.items.filter(item => 
+                        item.name.toLowerCase().includes(searchQuery) || 
+                        (item.desc && item.desc.toLowerCase().includes(searchQuery))
+                    )
+                })).filter(cat => cat.items.length > 0);
+            }
+
+            if (filteredData.length === 0 && !searchQuery) return; // Wait for data
+
+            filteredData.forEach(section => {
+                const sec = document.createElement('section');
+                sec.id = `section-${section.category.replace(/[^a-zA-Z0-9]/g, '-')}`;
+                sec.className = "mb-16 scroll-mt-24 menu-section";
+                
+                sec.innerHTML = `
+                    <div class="flex items-center gap-4 mb-8">
+                        <h3 class="text-2xl font-bold text-[#5d4037] whitespace-nowrap">${section.category}</h3>
+                        <div class="h-[1px] w-full bg-[#8b5e3c]/20"></div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        ${section.items.map((item, idx) => renderDishCard(item, idx, section.category)).join('')}
+                    </div>
+                `;
+                container.appendChild(sec);
+            });
+            if (window.lucide) lucide.createIcons();
+            setupScrollSpy();
+        }
+
+        let scrollSpyObserver;
+        function setupScrollSpy() {
+            if (scrollSpyObserver) scrollSpyObserver.disconnect();
+            
+            const options = {
+                rootMargin: '-100px 0px -70% 0px',
+                threshold: 0
+            };
+
+            scrollSpyObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        const navLinks = document.querySelectorAll('#nav-items button');
+                        navLinks.forEach(link => {
+                            link.classList.remove('nav-active');
+                            const linkText = link.innerText.toLowerCase().replace(/\s+/g, '-');
+                            const sectionId = id.replace('section-', '').toLowerCase();
+                            if (sectionId.includes(linkText) || (id === 'trek-section' && link.innerText.includes('Trek'))) {
+                                link.classList.add('nav-active');
+                            }
+                        });
+                    }
+                });
+            }, options);
+
+            document.querySelectorAll('.menu-section, #trek-section').forEach(section => {
+                scrollSpyObserver.observe(section);
+            });
+        }
+
+        window.addEventListener('scroll', () => {
+            const btt = document.getElementById('back-to-top');
+            if (window.pageYOffset > 300) {
+                btt.classList.add('show');
+            } else {
+                btt.classList.remove('show');
+            }
+        });
+
+        function renderDishCard(item, index = 0, category = "") {
+            const isSpecial = item.name.toLowerCase().includes('special');
+            const isPopular = item.name.toLowerCase().includes('thali') || item.name.toLowerCase().includes('special');
+            const isUnavailable = item.unavailable === true;
+            const isVeg = item.isVeg !== false;
+            const prepTime = item.prepTime || "30 MINS";
+
+            const gradients = [
+                'linear-gradient(135deg, #ffffff, #fdfbf7)', // pure mist
+                'linear-gradient(135deg, #fdfbf7, #f9f6f1)', // soft cedar
+                'linear-gradient(135deg, #fcfaf8, #f5f2ef)', // warm stone
+                'linear-gradient(135deg, #fffdfa, #fcf6ed)'  // morning light
+            ];
+            const bgGradient = gradients[index % gradients.length];
+
+            const emojiMap = {
+                "Hot Beverages": "☕",
+                "Cold Beverages": "🥤",
+                "Breakfast": "🍳",
+                "Maggi": "🍜",
+                "Pasta": "🍝",
+                "Sandwich": "🥪",
+                "Burger": "🍔",
+                "Pizza": "🍕",
+                "Salad": "🥗",
+                "Main Course": "🍛",
+                "Rice": "🍚",
+                "Sides": "🍟",
+                "Dessert": "🍰",
+                "Omelette": "🍳",
+                "Prantha": "🫓",
+                "Indian Zaika": "🥘"
+            };
+            const watermark = emojiMap[category] || "🍽️";
+            
+            return `
+                <div class="dish-card group relative p-6 rounded-2xl shadow-sm flex flex-col justify-between min-h-[200px] ${isSpecial ? 'special-card' : ''} ${isUnavailable ? 'unavailable opacity-60 grayscale' : ''}" 
+                     style="--card-bg: ${bgGradient}">
+                    
+                    ${isUnavailable ? '<div class="manager-badge bg-red-600">Unavailable</div>' : ''}
+                    
+                    <!-- Watermark -->
+                    <div class="absolute -right-2 -bottom-4 opacity-[0.07] pointer-events-none select-none" style="font-size: 80px;">
+                        ${watermark}
+                    </div>
+
+                    <div class="relative z-10">
+                        <!-- Badges Row -->
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="flex items-center gap-1 text-[9px] font-black uppercase tracking-wider px-2 py-1 rounded-md ${isVeg ? 'bg-[#1b4332]/10 text-[#1b4332]' : 'bg-red-50 text-red-700'}">
+                                ${isVeg ? '🟢 Veg' : '🔴 Non-Veg'}
+                            </span>
+                            ${isSpecial ? `
+                                <span class="text-[9px] font-black uppercase tracking-wider px-2 py-1 rounded-md bg-[#e6b17e]/20 text-[#8b5e3c] border border-[#e6b17e]/30">
+                                    ✦ Chef's Special
+                                </span>
+                            ` : ''}
+                            ${isPopular ? `
+                                <span class="text-[9px] font-black uppercase tracking-wider px-2 py-1 rounded-md bg-orange-50 text-orange-700">
+                                    🔥 Popular
+                                </span>
+                            ` : ''}
+                        </div>
+
+                        <h4 class="text-xl font-bold text-[#2d2d2d] group-hover:text-[#1b4332] transition-colors leading-tight mb-1">${item.name}</h4>
+                        ${item.desc ? `<p class="text-[11px] text-gray-500 italic line-clamp-2 mb-4 leading-relaxed">${item.desc}</p>` : ''}
+                    </div>
+
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex flex-col">
+                                <span class="text-[#1b4332] font-black text-2xl tracking-tighter">₹${item.price}</span>
+                                <div class="w-10 h-[2px] bg-[#e6b17e] mt-0.5 rounded-full"></div>
+                            </div>
+                            <div class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white/40 backdrop-blur-sm border border-white/20 shadow-sm">
+                                <i data-lucide="clock" class="w-3 h-3 text-[#5d4037]"></i>
+                                <span class="text-[9px] text-[#5d4037] font-black uppercase tracking-widest">${prepTime}</span>
+                            </div>
+                        </div>
+
+                        <div id="btn-container-${item.name.replace(/[^a-zA-Z0-9]/g, '-')}" class="w-full">
+                            ${renderCartButtons(item)}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderCartButtons(item) {
+            const cartItem = cart[item.name];
+            
+            if (cartItem) {
+                return `
+                    <div class="flex items-center justify-between w-full bg-[#1b4332] text-white rounded-xl px-4 py-2.5 shadow-lg border border-[#1b4332] transform transition-all duration-300">
+                        <button onclick="updateQty('${esc(item.name)}', -1)" class="hover:text-[#e6b17e] transition-colors p-1 active:scale-90">
+                            <i data-lucide="minus" class="w-5 h-5"></i>
+                        </button>
+                        <span class="font-black text-lg min-w-[30px] text-center">${cartItem.qty}</span>
+                        <button onclick="updateQty('${esc(item.name)}', 1)" class="hover:text-[#e6b17e] transition-colors p-1 active:scale-90">
+                            <i data-lucide="plus" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                `;
+            } else {
+                return `
+                    <button onclick="addToCart('${esc(item.name)}', ${item.price})" 
+                            class="shimmer-btn w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[#1b4332] text-white font-black hover:bg-[#e6b17e] hover:text-[#1b4332] transition-all duration-300 shadow-md hover:shadow-lg transform active:scale-95 group/btn border border-[#1b4332]">
+                        <i data-lucide="plus" class="w-5 h-5 transition-transform group-hover/btn:rotate-90"></i>
+                        <span class="tracking-widest text-[11px]">ADD TO CART</span>
+                    </button>
+                `;
+            }
+        }
+
+        window.addToCart = function(name, price) {
+            if (!cart[name]) {
+                cart[name] = { name, price, qty: 1 };
+            } else {
+                cart[name].qty++;
+            }
+            updateUI();
+        }
+
+        window.updateQty = function(name, delta) {
+            if (cart[name]) {
+                cart[name].qty += delta;
+                if (cart[name].qty <= 0) delete cart[name];
+            }
+            updateUI();
+        }
+
+        function updateUI() {
+            let totalItems = 0;
+            let totalPrice = 0;
+            for (const key in cart) {
+                totalItems += cart[key].qty;
+                totalPrice += cart[key].price * cart[key].qty;
+            }
+
+            const cartBtn = document.getElementById('cart-btn');
+            if (totalItems > 0) {
+                cartBtn.classList.remove('hidden');
+                document.getElementById('cart-count').innerText = totalItems;
+                document.getElementById('cart-total').innerText = '₹' + totalPrice;
+            } else {
+                cartBtn.classList.add('hidden');
+            }
+
+            // Re-render all button containers to reflect changes
+            MENU_DATA.forEach(section => {
+                section.items.forEach(item => {
+                    const container = document.getElementById(`btn-container-${item.name.replace(/[^a-zA-Z0-9]/g, '-')}`);
+                    if (container) {
+                        container.innerHTML = renderCartButtons(item);
+                    }
+                });
+            });
+            
+            if (window.lucide) lucide.createIcons();
+            if (!document.getElementById('checkout-modal').classList.contains('hidden')) {
+                renderCartModal();
+            }
+            
+            // Persist cart
+            localStorage.setItem('soul_cafe_cart', JSON.stringify(cart));
+        }
+
+        function renderCartModal() {
+            const list = document.getElementById('cart-items-list');
+            list.innerHTML = '';
+            let totalPrice = 0;
+            
+            for (const key in cart) {
+                const item = cart[key];
+                totalPrice += item.price * item.qty;
+                const div = document.createElement('div');
+                div.className = "flex justify-between items-center py-2 border-b border-[#8b5e3c]/10";
+                div.innerHTML = `
+                    <div class="flex-1">
+                        <p class="font-semibold">${item.name}</p>
+                        <p class="text-xs text-gray-500">₹${item.price} x ${item.qty}</p>
+                    </div>
+                    <div class="flex items-center gap-3 ml-4">
+                        <button onclick="updateQty('${esc(item.name)}', -1)" class="text-[#8b5e3c] hover:text-[#1b4332]"><i data-lucide="minus" class="w-4.5 h-4.5"></i></button>
+                        <span class="font-bold w-6 text-center">${item.qty}</span>
+                        <button onclick="updateQty('${esc(item.name)}', 1)" class="text-[#8b5e3c] hover:text-[#1b4332]"><i data-lucide="plus" class="w-4.5 h-4.5"></i></button>
+                        <span class="font-bold min-w-[60px] text-right">₹${item.price * item.qty}</span>
+                    </div>
+                `;
+                list.appendChild(div);
+            }
+            document.getElementById('modal-total').innerText = '₹' + totalPrice;
+            if (window.lucide) lucide.createIcons();
+        }
+
+        window.closeModal = function() {
+            document.getElementById('checkout-modal').classList.add('hidden');
+        }
+
+        window.handleCheckout = function() {
+            const name = document.getElementById('cust-name').value;
+            const space = document.getElementById('seating-space').value;
+            const notes = document.getElementById('order-notes').value;
+            
+            if (!name.trim()) {
+                alert("Please enter your name.");
+                return;
+            }
+
+            let cartItemsText = '';
+            let totalPrice = 0;
+            for (const key in cart) {
+                const item = cart[key];
+                cartItemsText += `• ${item.name} x ${item.qty} - ₹${item.price * item.qty}\n`;
+                totalPrice += item.price * item.qty;
+            }
+
+            let message = `*New Order - The Soul Cafe*\n\n*Customer:* ${name}\n*Space:* ${space}\n`;
+            if (notes.trim()) message += `*Notes:* ${notes}\n`;
+            message += `\n*Items:*\n${cartItemsText}\n\n------------------------\n*Total Amount: ₹${totalPrice}*\n------------------------\n_Note: Please allow 30 mins for fresh preparation._`;
+
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/917023207620?text=${encodedMessage}`, '_blank');
+            
+            // Persist customer name
+            localStorage.setItem('soul_cafe_cust_name', name);
+        }
+
+        window.addEventListener('error', (event) => {
+            console.error('Global Error:', event.error);
+            const boundary = document.getElementById('error-boundary');
+            const msg = document.getElementById('error-message');
+            if (boundary && msg) {
+                msg.innerText = event.error?.message || 'An unexpected error occurred.';
+                boundary.classList.remove('hidden');
+            }
+        });
+
+        init();
+    </script>
+</body>
+</html>
