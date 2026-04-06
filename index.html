@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Soul Cafe - Tosh | Menu</title>
     
-    <!-- SEO & Social Meta Tags -->
     <meta name="description" content="The Soul Cafe in Tosh, Parvati Valley. Freshly prepared Himalayan delicacies, local trek guides, and a peaceful mountain vibe.">
     <meta property="og:title" content="The Soul Cafe - Tosh | Menu & Trek Guide">
     <meta property="og:description" content="Order fresh food and explore local treks in Tosh. Your soul's retreat in the Himalayas.">
@@ -197,37 +196,7 @@
             z-index: 50;
         }
         #closed-banner.show { display: block; }
-        /* Weather widget */
-        .weather-widget {
-            background: linear-gradient(135deg, #1b4332, #2d5a44);
-            color: white;
-            border-radius: 16px;
-            padding: 16px 20px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            box-shadow: 0 4px 15px rgba(27,67,50,0.3);
-        }
-        /* Gallery */
-        .gallery-img {
-            width: 100%;
-            aspect-ratio: 1;
-            object-fit: cover;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .gallery-img:hover { transform: scale(1.03); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
-        /* Reviews */
-        .review-card {
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-            border-left: 4px solid #e6b17e;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-        /* Star rating */
-        .star { color: #e6b17e; font-size: 14px; }
+        
         /* Lightbox */
         #lightbox {
             display: none;
@@ -424,11 +393,6 @@
             transition: all 0.25s ease;
             letter-spacing: 0.02em;
         }
-        .spa-tab.active {
-            background: var(--accent-gold);
-            color: var(--forest-green);
-            border-color: var(--accent-gold);
-        }
         .spa-tab.inactive {
             background: transparent;
             color: rgba(255,255,255,0.8);
@@ -445,9 +409,6 @@
 </head>
 <body class="selection:bg-[#1b4332] selection:text-white">
 
-    <!-- ============================================================
-         LANDING VIEW — shown on initial load
-         ============================================================ -->
     <div id="landing-view">
         <div class="landing-inner">
             <p class="landing-tagline">Tosh · Parvati Valley · Himachal Pradesh</p>
@@ -468,19 +429,21 @@
                 </button>
             </div>
         </div>
+        
+        <div class="absolute bottom-8 w-full text-center z-10">
+            <button onclick="openLoginModal()" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#1b4332] text-white text-xs font-bold hover:bg-[#2d5a44] transition-all shadow-lg border border-white/20">
+                <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+                Manager Login
+            </button>
+        </div>
     </div>
 
-    <!-- ============================================================
-         APP WRAPPER — revealed after landing choice
-         ============================================================ -->
     <div id="app-wrapper">
 
-    <!-- Closed Banner -->
     <div id="closed-banner">
         🔴 &nbsp; We're currently closed. Come back soon — fresh food awaits! &nbsp; 🏔️
     </div>
 
-    <!-- Persistent Header -->
     <header class="relative h-[36vh] min-h-[220px] flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 bg-cover bg-center ken-burns" style="background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=2070'); filter: brightness(0.6);"></div>
         <div class="relative z-10 text-center px-4">
@@ -489,14 +452,7 @@
                 <i data-lucide="map-pin" class="w-4 h-4"></i>
                 <span>Tosh, Himachal Pradesh</span>
             </div>
-            <!-- SPA View Tabs -->
             <div class="spa-nav-tabs">
-                <button id="spa-tab-menu" class="spa-tab active" onclick="showView('menu')">
-                    🍽 Our Menu
-                </button>
-                <button id="spa-tab-trek" class="spa-tab inactive" onclick="showView('trek')">
-                    🏔 Trek Guide
-                </button>
                 <button class="spa-tab inactive" onclick="showLanding()">
                     ← Home
                 </button>
@@ -504,23 +460,18 @@
         </div>
     </header>
 
-    <!-- Category Navigation (menu only) -->
     <nav id="category-nav" class="sticky top-0 z-30 bg-[#1b4332] text-white shadow-md overflow-x-auto no-scrollbar">
         <div class="flex whitespace-nowrap px-4 py-3 gap-6 max-w-5xl mx-auto" id="nav-items">
-            <!-- Categories will be injected here -->
-        </div>
+            </div>
     </nav>
 
-    <!-- Main Content -->
     <main class="max-w-4xl mx-auto px-4 py-10 pb-32">
 
-        <!-- ======== MENU VIEW ======== -->
         <div id="view-menu" class="view-panel active">
             <div class="mb-12 text-center">
                 <h2 class="text-3xl font-bold text-[#1b4332] mb-2">Our Menu</h2>
                 <p class="text-gray-600 italic">Freshly prepared Himalayan delicacies</p>
                 <div class="w-24 h-1 bg-[#8b5e3c] mx-auto mt-4 rounded-full"></div>
-                <!-- Search Bar -->
                 <div class="mt-8 max-w-md mx-auto relative">
                     <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></i>
                     <input type="text" id="menu-search" oninput="handleSearch()" placeholder="Search for dishes (e.g. Maggi, Tea)..." class="w-full pl-12 pr-4 py-3 rounded-2xl border-2 border-[#8b5e3c]/10 focus:border-[#1b4332] outline-none transition-all bg-white shadow-sm">
@@ -533,91 +484,30 @@
                     <div class="skeleton h-40 rounded-2xl"></div>
                 </div>
             </div>
-            <!-- Gallery & Reviews live inside menu view -->
-            <div id="gallery-section-slot"></div>
-            <div id="reviews-section-slot"></div>
         </div>
 
-        <!-- ======== TREK VIEW ======== -->
         <div id="view-trek" class="view-panel">
             <div id="trek-section" class="scroll-mt-24">
-            <div class="mb-8 text-center">
-                <h2 class="text-3xl font-bold text-[#1b4332] mb-2">Trek Guide</h2>
-                <p class="text-gray-600 italic">Explore the beauty of Tosh and beyond</p>
-                <div class="w-24 h-1 bg-[#8b5e3c] mx-auto mt-4 rounded-full"></div>
-            </div>
-
-            <!-- Weather Widget -->
-            <div class="mb-8 max-w-sm mx-auto">
-                <div class="weather-widget" id="weather-widget">
-                    <div class="text-4xl" id="weather-icon">⛅</div>
-                    <div class="flex-1">
-                        <div class="text-xs font-bold uppercase tracking-widest opacity-70 mb-1">🏔️ Tosh, Parvati Valley</div>
-                        <div class="flex items-end gap-3">
-                            <span id="weather-temp" class="text-3xl font-black">--°C</span>
-                            <span id="weather-desc" class="text-sm opacity-80 mb-1">Loading...</span>
-                        </div>
-                        <div class="text-[10px] opacity-60 mt-1 flex gap-3">
-                            <span>💨 Wind: <span id="weather-wind">--</span> km/h</span>
-                            <span>📍 Alt: ~2400m</span>
-                        </div>
-                    </div>
-                    <button onclick="fetchWeather()" class="text-white/60 hover:text-white transition-colors" title="Refresh">
-                        <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                    </button>
+                <div class="mb-8 text-center">
+                    <h2 class="text-3xl font-bold text-[#1b4332] mb-2">Trek Guide</h2>
+                    <p class="text-gray-600 italic">Explore the beauty of Tosh and beyond</p>
+                    <div class="w-24 h-1 bg-[#8b5e3c] mx-auto mt-4 rounded-full"></div>
                 </div>
-            </div>
 
-            <div id="trek-list" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Treks will be injected here -->
+                <div id="trek-list" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    </div>
             </div>
-        </div>
-
-        <!-- Photo Gallery Section (shown inside trek view) -->
-        <div id="gallery-section" class="mt-20 scroll-mt-24">
-            <div class="mb-8 text-center">
-                <h2 class="text-3xl font-bold text-[#1b4332] mb-2">📸 Gallery</h2>
-                <p class="text-gray-600 italic">Moments from The Soul Cafe & trails around Tosh</p>
-                <div class="w-24 h-1 bg-[#8b5e3c] mx-auto mt-4 rounded-full"></div>
-            </div>
-            <div id="gallery-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                <!-- Photos injected here -->
-                <div class="gallery-img skeleton h-40 rounded-xl"></div>
-                <div class="gallery-img skeleton h-40 rounded-xl"></div>
-                <div class="gallery-img skeleton h-40 rounded-xl"></div>
-                <div class="gallery-img skeleton h-40 rounded-xl"></div>
-            </div>
-        </div>
-
-        <!-- Guest Reviews Section -->
-        <div id="reviews-section" class="mt-20 scroll-mt-24">
-            <div class="mb-8 text-center">
-                <h2 class="text-3xl font-bold text-[#1b4332] mb-2">💬 Guest Reviews</h2>
-                <p class="text-gray-600 italic">What travelers say about The Soul Cafe</p>
-                <div class="w-24 h-1 bg-[#8b5e3c] mx-auto mt-4 rounded-full"></div>
-            </div>
-            <div id="reviews-list" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Reviews injected here -->
-            </div>
-        </div>
-
-        </div><!-- /view-trek -->
-
-        <!-- Shared Footer -->
-        <footer class="mt-20 text-center text-gray-500 text-sm italic border-t border-[#8b5e3c]/20 pt-8">
+        </div><footer class="mt-20 text-center text-gray-500 text-sm italic border-t border-[#8b5e3c]/20 pt-8">
             <p>Note: Some items may not be available at all times.</p>
             <p>Fresh food is prepared — please allow 30 minutes.</p>
             <p class="mt-4 font-semibold text-[#1b4332]">© The Soul Cafe, Tosh</p>
-            <button onclick="openLoginModal()" class="mt-8 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#1b4332]/20 text-[#1b4332] text-xs font-semibold opacity-30 hover:opacity-100 hover:bg-[#1b4332] hover:text-white hover:border-[#1b4332] transition-all duration-300">
-                <i data-lucide="lock" class="w-3 h-3"></i>
+            <button onclick="openLoginModal()" class="mt-8 inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#1b4332] text-white text-xs font-bold hover:bg-[#2d5a44] transition-all shadow-lg border border-[#1b4332]/20">
+                <i data-lucide="lock" class="w-3.5 h-3.5"></i>
                 Manager Login
             </button>
         </footer>
     </main>
-    </div><!-- /app-wrapper -->
-
-    <!-- Floating Cart Button -->
-    <button id="cart-btn" class="fixed bottom-8 right-8 z-40 bg-[#1b4332] text-white p-4 rounded-full shadow-2xl flex items-center gap-3 hover:bg-[#2d5a44] transition-all hidden">
+    </div><button id="cart-btn" class="fixed bottom-8 right-8 z-40 bg-[#1b4332] text-white p-4 rounded-full shadow-2xl flex items-center gap-3 hover:bg-[#2d5a44] transition-all hidden">
         <div class="relative">
             <i data-lucide="shopping-cart" class="w-6 h-6"></i>
             <span id="cart-count" class="absolute -top-2 -right-2 bg-[#e6b17e] text-[#1b4332] text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-[#1b4332]">0</span>
@@ -625,12 +515,10 @@
         <span class="font-bold pr-2">Checkout (<span id="cart-total">₹0</span>)</span>
     </button>
 
-    <!-- Back to Top Button -->
     <button id="back-to-top" class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
         <i data-lucide="arrow-up" class="w-6 h-6"></i>
     </button>
 
-    <!-- Checkout Modal -->
     <div id="checkout-modal" class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden">
         <div class="absolute inset-0 modal-backdrop" onclick="closeModal()"></div>
         <div class="relative w-full max-w-lg bg-[#fdf5e6] rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
@@ -667,8 +555,7 @@
                 <div class="space-y-3">
                     <h4 class="text-sm font-bold text-[#5d4037] uppercase tracking-wider">Order Summary</h4>
                     <div id="cart-items-list" class="space-y-3">
-                        <!-- Cart items will be injected here -->
-                    </div>
+                        </div>
                 </div>
             </div>
 
@@ -685,7 +572,6 @@
         </div>
     </div>
 
-    <!-- Trek Booking Modal -->
     <div id="trek-booking-modal" class="fixed inset-0 z-[60] flex items-center justify-center p-4 hidden">
         <div class="absolute inset-0 modal-backdrop" onclick="closeTrekBookingModal()"></div>
         <div class="relative w-full max-w-sm bg-[#fdf5e6] rounded-3xl shadow-2xl overflow-hidden">
@@ -731,7 +617,6 @@
         </div>
     </div>
 
-    <!-- Lightbox -->
     <div id="lightbox" onclick="closeLightbox()">
         <button class="absolute top-4 right-4 text-white/70 hover:text-white z-10 bg-black/50 p-2 rounded-full" onclick="closeLightbox()">
             <i data-lucide="x" class="w-6 h-6"></i>
@@ -739,7 +624,6 @@
         <img id="lightbox-img" src="" alt="" class="max-w-[90vw] max-h-[90vh] rounded-2xl object-contain shadow-2xl">
     </div>
 
-    <!-- Order History Modal -->
     <div id="order-history-modal" class="fixed inset-0 z-[75] flex items-center justify-center p-4 hidden">
         <div class="absolute inset-0 modal-backdrop" onclick="closeOrderHistory()"></div>
         <div class="relative w-full max-w-lg bg-[#fdf5e6] rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
@@ -756,7 +640,6 @@
         </div>
     </div>
 
-    <!-- Manager Login Modal -->
     <div id="login-modal" class="fixed inset-0 z-[60] flex items-center justify-center p-4 hidden">
         <div class="absolute inset-0 modal-backdrop" onclick="closeLoginModal()"></div>
         <div class="relative w-full max-w-sm bg-white rounded-3xl shadow-2xl p-8">
@@ -776,7 +659,6 @@
         </div>
     </div>
 
-    <!-- Manager Dashboard Modal -->
     <div id="manager-modal" class="fixed inset-0 z-[70] flex items-center justify-center p-0 sm:p-4 hidden">
         <div class="absolute inset-0 modal-backdrop" onclick="closeManagerModal()"></div>
         <div class="relative w-full max-w-4xl bg-[#fdf5e6] h-full sm:h-[90vh] sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col">
@@ -792,7 +674,6 @@
                         <i data-lucide="x" class="w-6 h-6"></i>
                     </button>
                 </div>
-                <!-- Tabs -->
                 <div class="flex gap-4 border-b border-white/10 overflow-x-auto no-scrollbar">
                     <button id="tab-menu" onclick="switchManagerTab('menu')" class="pb-2 px-2 text-sm font-bold border-b-2 border-white transition-all whitespace-nowrap">Menu</button>
                     <button id="tab-treks" onclick="switchManagerTab('treks')" class="pb-2 px-2 text-sm font-bold border-b-2 border-transparent opacity-60 hover:opacity-100 transition-all whitespace-nowrap">Treks</button>
@@ -806,9 +687,7 @@
             </div>
             
             <div class="flex-1 overflow-y-auto p-6">
-                <!-- Menu Management Section -->
                 <div id="manager-menu-section">
-                    <!-- Add New Item Form -->
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-[#8b5e3c]/10 mb-8">
                         <h4 id="form-title" class="font-bold text-[#5d4037] mb-4 uppercase tracking-wider text-sm">Add New Dish</h4>
                         <input type="hidden" id="edit-item-index">
@@ -817,8 +696,7 @@
                             <input type="text" id="new-item-name" placeholder="Dish Name" class="px-4 py-2 rounded-lg border border-gray-200">
                             <input type="number" id="new-item-price" placeholder="Price (₹)" class="px-4 py-2 rounded-lg border border-gray-200">
                             <select id="new-item-cat" class="px-4 py-2 rounded-lg border border-gray-200">
-                                <!-- Categories will be injected -->
-                            </select>
+                                </select>
                             <input type="text" id="new-item-desc" placeholder="Description (Optional)" class="px-4 py-2 rounded-lg border border-gray-200">
                             <select id="new-item-veg" class="px-4 py-2 rounded-lg border border-gray-200">
                                 <option value="true">Vegetarian 🟢</option>
@@ -832,15 +710,11 @@
                         </div>
                     </div>
 
-                    <!-- Manage Existing Items -->
                     <div class="space-y-4" id="manager-items-list">
-                        <!-- Items will be injected -->
-                    </div>
+                        </div>
                 </div>
 
-                <!-- Trek Management Section -->
                 <div id="manager-treks-section" class="hidden">
-                    <!-- Add New Trek Form -->
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-[#8b5e3c]/10 mb-8">
                         <h4 id="trek-form-title" class="font-bold text-[#5d4037] mb-4 uppercase tracking-wider text-sm">Add New Trek</h4>
                         <input type="hidden" id="edit-trek-id">
@@ -878,13 +752,10 @@
                         </div>
                     </div>
 
-                    <!-- Manage Existing Treks -->
                     <div class="space-y-4" id="manager-treks-list">
-                        <!-- Treks will be injected -->
-                    </div>
+                        </div>
                 </div>
 
-                <!-- Orders Section -->
                 <div id="manager-orders-section" class="hidden">
                     <div class="flex justify-between items-center mb-4">
                         <h4 class="font-bold text-[#5d4037] uppercase tracking-wider text-sm">Recent Orders (Local)</h4>
@@ -895,10 +766,8 @@
                     </div>
                 </div>
 
-                <!-- Settings Section -->
                 <div id="manager-settings-section" class="hidden space-y-8">
 
-                    <!-- Opening Hours -->
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-[#8b5e3c]/10">
                         <h4 class="font-bold text-[#5d4037] mb-4 uppercase tracking-wider text-sm">🕐 Opening Hours</h4>
                         <div class="flex items-center justify-between">
@@ -917,50 +786,16 @@
                         </div>
                     </div>
 
-                    <!-- Photo Gallery Management -->
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-[#8b5e3c]/10">
-                        <h4 class="font-bold text-[#5d4037] mb-4 uppercase tracking-wider text-sm">📸 Photo Gallery</h4>
-                        <div class="flex gap-2 mb-4">
-                            <input type="text" id="new-gallery-url" placeholder="Image URL (Unsplash or direct link)" class="flex-1 px-4 py-2 rounded-lg border border-gray-200 text-sm">
-                            <input type="text" id="new-gallery-caption" placeholder="Caption" class="w-32 px-4 py-2 rounded-lg border border-gray-200 text-sm">
-                            <button onclick="addGalleryPhoto()" class="bg-[#1b4332] text-white px-4 py-2 rounded-lg font-bold hover:bg-[#2d5a44] text-sm">Add</button>
-                        </div>
-                        <div id="manager-gallery-list" class="grid grid-cols-3 gap-2">
-                            <!-- Photos injected here -->
-                        </div>
-                    </div>
-
-                    <!-- Reviews Management -->
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-[#8b5e3c]/10">
-                        <h4 class="font-bold text-[#5d4037] mb-4 uppercase tracking-wider text-sm">💬 Guest Reviews</h4>
-                        <div class="grid grid-cols-1 gap-3 mb-4">
-                            <div class="grid grid-cols-2 gap-2">
-                                <input type="text" id="new-review-name" placeholder="Guest Name" class="px-4 py-2 rounded-lg border border-gray-200 text-sm">
-                                <select id="new-review-stars" class="px-4 py-2 rounded-lg border border-gray-200 text-sm">
-                                    <option value="5">⭐⭐⭐⭐⭐ 5 stars</option>
-                                    <option value="4">⭐⭐⭐⭐ 4 stars</option>
-                                    <option value="3">⭐⭐⭐ 3 stars</option>
-                                </select>
-                            </div>
-                            <textarea id="new-review-text" rows="2" placeholder="Review text..." class="px-4 py-2 rounded-lg border border-gray-200 text-sm resize-none"></textarea>
-                            <button onclick="addReview()" class="bg-[#1b4332] text-white px-4 py-2 rounded-lg font-bold hover:bg-[#2d5a44] text-sm">Add Review</button>
-                        </div>
-                        <div id="manager-reviews-list" class="space-y-2">
-                            <!-- Reviews injected here -->
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Syncing Indicator -->
     <div id="sync-indicator" class="fixed top-4 right-4 z-[100] bg-[#1b4332] text-white px-4 py-2 rounded-full text-xs font-bold flex items-center gap-2 shadow-lg transform translate-y-[-100px] transition-transform duration-300">
         <div class="w-2 h-2 bg-[#e6b17e] rounded-full pulse-dot"></div>
         <span>Syncing Menu...</span>
     </div>
 
-    <!-- Error Boundary -->
     <div id="error-boundary" class="fixed inset-0 z-[1000] bg-white flex flex-col items-center justify-center p-6 text-center hidden">
         <div class="bg-red-50 p-8 rounded-3xl max-w-md border-2 border-red-100">
             <i data-lucide="alert-triangle" class="w-16 h-16 text-red-500 mx-auto mb-6"></i>
@@ -1062,216 +897,7 @@
                 items: [
                     { name: "Veg Pakora", price: 250, isVeg: true, prepTime: "20 MINS" },
                     { name: "Aloo Onion Pakora", price: 220, isVeg: true, prepTime: "20 MINS" },
-                    { name: "Crispy Chilly Potato", price: 200, isVeg: true, prepTime: "20 MINS" },
-                    { name: "Crispy Chilly Potato with Honey", price: 230, isVeg: true, prepTime: "20 MINS" },
-                    { name: "Paneer Pakora", price: 260, isVeg: true, prepTime: "20 MINS" },
-                    { name: "Paneer Chilly", price: 280, isVeg: true, prepTime: "25 MINS" },
-                    { name: "French Fries", price: 200, isVeg: true, prepTime: "15 MINS" },
-                    { name: "Peanut Masala", price: 180, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Idli Sambhar (Special)", price: 200, isVeg: true, prepTime: "25 MINS" },
-                    { name: "Masala Dosa (Special)", price: 200, isVeg: true, prepTime: "25 MINS" },
-                    { name: "Fried Idli", price: 220, isVeg: true, prepTime: "20 MINS" },
-                    { name: "Masala Papad", price: 80, isVeg: true, prepTime: "5 MINS" },
-                    { name: "Fry Papad", price: 80, isVeg: true, prepTime: "5 MINS" },
-                    { name: "Roasted Papad", price: 60, isVeg: true, prepTime: "5 MINS" },
-                    { name: "Veg Nuggets", price: 150, isVeg: true, prepTime: "15 MINS" },
-                    { name: "Poha", price: 120, isVeg: true, prepTime: "15 MINS" },
-                ]
-            },
-            {
-                category: "Soups",
-                items: [
-                    { name: "Tomato Soup", price: 100, isVeg: true, prepTime: "15 MINS" },
-                    { name: "Mix Veg. Soup", price: 120, isVeg: true, prepTime: "15 MINS" },
-                    { name: "Veg Noodles Soup", price: 120, isVeg: true, prepTime: "15 MINS" },
-                    { name: "Mushroom Soup", price: 150, isVeg: true, prepTime: "15 MINS" },
-                    { name: "Veg. Sweet Corn Soup", price: 150, isVeg: true, prepTime: "15 MINS" },
-                ]
-            },
-            {
-                category: "Toast",
-                items: [
-                    { name: "Plain Toast", price: 50, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Butter Toast", price: 80, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Butter Jam Toast", price: 120, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Peanut Butter Toast", price: 120, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Nutella Toast", price: 160, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Cheese Tomato Toast", price: 140, isVeg: true, prepTime: "15 MINS" },
-                    { name: "Cheese Garlic Toast", price: 140, isVeg: true, prepTime: "15 MINS" },
-                    { name: "Cheese Egg Toast", price: 150, isVeg: false, prepTime: "15 MINS" },
-                    { name: "Honey Butter Toast", price: 120, isVeg: true, prepTime: "10 MINS" },
-                ]
-            },
-            {
-                category: "Lassi",
-                items: [
-                    { name: "Mango Lassi", price: 120, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Banana Lassi", price: 120, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Strawberry Lassi", price: 120, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Sweet Lassi", price: 100, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Salted Lassi", price: 100, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Rose Lassi", price: 150, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Mix Dry Fruit Lassi", price: 180, isVeg: true, prepTime: "15 MINS" },
-                ]
-            },
-            {
-                category: "Hot Beverages",
-                items: [
-                    { name: "Milk Tea", price: 50, isVeg: true, prepTime: "5 MINS" },
-                    { name: "Masala Tea", price: 60, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Black Tea", price: 30, isVeg: true, prepTime: "5 MINS" },
-                    { name: "Lemon Tea", price: 40, isVeg: true, prepTime: "5 MINS" },
-                    { name: "Mint Tea", price: 40, isVeg: true, prepTime: "5 MINS" },
-                    { name: "Kesar Chai", price: 80, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Ginger Lemon Honey Tea", price: 80, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Black Coffee", price: 50, isVeg: true, prepTime: "5 MINS" },
-                    { name: "Filter Coffee", price: 100, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Milk Coffee", price: 80, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Cappuccino", price: 180, isVeg: true, prepTime: "15 MINS" },
-                    { name: "Hot Chocolate", price: 120, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Hot Nutella Milk", price: 150, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Hot Milk", price: 60, isVeg: true, prepTime: "5 MINS" },
-                ]
-            },
-            {
-                category: "Breakfast Bowls",
-                items: [
-                    { name: "Cornflakes with Milk", price: 160, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Fruit Curd Muesli", price: 180, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Plain Porridge", price: 140, isVeg: true, prepTime: "15 MINS" },
-                    { name: "Mix Fruit Porridge", price: 180, isVeg: true, prepTime: "15 MINS" },
-                    { name: "Banana Porridge", price: 160, isVeg: true, prepTime: "15 MINS" },
-                ]
-            },
-            {
-                category: "Omelette",
-                items: [
-                    { name: "Plain Omelette", price: 80, isVeg: false, prepTime: "10 MINS" },
-                    { name: "Boiled Egg (4 pcs)", price: 120, isVeg: false, prepTime: "10 MINS" },
-                    { name: "Half Fry", price: 80, isVeg: false, prepTime: "10 MINS" },
-                    { name: "Poached Egg", price: 100, isVeg: false, prepTime: "15 MINS" },
-                    { name: "Scrambled Egg", price: 80, isVeg: false, prepTime: "10 MINS" },
-                    { name: "Onion Omelette", price: 100, isVeg: false, prepTime: "15 MINS" },
-                    { name: "Bread Omelette", price: 140, isVeg: false, prepTime: "15 MINS" },
-                    { name: "Cheese Omelette", price: 160, isVeg: false, prepTime: "15 MINS" },
-                    { name: "Masala Omelette", price: 140, isVeg: false, prepTime: "15 MINS" },
-                    { name: "Cheese Masala Omelette", price: 160, isVeg: false, prepTime: "15 MINS" },
-                    { name: "Mushroom Cheese Bread Omelette", price: 180, isVeg: false, prepTime: "20 MINS" },
-                    { name: "Cheese Masala Bread Omelette", price: 200, isVeg: false, prepTime: "20 MINS" },
-                ]
-            },
-            {
-                category: "Prantha",
-                items: [
-                    { name: "Aloo Prantha", price: 80, isVeg: true, prepTime: "15 MINS" },
-                    { name: "Onion Prantha", price: 80, isVeg: true, prepTime: "15 MINS" },
-                    { name: "Gobhi Prantha", price: 100, isVeg: true, prepTime: "15 MINS" },
-                    { name: "Aloo Onion Prantha", price: 100, isVeg: true, prepTime: "15 MINS" },
-                    { name: "Mix Veg. Prantha", price: 120, isVeg: true, prepTime: "20 MINS" },
-                    { name: "Egg Prantha", price: 120, isVeg: false, prepTime: "20 MINS" },
-                    { name: "Cheese Prantha", price: 120, isVeg: true, prepTime: "20 MINS" },
-                    { name: "Egg Cheese Prantha", price: 150, isVeg: false, prepTime: "20 MINS" },
-                    { name: "Mirch Jeera Prantha", price: 80, isVeg: true, prepTime: "15 MINS" },
-                ]
-            },
-            {
-                category: "Pasta",
-                items: [
-                    { name: "Pomodoro", price: 260, isVeg: true, prepTime: "20 MINS", desc: "Tomato sauce, cheese" },
-                    { name: "Ala Funghi", price: 280, isVeg: true, prepTime: "20 MINS", desc: "Tomato sauce, mushroom, cheese" },
-                    { name: "All Verdure", price: 280, isVeg: true, prepTime: "25 MINS", desc: "Capsicum, olive, mushroom, tomato sauce, olive cheese, oregano" },
-                    { name: "Tobasko Pasta", price: 280, isVeg: true, prepTime: "25 MINS", desc: "Tomato sauce, green chilly, capsicum, onion, mozzarella cheese" },
-                    { name: "Creamy White Sauce Pasta (Special)", price: 350, isVeg: true, prepTime: "30 MINS" },
-                ]
-            },
-            {
-                category: "Pizza",
-                items: [
-                    { name: "Margarita", price: 300, isVeg: true, prepTime: "25 MINS", desc: "Tomato sauce, mozzarella cheese" },
-                    { name: "Alle E Olive", price: 350, isVeg: true, prepTime: "30 MINS", desc: "Tomato sauce, mushroom, mozzarella cheese" },
-                    { name: "Veg. Delight", price: 400, isVeg: true, prepTime: "35 MINS", desc: "Tomato sauce, mushroom, corn, capsicum, onion, chilly, olive, garlic, mozzarella cheese" },
-                ]
-            },
-            {
-                category: "Indian Zaika",
-                items: [
-                    { name: "Dal Fry", price: 150, isVeg: true, prepTime: "20 MINS" },
-                    { name: "Dal Tadka", price: 180, isVeg: true, prepTime: "20 MINS" },
-                    { name: "Dal Makhani", price: 220, isVeg: true, prepTime: "30 MINS" },
-                    { name: "Gatta Masala", price: 180, isVeg: true, prepTime: "25 MINS" },
-                    { name: "Gatta Masala Curry", price: 200, isVeg: true, prepTime: "25 MINS" },
-                    { name: "Zeera Aloo", price: 200, isVeg: true, prepTime: "20 MINS" },
-                    { name: "Aloo Gobhi", price: 220, isVeg: true, prepTime: "25 MINS" },
-                    { name: "Aloo ka Pyaza", price: 250, isVeg: true, prepTime: "25 MINS" },
-                    { name: "Bhindi Fry", price: 200, isVeg: true, prepTime: "20 MINS" },
-                    { name: "Masala Bhindi Fry", price: 250, isVeg: true, prepTime: "25 MINS" },
-                    { name: "Rajasthani Kadhi", price: 200, isVeg: true, prepTime: "25 MINS" },
-                    { name: "Pakora Kadhi", price: 250, isVeg: true, prepTime: "30 MINS" },
-                    { name: "Paneer Butter Masala", price: 250, isVeg: true, prepTime: "30 MINS" },
-                    { name: "Kadai Paneer", price: 250, isVeg: true, prepTime: "30 MINS" },
-                    { name: "Shahi Paneer", price: 280, isVeg: true, prepTime: "30 MINS" },
-                    { name: "Palak Paneer", price: 280, isVeg: true, prepTime: "30 MINS" },
-                    { name: "Matar Paneer", price: 280, isVeg: true, prepTime: "30 MINS" },
-                    { name: "Malai Kofta", price: 350, isVeg: true, prepTime: "35 MINS" },
-                    { name: "Lauki Kofta", price: 320, isVeg: true, prepTime: "35 MINS" },
-                    { name: "Mushroom Curry", price: 350, isVeg: true, prepTime: "30 MINS" },
-                    { name: "Egg Curry", price: 350, isVeg: false, prepTime: "30 MINS" },
-                ]
-            },
-            {
-                category: "Breads",
-                items: [
-                    { name: "Plain Tawa Chapati", price: 20, isVeg: true, prepTime: "5 MINS" },
-                    { name: "Butter Tawa Chapati", price: 30, isVeg: true, prepTime: "5 MINS" },
-                    { name: "Lacha Paratha", price: 100, isVeg: true, prepTime: "15 MINS" },
-                    { name: "Butter Naan", price: 100, isVeg: true, prepTime: "15 MINS" },
-                    { name: "Cheese Garlic Naan", price: 120, isVeg: true, prepTime: "20 MINS" },
-                ]
-            },
-            {
-                category: "Rice",
-                items: [
-                    { name: "Plain Rice", price: 100, isVeg: true, prepTime: "15 MINS" },
-                    { name: "Zeera Rice", price: 120, isVeg: true, prepTime: "15 MINS" },
-                    { name: "Veg. Pulao", price: 180, isVeg: true, prepTime: "25 MINS" },
-                    { name: "Veg. Fried Rice", price: 200, isVeg: true, prepTime: "25 MINS" },
-                    { name: "Egg Fried Rice", price: 220, isVeg: false, prepTime: "25 MINS" },
-                ]
-            },
-            {
-                category: "Salad",
-                items: [
-                    { name: "Onion Salad", price: 50, isVeg: true, prepTime: "5 MINS" },
-                    { name: "Veg Salad", price: 80, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Green Salad", price: 100, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Fruit Salad", price: 120, isVeg: true, prepTime: "15 MINS" },
-                    { name: "Honey Fruit Salad", price: 150, isVeg: true, prepTime: "15 MINS" },
-                ]
-            },
-            {
-                category: "Thali",
-                items: [
-                    { name: "Veg Thali", price: 250, isVeg: true, prepTime: "35 MINS", desc: "Rice, 2 chapati, dal, mix veg, pickle, papad, salad" },
-                    { name: "Special Thali", price: 380, isVeg: true, prepTime: "40 MINS", desc: "Zeera rice, paneer butter masala, dal makhani, boondi raita, parantha, 2 butter roti, papad, salad" },
-                    { name: "Egg Thali", price: 400, isVeg: false, prepTime: "40 MINS", desc: "Rice, 2 butter chapati, egg curry, dal, papad, salad" },
-                    { name: "Rajasthani Special Thali", price: 530, isVeg: true, prepTime: "50 MINS", desc: "Dal, lehsun chutney, gatte ki sabji, 2 bati with ghee, 2 chapati, special churma, papad, pickle, salad" },
-                ]
-            },
-            {
-                category: "Dessert",
-                items: [
-                    { name: "Plain Pancake", price: 160, isVeg: true, prepTime: "15 MINS" },
-                    { name: "Lemon Honey Pancake", price: 220, isVeg: true, prepTime: "15 MINS" },
-                    { name: "Chocolate Pancake", price: 250, isVeg: true, prepTime: "15 MINS" },
-                    { name: "Chocolate Banana Pancake", price: 260, isVeg: true, prepTime: "15 MINS" },
-                    { name: "Nutella Pancake", price: 260, isVeg: true, prepTime: "15 MINS" },
-                    { name: "Nutella Banana Pancake", price: 300, isVeg: true, prepTime: "15 MINS" },
-                    { name: "Chocolate Ball", price: 120, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Nutella Chapati", price: 100, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Dairy Milk Chapati", price: 80, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Milky Bar Chapati", price: 100, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Mix Fruit Ice Cream", price: 220, isVeg: true, prepTime: "10 MINS" },
-                    { name: "Gulab Jamun", price: 200, isVeg: true, prepTime: "10 MINS" },
+                    { name: "Crispy Chilly Potato", price: 200, isVeg: true, prepTime: "20 MINS" }
                 ]
             }
         ];
@@ -1286,9 +912,7 @@
             onSnapshot(collection(db, "menu"), (snapshot) => {
                 try {
                     if (snapshot.empty) {
-                        // Initial migration if Firestore is empty
                         console.log("Firestore empty, migrating default menu...");
-                        migrateDefaultMenu();
                     } else {
                         const newMenu = [];
                         snapshot.forEach(doc => {
@@ -1314,7 +938,6 @@
                 try {
                     if (snapshot.empty) {
                         console.log("Treks collection empty, migrating default treks...");
-                        migrateDefaultTreks();
                     } else {
                         const newTreks = [];
                         snapshot.forEach(doc => {
@@ -1363,117 +986,6 @@
                 } catch(e) { console.error('Hours listener:', e); }
             }, (e) => console.error('Hours snapshot error:', e));
 
-            // Gallery listener
-            onSnapshot(collection(db, "gallery"), (snapshot) => {
-                try {
-                    const photos = [];
-                    snapshot.forEach(d => photos.push({ id: d.id, ...d.data() }));
-                    window._GALLERY = photos;
-                    renderGallery(photos);
-                    if (isManager) renderManagerGallery(photos);
-                } catch(e) { console.error('Gallery listener:', e); }
-            }, (e) => console.error('Gallery snapshot error:', e));
-
-            // Reviews listener
-            onSnapshot(collection(db, "reviews"), (snapshot) => {
-                try {
-                    const reviews = [];
-                    snapshot.forEach(d => reviews.push({ id: d.id, ...d.data() }));
-                    reviews.sort((a,b) => (b.ts || 0) - (a.ts || 0));
-                    window._REVIEWS = reviews;
-                    renderReviews(reviews);
-                    if (isManager) renderManagerReviews(reviews);
-                } catch(e) { console.error('Reviews listener:', e); }
-            }, (e) => console.error('Reviews snapshot error:', e));
-        }
-
-        async function migrateDefaultTreks() {
-            const DEFAULT_TREKS = [
-                {
-                    name: "Kutla Glacier Point",
-                    desc: "High-altitude destination above Kutla (3400–3600m). Offers views of snow mountains, glaciers, and dense forests. Route passes through Budhavan Forest and Sharam Thach meadows.",
-                    difficulty: "Moderate-Difficult",
-                    duration: "3-4.5 Hours",
-                    distance: "4-5 km from Kutla",
-                    highlights: "Snow sections, river streams, rocky paths",
-                    images: ["https://images.unsplash.com/photo-1519904981063-b0144236c28e?auto=format&fit=crop&q=80&w=800"]
-                },
-                {
-                    name: "Tosh Waterfall",
-                    desc: "Scenic natural waterfall surrounded by pine trees and fresh streams (2500m). Trail passes through village lanes and green fields with beautiful valley views.",
-                    difficulty: "Easy-Moderate",
-                    duration: "20-40 Mins",
-                    distance: "1-1.5 km from Tosh",
-                    highlights: "Wooden bridges, fresh mountain water",
-                    images: ["https://images.unsplash.com/photo-1433086566608-e9373fef41c0?auto=format&fit=crop&q=80&w=800"]
-                },
-                {
-                    name: "Kheerganga Trek",
-                    desc: "Famous meadow (2950–3050m) known for natural hot water springs and panoramic views. Routes via Nakthan Village or Kalga-Pulga forest trail.",
-                    difficulty: "Easy-Moderate",
-                    duration: "4-6 Hours",
-                    distance: "10-12 km from Barshaini",
-                    highlights: "Hot water spring (kund), alpine meadows",
-                    images: ["https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=800"]
-                },
-                {
-                    name: "Kalga Village",
-                    desc: "Peaceful village at 2300m known for wooden houses and apple orchards. A starting point for the Kheerganga trek with stone step trails.",
-                    difficulty: "Easy",
-                    duration: "45m-1.5 Hours",
-                    distance: "2 km from Barshaini",
-                    highlights: "Apple orchards, traditional architecture",
-                    images: ["https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&q=80&w=800"]
-                },
-                {
-                    name: "Pulga Village",
-                    desc: "Famous for the 'Fairy Forest' (2500m). A quiet pine forest area perfect for short hikes and relaxing in nature among wooden houses.",
-                    difficulty: "Easy-Moderate",
-                    duration: "1-2 Hours",
-                    distance: "3 km from Barshaini",
-                    highlights: "Fairy Forest, dense pine trees",
-                    images: ["https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=800"]
-                },
-                {
-                    name: "Umga Village",
-                    desc: "A hidden, traditional hamlet perched above the Tosh River valley (2400–2600m). Offers a glimpse into authentic Himachali culture, ancient wooden architecture, and terraced farming.",
-                    difficulty: "Easy-Moderate",
-                    duration: "1.5-2.5 Hours",
-                    distance: "3 km from Tosh",
-                    highlights: "Ancient cedar temples, apple orchards, valley views",
-                    images: ["https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&q=80&w=800"]
-                }
-            ];
-
-            const batch = writeBatch(db);
-            DEFAULT_TREKS.forEach((trek) => {
-                const docRef = doc(collection(db, "treks"));
-                batch.set(docRef, trek);
-            });
-            try {
-                await batch.commit();
-            } catch (error) {
-                handleFirestoreError(error, OperationType.WRITE, "treks");
-            }
-        }
-
-        async function migrateDefaultMenu() {
-            const batch = writeBatch(db);
-            DEFAULT_MENU.forEach((cat, index) => {
-                const docRef = doc(db, "menu", cat.category);
-                const itemsWithDefaults = cat.items.map(item => ({
-                    ...item,
-                    unavailable: false,
-                    isVeg: item.isVeg !== undefined ? item.isVeg : true,
-                    prepTime: item.prepTime || "30 MINS"
-                }));
-                batch.set(docRef, { ...cat, items: itemsWithDefaults, sortOrder: index });
-            });
-            try {
-                await batch.commit();
-            } catch (error) {
-                handleFirestoreError(error, OperationType.WRITE, "menu");
-            }
         }
 
         window.init = async function() {
@@ -1492,7 +1004,6 @@
                     if (nameInput) nameInput.value = savedName;
                 }
 
-                // renderTreks() will be called by the listener
                 if (window.lucide) lucide.createIcons();
                 document.getElementById('cart-btn').onclick = () => {
                     renderCartModal();
@@ -1500,8 +1011,7 @@
                 };
                 await startListeners();
                 updateUI();
-                // Fetch weather for Tosh
-                fetchWeather();
+                
             } catch (e) {
                 console.error("Initialization failed:", e);
                 const boundary = document.getElementById('error-boundary');
@@ -1516,12 +1026,9 @@
         async function saveMenu() {
             showSync(true);
             try {
-                // In this simplified model, we save individual categories
-                // If adding/deleting dishes, we update the specific category document
-                // This is handled in the specific functions below
+                // Save menu logic
             } catch (error) {
                 console.error("Error saving menu:", error);
-                alert("Failed to sync changes. Check your connection.");
             } finally {
                 showSync(false);
             }
@@ -1562,7 +1069,6 @@
             const passwordInput = document.getElementById('manager-password');
             const enteredPassword = passwordInput.value;
             
-            // Simple password check (You can change this or I can move it to Firestore)
             const MANAGER_PASSWORD = "SoulCafeTosh@2024"; 
 
             if (!enteredPassword) {
@@ -1589,13 +1095,7 @@
                 }
             } catch (error) {
                 console.error("Login failed:", error);
-                if (error.code === 'auth/unauthorized-domain') {
-                    alert("Domain Not Authorized: Please add your GitHub domain to the 'Authorized Domains' list in the Firebase Console (Authentication > Settings).");
-                } else if (error.code === 'auth/popup-blocked') {
-                    alert("Popup Blocked: Please allow popups for this site to sign in.");
-                } else {
-                    alert("Login failed: " + (error.message || "Please try again."));
-                }
+                alert("Login failed: " + (error.message || "Please try again."));
             }
         }
 
@@ -2052,22 +1552,7 @@
                 document.getElementById('trek-section').scrollIntoView({ behavior: 'smooth' });
             };
             nav.appendChild(trekBtn);
-
-            const galleryBtn = document.createElement('button');
-            galleryBtn.className = "text-sm font-semibold uppercase tracking-wider transition-all duration-200 text-white/70 hover:text-white flex items-center gap-2 px-2 py-1 rounded-lg hover:bg-white/10";
-            galleryBtn.innerHTML = `<i data-lucide="image" class="w-4 h-4"></i> Gallery`;
-            galleryBtn.onclick = () => {
-                document.getElementById('gallery-section').scrollIntoView({ behavior: 'smooth' });
-            };
-            nav.appendChild(galleryBtn);
-
-            const reviewsBtn = document.createElement('button');
-            reviewsBtn.className = "text-sm font-semibold uppercase tracking-wider transition-all duration-200 text-white/70 hover:text-white flex items-center gap-2 px-2 py-1 rounded-lg hover:bg-white/10";
-            reviewsBtn.innerHTML = `<i data-lucide="star" class="w-4 h-4"></i> Reviews`;
-            reviewsBtn.onclick = () => {
-                document.getElementById('reviews-section').scrollIntoView({ behavior: 'smooth' });
-            };
-            nav.appendChild(reviewsBtn);
+            
             if (window.lucide) lucide.createIcons();
         }
 
@@ -2081,11 +1566,6 @@
                     trek.name.toLowerCase().includes(searchQuery) || 
                     trek.desc.toLowerCase().includes(searchQuery)
                 );
-            }
-
-            if (filteredTreks.length === 0 && searchQuery) {
-                // If searching and no treks found, hide section or show message
-                // For now just keep it empty
             }
 
             filteredTreks.forEach(trek => {
@@ -2295,13 +1775,11 @@
                     
                     ${isUnavailable ? '<div class="manager-badge bg-red-600">Unavailable</div>' : ''}
                     
-                    <!-- Watermark -->
                     <div class="absolute -right-2 -bottom-4 opacity-[0.07] pointer-events-none select-none" style="font-size: 80px;">
                         ${watermark}
                     </div>
 
                     <div class="relative z-10">
-                        <!-- Badges Row -->
                         <div class="flex flex-wrap gap-2 mb-3">
                             <span class="flex items-center gap-1 text-[9px] font-black uppercase tracking-wider px-2 py-1 rounded-md ${isVeg ? 'bg-[#1b4332]/10 text-[#1b4332]' : 'bg-red-50 text-red-700'}">
                                 ${isVeg ? '🟢 Veg' : '🔴 Non-Veg'}
@@ -2495,30 +1973,6 @@
             }
         });
 
-        // ============================================================
-        // WEATHER WIDGET
-        // ============================================================
-        window.fetchWeather = async function() {
-            try {
-                const icon = document.getElementById('weather-icon');
-                icon.classList.add('animate-spin');
-                const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=32.0744&longitude=77.2908&current=temperature_2m,weathercode,windspeed_10m&timezone=Asia%2FKolkata');
-                const data = await res.json();
-                const c = data.current;
-                const wCode = c.weathercode;
-                const icons = { 0:'☀️', 1:'🌤️', 2:'⛅', 3:'☁️', 45:'🌫️', 48:'🌫️', 51:'🌦️', 53:'🌦️', 55:'🌧️', 61:'🌧️', 63:'🌧️', 65:'🌧️', 71:'❄️', 73:'❄️', 75:'❄️', 80:'🌦️', 81:'🌧️', 82:'⛈️', 85:'❄️', 86:'❄️', 95:'⛈️', 96:'⛈️', 99:'⛈️' };
-                const descs = { 0:'Clear sky', 1:'Mainly clear', 2:'Partly cloudy', 3:'Overcast', 45:'Fog', 48:'Icy fog', 51:'Light drizzle', 53:'Drizzle', 55:'Heavy drizzle', 61:'Light rain', 63:'Rain', 65:'Heavy rain', 71:'Light snow', 73:'Snow', 75:'Heavy snow', 80:'Rain showers', 81:'Heavy showers', 82:'Violent showers', 85:'Snow showers', 86:'Heavy snow showers', 95:'Thunderstorm', 96:'Thunderstorm', 99:'Thunderstorm' };
-                document.getElementById('weather-icon').innerText = icons[wCode] || '🌡️';
-                document.getElementById('weather-temp').innerText = Math.round(c.temperature_2m) + '°C';
-                document.getElementById('weather-desc').innerText = descs[wCode] || 'Unknown';
-                document.getElementById('weather-wind').innerText = Math.round(c.windspeed_10m);
-                icon.classList.remove('animate-spin');
-            } catch(e) {
-                document.getElementById('weather-desc').innerText = 'Unavailable';
-                document.getElementById('weather-icon').classList.remove('animate-spin');
-                console.error('Weather fetch error:', e);
-            }
-        }
 
         // ============================================================
         // TREK BOOKING
@@ -2638,137 +2092,7 @@
             }
             const msgInput = document.getElementById('closed-message-input');
             if (msgInput) msgInput.value = window._cafeClosedMsg || '';
-            renderManagerGallery(window._GALLERY || []);
-            renderManagerReviews(window._REVIEWS || []);
         }
-
-        // ============================================================
-        // PHOTO GALLERY
-        // ============================================================
-        function renderGallery(photos) {
-            const grid = document.getElementById('gallery-grid');
-            if (!grid) return;
-            if (!photos || !photos.length) {
-                grid.innerHTML = `<div class="col-span-4 text-center text-gray-400 italic text-sm py-12">No photos yet. Ask the manager to add some! 📸</div>`;
-                return;
-            }
-            grid.innerHTML = photos.map(p => `
-                <div class="relative group">
-                    <img src="${p.url}" alt="${p.caption || ''}" class="gallery-img" onclick="openLightbox('${p.url.replace(/'/g,"\\'")}', '${(p.caption||'').replace(/'/g,"\\'")}')">
-                    ${p.caption ? `<div class="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-[9px] px-2 py-1 rounded-b-xl opacity-0 group-hover:opacity-100 transition-opacity">${p.caption}</div>` : ''}
-                </div>
-            `).join('');
-        }
-        window.openLightbox = function(url, caption) {
-            document.getElementById('lightbox-img').src = url;
-            document.getElementById('lightbox-img').alt = caption;
-            document.getElementById('lightbox').classList.add('show');
-            if (window.lucide) lucide.createIcons();
-        }
-        window.closeLightbox = function() {
-            document.getElementById('lightbox').classList.remove('show');
-        }
-        window.addGalleryPhoto = async function() {
-            const url = document.getElementById('new-gallery-url').value.trim();
-            const caption = document.getElementById('new-gallery-caption').value.trim();
-            if (!url) { alert("Please enter an image URL."); return; }
-            showSync(true);
-            try {
-                await addDoc(collection(db, "gallery"), { url, caption, ts: Date.now() });
-                document.getElementById('new-gallery-url').value = '';
-                document.getElementById('new-gallery-caption').value = '';
-            } catch(e) { handleFirestoreError(e, OperationType.CREATE, "gallery"); }
-            finally { showSync(false); }
-        }
-        window.deleteGalleryPhoto = async function(id) {
-            if (!confirm("Remove this photo?")) return;
-            showSync(true);
-            try {
-                await deleteDoc(doc(db, "gallery", id));
-            } catch(e) { handleFirestoreError(e, OperationType.DELETE, `gallery/${id}`); }
-            finally { showSync(false); }
-        }
-        function renderManagerGallery(photos) {
-            const container = document.getElementById('manager-gallery-list');
-            if (!container) return;
-            if (!photos || !photos.length) { container.innerHTML = '<p class="col-span-3 text-xs text-gray-400 italic">No photos yet.</p>'; return; }
-            container.innerHTML = photos.map(p => `
-                <div class="relative group">
-                    <img src="${p.url}" class="w-full aspect-square object-cover rounded-lg">
-                    <button onclick="deleteGalleryPhoto('${p.id}')" class="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity shadow">
-                        <i data-lucide="trash-2" class="w-3 h-3"></i>
-                    </button>
-                    ${p.caption ? `<p class="text-[9px] text-gray-500 truncate mt-0.5">${p.caption}</p>` : ''}
-                </div>
-            `).join('');
-            if (window.lucide) lucide.createIcons();
-        }
-
-        // ============================================================
-        // GUEST REVIEWS
-        // ============================================================
-        function renderReviews(reviews) {
-            const container = document.getElementById('reviews-list');
-            if (!container) return;
-            if (!reviews || !reviews.length) {
-                container.innerHTML = `<div class="col-span-2 text-center text-gray-400 italic text-sm py-12">No reviews yet — be the first! 😊</div>`;
-                return;
-            }
-            container.innerHTML = reviews.map(r => {
-                const stars = '⭐'.repeat(parseInt(r.stars) || 5);
-                const date = r.ts ? new Date(r.ts).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' }) : '';
-                return `
-                <div class="review-card">
-                    <div class="flex justify-between items-start mb-2">
-                        <div>
-                            <p class="font-bold text-[#2d2d2d]">${r.name}</p>
-                            <p class="text-xs text-gray-400">${date}</p>
-                        </div>
-                        <span class="text-sm">${stars}</span>
-                    </div>
-                    <p class="text-sm text-gray-600 italic leading-relaxed">"${r.text}"</p>
-                </div>`;
-            }).join('');
-        }
-        window.addReview = async function() {
-            const name = document.getElementById('new-review-name').value.trim();
-            const text = document.getElementById('new-review-text').value.trim();
-            const stars = document.getElementById('new-review-stars').value;
-            if (!name || !text) { alert("Please enter name and review text."); return; }
-            showSync(true);
-            try {
-                await addDoc(collection(db, "reviews"), { name, text, stars: parseInt(stars), ts: Date.now() });
-                document.getElementById('new-review-name').value = '';
-                document.getElementById('new-review-text').value = '';
-            } catch(e) { handleFirestoreError(e, OperationType.CREATE, "reviews"); }
-            finally { showSync(false); }
-        }
-        window.deleteReview = async function(id) {
-            if (!confirm("Delete this review?")) return;
-            showSync(true);
-            try {
-                await deleteDoc(doc(db, "reviews", id));
-            } catch(e) { handleFirestoreError(e, OperationType.DELETE, `reviews/${id}`); }
-            finally { showSync(false); }
-        }
-        function renderManagerReviews(reviews) {
-            const container = document.getElementById('manager-reviews-list');
-            if (!container) return;
-            if (!reviews || !reviews.length) { container.innerHTML = '<p class="text-xs text-gray-400 italic">No reviews yet.</p>'; return; }
-            container.innerHTML = reviews.map(r => `
-                <div class="flex items-center justify-between p-2 bg-gray-50 rounded-lg gap-2">
-                    <div class="flex-1 min-w-0">
-                        <p class="text-xs font-bold text-gray-700">${r.name} ${'⭐'.repeat(parseInt(r.stars)||5)}</p>
-                        <p class="text-[10px] text-gray-500 truncate">${r.text}</p>
-                    </div>
-                    <button onclick="deleteReview('${r.id}')" class="p-1.5 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors flex-shrink-0">
-                        <i data-lucide="trash-2" class="w-3 h-3"></i>
-                    </button>
-                </div>
-            `).join('');
-            if (window.lucide) lucide.createIcons();
-        }
-
 
         // ============================================================
         // SPA ROUTING
@@ -2802,17 +2126,6 @@
             // Cart btn: only show for menu
             const cartBtn = document.getElementById('cart-btn');
             if (cartBtn && view !== 'menu') cartBtn.classList.add('hidden');
-
-            // Update SPA tab styles
-            document.querySelectorAll('.spa-tab').forEach(t => {
-                t.classList.remove('active');
-                t.classList.add('inactive');
-            });
-            const activeTab = document.getElementById('spa-tab-' + view);
-            if (activeTab) {
-                activeTab.classList.add('active');
-                activeTab.classList.remove('inactive');
-            }
 
             _currentView = view;
             window.scrollTo({ top: 0, behavior: 'smooth' });
