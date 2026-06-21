@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Soul Cafe - Tosh | Order Online</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+    
+    <style>
+        :root { --forest-green: #1b4332; --warm-cream: #fdf5e6; --accent-gold: #e6b17e; }
+        body { font-family: 'Outfit', sans-serif; background-color: var(--warm-cream); color: #2d2d2d; overflow-x: hidden; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .dish-card {
+            background: white; border-radius: 1.5rem; border-left: 5px solid var(--accent-gold);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex; flex-direction: column; justify-content: space-between;
+            height: 100%; padding: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .dish-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .modal-backdrop { backdrop-filter: blur(10px); background-color: rgba(0, 0, 0, 0.7); }
+
+        .nav-btn {
+            white-space: nowrap; font-weight: 700; color: rgba(255,255,255,0.7);
+            transition: all 0.3s ease; border-bottom: 2px solid transparent; padding-bottom: 4px;
+        }
+        .nav-btn:hover { color: white; border-bottom-color: var(--accent-gold); }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="relative h-[30vh] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=2070'); filter: brightness(0.4);"></div>
+        <div class="relative z-10 text-center px-4">
+            <h1 class="text-4xl md:text-6xl font-bold text-white tracking-tighter drop-shadow-lg">The Soul Cafe</h1>
+            <p class="text-[#e6b17e] font-medium text-sm md:text-base mt-2 uppercase tracking-[0.2em]">Tosh, Parvati Valley</p>
+        </div>
+    </header>
+
+    <nav class="sticky top-0 z-40 bg-[#1b4332] shadow-2xl overflow-x-auto no-scrollbar">
+        <div class="flex items-center px-6 py-4 gap-8 max-w-6xl mx-auto text-[11px] uppercase tracking-widest" id="nav-items"></div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-4 md:px-8 py-12 pb-40">
+        <div class="mb-16 relative max-w-xl mx-auto">
+            <i data-lucide="search" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-[#1b4332]"></i>
+            <input type="text" id="menu-search" oninput="handleSearch()" placeholder="Search dishes..." 
+                   class="w-full pl-14 pr-6 py-5 rounded-3xl border-none shadow-xl outline-none text-lg bg-white ring-1 ring-black/5 focus:ring-4 focus:ring-[#1b4332]/10 transition-all">
+        </div>
+
+        <div id="menu-sections" class="space-y-20"></div>
+
+        <footer class="mt-32 text-center py-16 border-t border-black/5">
+            <button onclick="window.openManager()" class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 hover:text-[#1b4332] transition-all">
+                 Manager Access Dashboard
+            </button>
+        </footer>
+    </main>
+
+    <div id="cart-container" class="fixed bottom-10 left-0 right-0 z-50 flex justify-center pointer-events-none">
+        <button id="cart-btn" onclick="window.openCheckout()" class="pointer-events-auto bg-[#1b4332] text-white px-8 py-4 rounded-full shadow-2xl flex items-center gap-4 hidden scale-100 active:scale-95 transition-transform">
+            <div class="relative"><i data-lucide="shopping-cart" class="w-6 h-6"></i><span id="cart-count" class="absolute -top-3 -right-3 bg-[#e6b17e] text-[#1b4332] text-[10px] font-black w-6 h-6 rounded-full flex items-center justify-center border-2 border-[#1b4332]">0</span></div>
+            <span class="font-bold text-lg tracking-tight">Order Now (₹<span id="cart-total">0</span>)</span>
+        </button>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 hidden">
+        <div class="absolute inset-0 modal-backdrop" onclick="closeModals()"></div>
+        <div class="relative w-full max-w-md bg-white rounded-[2.5rem] overflow-hidden shadow-2xl">
+            <div class="p-8 bg-[#1b4332] text-white flex justify-between items-center"><h3 class="font-bold uppercase tracking-widest text-sm">Review Your Order</h3><button onclick="closeModals()"><i data-lucide="x"></i></button></div>
+            <div class="p-8 space-y-5">
+                <input type="text" id="cust-name" placeholder="Your Name" class="w-full px-5 py-4 rounded-2xl bg-gray-50 outline-none">
+                <select id="cust-space" class="w-full px-5 py-4 rounded-2xl bg-gray-50 outline-none">
+                    <option value="Indoor Cafe 🪑">Indoor Cafe</option>
+                    <option value="Open Table 🌳">Open Table</option>
+                    <option value="Camp Side 🏕️">Camp Side</option>
+                    <option value="Room Delivery 🏠">Room Delivery</option>
+                </select>
+                <textarea id="cust-notes" placeholder="Special Instructions" class="w-full px-5 py-4 rounded-2xl bg-gray-50 h-24 outline-none"></textarea>
+                <div id="checkout-items" class="max-h-40 overflow-y-auto text-xs space-y-2"></div>
+                <button onclick="window.confirmOrder()" class="w-full bg-[#25D366] text-white py-5 rounded-2xl font-black text-lg shadow-xl">Send to WhatsApp</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="fixed inset-0 z-[110] flex items-center justify-center p-4 hidden">
+        <div class="absolute inset-0 modal-backdrop" onclick="closeModals()"></div>
+        <div class="relative w-full max-w-sm bg-white rounded-[2rem] p-10">
+            <h3 class="text-2xl font-bold mb-8 text-center">Admin Login</h3>
+            <input type="password" id="mgr-pass" placeholder="Password" class="w-full px-6 py-5 rounded-2xl bg-gray-50 text-center text-xl mb-6 outline-none">
+            <button onclick="window.doLogin()" class="w-full bg-[#1b4332] text-white py-5 rounded-2xl font-bold">Sign In</button>
+        </div>
+    </div>
+
+    <!-- Dashboard Modal -->
+    <div id="manager-modal" class="fixed inset-0 z-[111] flex items-center justify-center p-0 sm:p-4 hidden">
+        <div class="absolute inset-0 modal-backdrop" onclick="closeModals()"></div>
+        <div class="relative w-full max-w-5xl bg-white h-full sm:h-[95vh] sm:rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col">
+            <div class="p-8 bg-[#1b4332] text-white flex justify-between items-center">
+                <h3 class="font-bold uppercase tracking-widest">Management Dashboard</h3>
+                <div class="flex gap-6"><button onclick="window.doLogout()" class="text-xs font-bold underline">Logout</button><button onclick="closeModals()"><i data-lucide="x"></i></button></div>
+            </div>
+            <div class="flex-1 overflow-y-auto p-8 space-y-12 bg-gray-50">
+                <section class="bg-white p-8 rounded-[2rem]">
+                    <h4 class="text-xs font-black uppercase text-[#1b4332] mb-6">Manage Categories</h4>
+                    <div class="flex gap-4 mb-4">
+                        <input type="text" id="mgr-new-cat" placeholder="Category Name" class="flex-1 px-5 py-3 border rounded-xl">
+                        <button onclick="window.addCategory()" class="bg-[#1b4332] text-white px-8 py-3 rounded-xl font-bold">Add</button>
+                    </div>
+                    <div id="mgr-sort-list" class="space-y-3"></div>
+                </section>
+
+                <section id="dish-form-section" class="bg-white p-8 rounded-[2rem]">
+                    <h4 id="dish-form-title" class="text-xs font-black uppercase text-[#1b4332] mb-6">Add New Dish</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <input type="text" id="dish-name" placeholder="Dish Name" class="px-5 py-3 bg-gray-50 rounded-xl outline-none">
+                        <input type="number" id="dish-price" placeholder="Price (₹)" class="px-5 py-3 bg-gray-50 rounded-xl outline-none">
+                        <select id="dish-cat" class="px-5 py-3 bg-gray-50 rounded-xl outline-none col-span-1"></select>
+                        <textarea id="dish-desc" placeholder="Dish Description" class="md:col-span-2 px-5 py-3 bg-gray-50 rounded-xl h-24 outline-none"></textarea>
+                    </div>
+                    <div class="flex gap-4 mt-8">
+                        <button id="dish-save-btn" onclick="window.saveDish()" class="flex-1 bg-[#e6b17e] text-[#1b4332] py-4 rounded-2xl font-black uppercase tracking-widest">Add Dish to Menu</button>
+                        <button id="dish-cancel-btn" onclick="window.cancelEdit()" class="hidden px-8 bg-gray-200 text-gray-600 py-4 rounded-2xl font-black uppercase tracking-widest">Cancel</button>
+                    </div>
+                </section>
+
+                <div id="mgr-inventory" class="space-y-6 pb-20"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+        import { initializeFirestore, collection, onSnapshot, doc, setDoc, deleteDoc, writeBatch } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+
+        const firebaseConfig = { projectId: "gen-lang-client-0775483264", apiKey: "AIzaSyBkR2MeWHwOG55lb5TkEJSeFuPfF1ZL6Vk" };
+        const app = initializeApp(firebaseConfig);
+        const db = initializeFirestore(app, { experimentalForceLongPolling: true }, "ai-studio-4ce66396-f81d-4d93-944e-3f363b09c805");
+
+        let MENU_DATA = [];
+        let CART = {};
+        let EDIT_TARGET = null; // Stores { catName, index }
+        const MASTER_PASS = "SoulCafeTosh@2024";
+
+        async function init() {
+            onSnapshot(collection(db, "menu"), (snap) => {
+                MENU_DATA = snap.docs.map(d => d.data()).sort((a,b) => a.order - b.order);
+                updateUI();
+            });
+            lucide.createIcons();
+        }
+
+        function updateUI() {
+            renderNav();
+            renderMenu();
+            renderManagerData();
+            updateCartUI();
+            lucide.createIcons();
+        }
+
+        function renderNav() {
+            const nav = document.getElementById('nav-items');
+            nav.innerHTML = MENU_DATA.map(c => `<button onclick="scrollToCat('${c.category}')" class="nav-btn">${c.category}</button>`).join('');
+        }
+
+        window.scrollToCat = (cat) => {
+            const el = document.getElementById(`sec-${cat.replace(/\s+/g, '-')}`);
+            if(el) window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
+        };
+
+        window.handleSearch = () => renderMenu(document.getElementById('menu-search').value.toLowerCase());
+
+        function renderMenu(query = '') {
+            const container = document.getElementById('menu-sections');
+            container.innerHTML = '';
+            MENU_DATA.forEach(section => {
+                const items = section.items.filter(i => !i.unavailable && (i.name.toLowerCase().includes(query) || (i.desc && i.desc.toLowerCase().includes(query))));
+                if (items.length === 0) return;
+                const sectionDiv = document.createElement('div');
+                sectionDiv.id = `sec-${section.category.replace(/\s+/g, '-')}`;
+                sectionDiv.innerHTML = `
+                    <div class="flex items-center gap-6 mb-10"><h3 class="font-black text-xl uppercase text-[#1b4332]">${section.category}</h3><div class="h-[2px] bg-[#1b4332]/10 flex-1"></div></div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        ${items.map(item => {
+                            const inCart = CART[item.name];
+                            return `
+                            <div class="dish-card">
+                                <div>
+                                    <div class="flex justify-between items-start mb-4"><div class="text-xl font-black text-[#1b4332]">₹${item.price}</div></div>
+                                    <h4 class="text-xl font-bold text-gray-800 leading-tight mb-2">${item.name}</h4>
+                                    ${item.desc ? `<p class="text-sm text-gray-400 italic line-clamp-2">${item.desc}</p>`:''}
+                                </div>
+                                <div class="mt-8">
+                                    ${inCart ? `
+                                        <div class="flex items-center justify-between bg-[#1b4332] text-white rounded-2xl overflow-hidden shadow-lg">
+                                            <button onclick="window.updateQty('${item.name}', -1)" class="w-12 h-12 flex items-center justify-center text-xl font-bold">-</button>
+                                            <span class="font-black text-lg">${inCart.qty}</span>
+                                            <button onclick="window.updateQty('${item.name}', 1)" class="w-12 h-12 flex items-center justify-center text-xl font-bold">+</button>
+                                        </div>
+                                    ` : `<button onclick="window.addToCart('${item.name}', ${item.price})" class="w-full py-4 bg-[#1b4332] text-white text-[11px] font-black rounded-2xl uppercase tracking-[0.2em] shadow-lg">Add to Cart</button>`}
+                                </div>
+                            </div>`;
+                        }).join('')}
+                    </div>`;
+                container.appendChild(sectionDiv);
+            });
+        }
+
+        window.addToCart = (name, price) => { CART[name] = { name, price, qty: 1 }; updateUI(); };
+        window.updateQty = (name, delta) => { if (CART[name]) { CART[name].qty += delta; if (CART[name].qty <= 0) delete CART[name]; updateUI(); } };
+
+        function updateCartUI() {
+            let total = 0, count = 0;
+            for (let k in CART) { total += CART[k].price * CART[k].qty; count += CART[k].qty; }
+            const btn = document.getElementById('cart-btn');
+            if (count > 0) { btn.classList.remove('hidden'); document.getElementById('cart-total').innerText = total; document.getElementById('cart-count').innerText = count; } else { btn.classList.add('hidden'); }
+        }
+
+        window.openCheckout = () => {
+            const list = document.getElementById('checkout-items');
+            list.innerHTML = Object.values(CART).map(i => `<div class="flex justify-between py-2 border-b border-gray-50"><span>${i.name} x ${i.qty}</span><span class="font-bold">₹${i.price * i.qty}</span></div>`).join('');
+            document.getElementById('checkout-modal').classList.remove('hidden');
+        };
+
+        window.confirmOrder = () => {
+            const name = document.getElementById('cust-name').value.trim();
+            const space = document.getElementById('cust-space').value;
+            const notes = document.getElementById('cust-notes').value.trim();
+            if (!name) { alert("Please enter your name"); return; }
+            let itemsTxt = ""; let grandTotal = 0;
+            for (let k in CART) { const item = CART[k]; itemsTxt += `• ${item.name} x ${item.qty} — ₹${item.price * item.qty}\n`; grandTotal += item.price * item.qty; }
+            const message = `✨ WELCOME TO THE SOUL CAFE! ✨\nThank you for your order, ${name}! 🙏\n━━━━━━━━━━━━━━━━━━━\n📝 ORDER RECEIPT\n• Seating: ${space}\n• Note: "${notes || 'Hii'}" 👋\n\n🍳 ORDER DETAILS\n${itemsTxt}━━━━━━━━━━━━━━━━━━━\n💰 PAYMENT SUMMARY\n• Grand Total: ₹${grandTotal}\n\n🏔️ Soul Cafe, Tosh`;
+            window.open(`https://wa.me/917023207620?text=${encodeURIComponent(message)}`);
+            CART = {}; closeModals(); updateUI();
+        };
+
+        // --- Manager Dashboard Functions ---
+        window.openManager = () => { if(localStorage.getItem('isSoulAdmin') === 'true') document.getElementById('manager-modal').classList.remove('hidden'); else document.getElementById('login-modal').classList.remove('hidden'); };
+        window.doLogin = () => { if(document.getElementById('mgr-pass').value === MASTER_PASS) { localStorage.setItem('isSoulAdmin', 'true'); document.getElementById('login-modal').classList.add('hidden'); document.getElementById('manager-modal').classList.remove('hidden'); } else alert("Invalid Password"); };
+        window.doLogout = () => { localStorage.removeItem('isSoulAdmin'); location.reload(); };
+        window.closeModals = () => { document.querySelectorAll('[id$="-modal"]').forEach(m => m.classList.add('hidden')); };
+
+        window.addCategory = async () => {
+            const name = document.getElementById('mgr-new-cat').value.trim();
+            if(!name) return;
+            await setDoc(doc(db, "menu", name), { category: name, items: [], order: MENU_DATA.length });
+            document.getElementById('mgr-new-cat').value = '';
+        };
+
+        window.reorder = async (index, direction) => {
+            const targetIndex = index + direction;
+            if (targetIndex < 0 || targetIndex >= MENU_DATA.length) return;
+            const batch = writeBatch(db);
+            batch.set(doc(db, "menu", MENU_DATA[index].category), { ...MENU_DATA[index], order: targetIndex });
+            batch.set(doc(db, "menu", MENU_DATA[targetIndex].category), { ...MENU_DATA[targetIndex], order: index });
+            await batch.commit();
+        };
+
+        window.editDish = (catName, idx) => {
+            const cat = MENU_DATA.find(c => c.category === catName);
+            const dish = cat.items[idx];
+            EDIT_TARGET = { catName, idx };
+            
+            document.getElementById('dish-name').value = dish.name;
+            document.getElementById('dish-price').value = dish.price;
+            document.getElementById('dish-cat').value = catName;
+            document.getElementById('dish-desc').value = dish.desc || '';
+            
+            document.getElementById('dish-form-title').innerText = "Edit Dish";
+            document.getElementById('dish-save-btn').innerText = "Update Dish Details";
+            document.getElementById('dish-cancel-btn').classList.remove('hidden');
+            document.getElementById('dish-form-section').scrollIntoView({ behavior: 'smooth' });
+        };
+
+        window.cancelEdit = () => {
+            EDIT_TARGET = null;
+            document.getElementById('dish-name').value = '';
+            document.getElementById('dish-price').value = '';
+            document.getElementById('dish-desc').value = '';
+            document.getElementById('dish-form-title').innerText = "Add New Dish";
+            document.getElementById('dish-save-btn').innerText = "Add Dish to Menu";
+            document.getElementById('dish-cancel-btn').classList.add('hidden');
+        };
+
+        window.saveDish = async () => {
+            const name = document.getElementById('dish-name').value.trim();
+            const price = parseInt(document.getElementById('dish-price').value);
+            const catName = document.getElementById('dish-cat').value;
+            const desc = document.getElementById('dish-desc').value.trim();
+            if(!name || !price) return;
+
+            if(EDIT_TARGET) {
+                const oldCat = MENU_DATA.find(c => c.category === EDIT_TARGET.catName);
+                if(EDIT_TARGET.catName === catName) {
+                    oldCat.items[EDIT_TARGET.idx] = { ...oldCat.items[EDIT_TARGET.idx], name, price, desc };
+                    await setDoc(doc(db, "menu", catName), oldCat);
+                } else {
+                    const dish = oldCat.items.splice(EDIT_TARGET.idx, 1)[0];
+                    const newCat = MENU_DATA.find(c => c.category === catName);
+                    newCat.items.push({ ...dish, name, price, desc });
+                    const batch = writeBatch(db);
+                    batch.set(doc(db, "menu", EDIT_TARGET.catName), oldCat);
+                    batch.set(doc(db, "menu", catName), newCat);
+                    await batch.commit();
+                }
+                cancelEdit();
+            } else {
+                const section = MENU_DATA.find(s => s.category === catName);
+                section.items.push({ name, price, desc, unavailable: false });
+                await setDoc(doc(db, "menu", catName), section);
+                document.getElementById('dish-name').value = ''; document.getElementById('dish-price').value = ''; document.getElementById('dish-desc').value = '';
+            }
+        };
+
+        function renderManagerData() {
+            document.getElementById('mgr-sort-list').innerHTML = MENU_DATA.map((c, i) => `
+                <div class="flex items-center justify-between bg-gray-50 p-3 rounded-xl border border-gray-100"><span class="font-bold text-sm">${c.category}</span>
+                <div class="flex gap-4"><button onclick="window.reorder(${i}, -1)">↑</button><button onclick="window.reorder(${i}, 1)">↓</button><button onclick="window.deleteCat('${c.category}')" class="text-red-500 font-bold ml-4">×</button></div></div>`).join('');
+            document.getElementById('dish-cat').innerHTML = MENU_DATA.map(c => `<option value="${c.category}">${c.category}</option>`).join('');
+            document.getElementById('mgr-inventory').innerHTML = MENU_DATA.map(cat => `
+                <div class="bg-white p-6 rounded-[1.5rem] border border-gray-100">
+                    <h5 class="text-xs font-black uppercase mb-4 text-[#1b4332] border-b pb-2 tracking-widest">${cat.category}</h5>
+                    <div class="space-y-3">
+                        ${cat.items.map((it, i) => `
+                            <div class="flex items-center justify-between text-xs py-2 border-t border-gray-50">
+                                <span>${it.name} (₹${it.price})</span>
+                                <div class="flex gap-4">
+                                    <button onclick="window.editDish('${cat.category}', ${i})" class="text-blue-500 font-bold">Edit</button>
+                                    <button onclick="window.deleteDish('${cat.category}', ${i})" class="text-red-500 font-bold">Delete</button>
+                                </div>
+                            </div>`).join('')}
+                    </div>
+                </div>`).join('');
+        }
+
+        window.deleteDish = async (cat, idx) => { if(!confirm("Delete dish?")) return; const sec = MENU_DATA.find(s => s.category === cat); sec.items.splice(idx, 1); await setDoc(doc(db, "menu", cat), sec); };
+        window.deleteCat = async (name) => { if(confirm(`Delete category "${name}"?`)) await deleteDoc(doc(db, "menu", name)); };
+
+        init();
+    </script>
+</body>
+</html>
